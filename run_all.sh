@@ -41,8 +41,13 @@ export PYTHONUNBUFFERED=1        # so .out streams live instead of buffering
 CODE_MODEL="Qwen/Qwen2.5-Coder-7B-Instruct"
 
 echo ">>> Activating conda environment..."
-source "$(conda info --base)/etc/profile.d/conda.sh"
-conda activate vipergpt
+source "$(conda info --base)/etc/profile.d/conda.sh" || true
+conda activate vipergpt || true
+# conda activate can fail silently in a batch shell - force the env onto PATH.
+export PATH="/home/mazaveri/.conda/envs/vipergpt/bin:$PATH"
+export CONDA_PREFIX="/home/mazaveri/.conda/envs/vipergpt"
+# Stop the broken ~/.local torch (python3.11) from shadowing the env.
+export PYTHONNOUSERSITE=1
 echo "[OK] Python : $(which python)"
 echo "[OK] Version: $(python --version 2>&1)"
 
