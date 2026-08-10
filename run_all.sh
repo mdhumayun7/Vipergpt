@@ -284,7 +284,7 @@ echo ">>> PHASE 5: M1 ANALYSIS — RefCOCO/testA (spatial allowed)"
 echo ">>> Start: $(date)"
 echo "------------------------------------------------------------"
 python -m vipergpt_repro.eval.codegen_analysis \
-    --version refcoco --split testA --max-samples 500 --batch-size 8
+    --version refcoco --split testA --max-samples 500 --batch-size 8 --prompt prompts/${PROMPT_FILE:-api.prompt}
 [[ $? -eq 0 ]] && ST[m1_refcoco]=OK || ST[m1_refcoco]=FAIL
 echo ">>> PHASE 5 DONE: $(date)"
 
@@ -296,7 +296,7 @@ echo ">>> PHASE 6: M1 ANALYSIS — RefCOCO+/testA (spatial excluded, control)"
 echo ">>> Start: $(date)"
 echo "------------------------------------------------------------"
 python -m vipergpt_repro.eval.codegen_analysis \
-    --version refcoco+ --split testA --max-samples 500 --batch-size 8
+    --version refcoco+ --split testA --max-samples 500 --batch-size 8 --prompt prompts/${PROMPT_FILE:-api.prompt}
 [[ $? -eq 0 ]] && ST[m1_refcocoplus]=OK || ST[m1_refcocoplus]=FAIL
 echo ">>> PHASE 6 DONE: $(date)"
 

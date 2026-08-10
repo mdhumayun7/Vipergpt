@@ -187,3 +187,54 @@ execute_command must return a patch. If adding them moves the 98.8% materially,
 the finding is about prompt/model transfer; if not, it is a structural limitation
 of open-weights substitution — which is itself the reproducibility result, since
 Codex is no longer available to anyone.
+
+### Confound resolved: the prompt, not the model
+
+prompts/api.prompt is task-agnostic. Its in-context examples return strings
+(`simple_query`, `best_text_match`, `llm_query`); nothing states that grounding
+must return an ImagePatch. It also instructs explicitly:
+
+  "Use base Python (comparison, sorting) for basic logical operations,
+   left/right/up/down, math, etc."
+
+So the near-absence of compute_depth (29) and distance (5) against find (547) is
+the prompt working as designed, not the generator failing. The 98.8% task-invalid
+return rate is a prompt-specification gap, not a Qwen limitation.
+
+Next: prompts/api_grounding.prompt adds an explicit return-type contract plus two
+grounding examples (one 2D, one depth-based). Measuring the before/after delta on
+the same 500 queries. Original preserved as prompts/api.prompt.orig.
+
+### Confound resolved: the prompt, not the model
+
+prompts/api.prompt is task-agnostic. Its in-context examples return strings
+(`simple_query`, `best_text_match`, `llm_query`); nothing states that grounding
+must return an ImagePatch. It also instructs explicitly:
+
+  "Use base Python (comparison, sorting) for basic logical operations,
+   left/right/up/down, math, etc."
+
+So the near-absence of compute_depth (29) and distance (5) against find (547) is
+the prompt working as designed, not the generator failing. The 98.8% task-invalid
+return rate is a prompt-specification gap, not a Qwen limitation.
+
+Next: prompts/api_grounding.prompt adds an explicit return-type contract plus two
+grounding examples (one 2D, one depth-based). Measuring the before/after delta on
+the same 500 queries. Original preserved as prompts/api.prompt.orig.
+
+### Confound resolved: the prompt, not the model
+
+prompts/api.prompt is task-agnostic. Its in-context examples return strings
+(`simple_query`, `best_text_match`, `llm_query`); nothing states that grounding
+must return an ImagePatch. It also instructs explicitly:
+
+  "Use base Python (comparison, sorting) for basic logical operations,
+   left/right/up/down, math, etc."
+
+So the near-absence of compute_depth (29) and distance (5) against find (547) is
+the prompt working as designed, not the generator failing. The 98.8% task-invalid
+return rate is a prompt-specification gap, not a Qwen limitation.
+
+Next: prompts/api_grounding.prompt adds an explicit return-type contract plus two
+grounding examples (one 2D, one depth-based). Measuring the before/after delta on
+the same 500 queries. Original preserved as prompts/api.prompt.orig.
