@@ -158,3 +158,32 @@ NOTE: Phase 1 of run_all.sh reports RefCOCO splits as ['test','train','val'],
 which is misleading — that checker reads refs(google).p, while the analysis script
 is patched to prefer refs(unc).p and did use testA. Phase 1's checker should be
 patched to match.
+
+### Follow-up analysis (same data, no GPU)
+
+| Run | Returns a string (task-invalid) | Spatial query with no positional op |
+|---|---:|---:|
+| RefCOCO/testA  | 98.8% | 17.3% |
+| RefCOCO+/testA | 98.2% | 31.9% |
+
+Visual grounding requires an ImagePatch (a box). Essentially every generated
+program returns a natural-language string instead. Programs parse at ~100% and are
+task-invalid at ~99%. Predicted RefCOCO IoU accuracy under execution: near zero.
+
+Call frequency confirms the geometric API is barely touched: 547 `find` against
+29 `compute_depth` and 5 `distance`. Where spatial relations ARE handled, it is via
+2D pixel arithmetic on patch attributes (`max(patches, key=lambda p: p.right)`),
+never via geometry. This explains the earlier anomaly that spatial queries use
+fewer API calls than non-spatial ones — the spatial constraint is often dropped
+outright (17.3% / 31.9% of spatial queries contain no positional operation at all).
+
+`llm_query` appears 265 times — a text-only model being asked image questions
+("Who is in the bottom left corner of the image?"), which cannot work.
+
+CONFOUND, to resolve before claiming anything: is this Qwen's failure or
+ViperGPT's? Codex may have handled the API contract correctly. Next step is to
+check whether prompts/api.prompt carries grounding-specific examples showing that
+execute_command must return a patch. If adding them moves the 98.8% materially,
+the finding is about prompt/model transfer; if not, it is a structural limitation
+of open-weights substitution — which is itself the reproducibility result, since
+Codex is no longer available to anyone.
