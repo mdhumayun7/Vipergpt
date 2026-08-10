@@ -1,0 +1,47 @@
+# === Reproduction repo: nothing large enters git ===
+# Data, weights, checkpoints, raw outputs live on scratch (symlinked).
+data/
+checkpoints/
+pretrained_models/
+outputs/
+runs/
+wandb/
+
+# Model / checkpoint blobs
+*.ckpt
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.onnx
+*.h5
+
+# Caches / logs (large or machine-specific)
+cache/
+*.log
+!results/logs/*.log
+
+# Secrets
+.env
+api.key
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

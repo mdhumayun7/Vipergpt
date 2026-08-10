@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vipergpt-repro"
+version = "0.1.0"
+description = "Thesis-grade reproduction of ViperGPT (Suris, Menon, Vondrick 2023) with an open-weights code generator."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Sankarshan", email = "sankarshan703@gmail.com" }]
+
+# NOTE: Runtime deps are pinned in environment.yml / requirements.lock.txt.
+# This list is the human-readable minimum; the lockfile is authoritative.
+dependencies = [
+    "torch",
+    "torchvision",
+    "transformers",
+    "accelerate",
+    "omegaconf",
+    "numpy",
+    "pillow",
+    "opencv-python",
+    "pandas",
+    "tqdm",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "pre-commit"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "slow: marks tests that need GPU or large model weights (deselect with '-m \"not slow\"')",
+]

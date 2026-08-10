@@ -1,0 +1,65 @@
+# Base configuration. Experiment files under configs/experiment/ override these.
+# Mirrors the structure of the official viper base_config.yaml, adapted for an
+# open-weights code generator and a reproducible offline cluster workflow.
+# ALL hyperparameters live in configs/ — never hardcode them in src/.
+
+seed: 0
+multiprocessing: false          # models + samples in parallel (producer-consumer)
+execute_code: true              # execute generated programs in batch mode
+
+paths:
+  pretrained_models: ./pretrained_models
+  data: ./data
+  outputs: ./outputs
+  results: ./results
+
+# ---- Program generator (replaces deprecated Codex) ----
+codegen:
+  backend: open_weights         # open_weights | openai | anthropic  (this repro: open_weights)
+  model: Qwen/Qwen2.5-Coder-7B-Instruct   # candidate; finalized in Phase 3 plan
+  temperature: 0.0
+  max_new_tokens: 512
+  prompt: ./prompts/api.prompt  # the API specification prompt
+  dtype: bfloat16
+
+# ---- Perception / knowledge modules ----
+load_models:
+  glip: true                    # find, exists
+  xvlm: true                    # verify_property, best_[image|text]_match
+  blip2: true                   # simple_query
+  depth: true                   # compute_depth (MiDaS)
+  llm_qa: true                  # llm_query / external knowledge (open LLM)
+
+detect_thresholds:
+  glip: 0.5
+ratio_box_area_to_image_area: 0.0
+crop_larger_margin: true
+
+verify_property:
+  model: xvlm
+  thresh_xvlm: 0.6
+
+best_match_model: xvlm
+
+blip2:
+  model_type: blip2-flan-t5-xxl
+  half_precision: true
+
+llm_qa:                          # external-knowledge text model (replaces GPT-3)
+  backend: open_weights
+  model: meta-llama/Llama-3.1-8B-Instruct   # candidate; finalized in Phase 3 plan
+  temperature: 0.0
+  n_votes: 1
+
+dataset:
+  name: null
+  data_path: ./data
+  split: ''
+  max_samples: null
+  batch_size: 20
+  start_sample: 0
+
+save: true
+use_cache: true
+log_every: 20
+wandb: false
