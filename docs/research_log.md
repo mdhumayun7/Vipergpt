@@ -124,3 +124,37 @@ NOTE: Phase 1 of run_all.sh reports RefCOCO splits as ['test','train','val'],
 which is misleading — that checker reads refs(google).p, while the analysis script
 is patched to prefer refs(unc).p and did use testA. Phase 1's checker should be
 patched to match.
+
+## 2026-08-11 — Milestone 1 result: initial hypothesis NOT supported
+
+Job 29187, 3818s, all stages OK. 500 queries each on RefCOCO/testA and
+RefCOCO+/testA, Qwen2.5-Coder-7B-Instruct, greedy.
+
+| Dataset  | Subset      | N   | Parse% | Collapse% | Mean API |
+|----------|-------------|-----|--------|-----------|----------|
+| RefCOCO  | all         | 500 | 99.8   | 0.6       | 2.45     |
+| RefCOCO  | spatial     | 289 | 100.0  | 0.3       | 2.35     |
+| RefCOCO  | non-spatial | 211 | 99.5   | 1.0       | 2.60     |
+| RefCOCO+ | all         | 500 | 99.6   | 0.2       | 2.89     |
+| RefCOCO+ | spatial     | 47  | 97.9   | 0.0       | 3.33     |
+| RefCOCO+ | non-spatial | 453 | 99.8   | 0.2       | 2.84     |
+
+HYPOTHESIS REJECTED. We predicted that spatial-relational queries would cause the
+generator to collapse the whole query into a single opaque `simple_query` call.
+Collapse rate is ~0% everywhere. The reason: the `simple_query` shortcut for
+relational terms lives in the paper's GQA prompt, not the grounding prompt, and
+visual grounding must return an ImagePatch, which `simple_query` cannot produce.
+The measurement was well-formed but aimed at the wrong task.
+
+Cost of finding this out: one 63-minute job, before any perception model was built.
+
+NEW QUESTION, from the same data: spatial queries in RefCOCO use FEWER API calls
+(2.35) than non-spatial ones (2.60), and RefCOCO+ overall uses more (2.89) than
+RefCOCO (2.45). If spatial relations are being resolved by 2D pixel arithmetic on
+`find()` output rather than by the geometric API, then `compute_depth`/`distance`
+should be near-absent from the call-frequency table. Checking next.
+
+NOTE: Phase 1 of run_all.sh reports RefCOCO splits as ['test','train','val'],
+which is misleading — that checker reads refs(google).p, while the analysis script
+is patched to prefer refs(unc).p and did use testA. Phase 1's checker should be
+patched to match.
