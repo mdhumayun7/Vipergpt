@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: >-
+  If you use this reproduction, please cite both this repository and the
+  original ViperGPT paper.
+title: "Reproduction of ViperGPT: Visual Inference via Python Execution for Reasoning"
+type: software
+authors:
+  - given-names: Sankarshan
+    email: sankarshan703@gmail.com
+repository-code: "https://github.com/USERNAME/vipergpt-repro"
+abstract: >-
+  A thesis-grade, reproducible reimplementation of ViperGPT that replaces the
+  deprecated Codex program generator with an open-weights code model, and
+  reproduces the RefCOCO/RefCOCO+, GQA, OK-VQA, and NExT-QA results
+  (Tables 1-4 of the original paper).
+license: MIT
+references:
+  - type: article
+    title: "ViperGPT: Visual Inference via Python Execution for Reasoning"
+    authors:
+      - given-names: Dídac
+        family-names: Surís
+      - given-names: Sachit
+        family-names: Menon
+      - given-names: Carl
+        family-names: Vondrick
+    year: 2023
+    journal: "arXiv preprint arXiv:2303.08128"
+    url: "https://arxiv.org/abs/2303.08128"

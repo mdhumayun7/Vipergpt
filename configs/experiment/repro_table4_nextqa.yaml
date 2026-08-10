@@ -1,0 +1,12 @@
+# Experiment: reproduce Table 4 (NExT-QA video causal/temporal reasoning).
+dataset:
+  name: nextqa
+  split: val          # multiple-choice; hard split (T/C) + full set reported
+  variant: multiple_choice
+  batch_size: 10
+load_models:
+  glip: true
+  xvlm: true
+  blip2: true         # simple_query per frame
+  depth: false
+  llm_qa: true        # select_answer (GPT-3 in paper) -> open LLM

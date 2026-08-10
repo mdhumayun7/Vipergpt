@@ -1,0 +1,42 @@
+# Human-readable conda environment for the ViperGPT reproduction.
+# After creating, IMMEDIATELY freeze exact versions:
+#   conda env export --no-builds > /tmp/env.full.yml
+#   pip freeze > requirements.lock.txt
+# and commit requirements.lock.txt (the machine-authoritative pin).
+#
+# Version pins here follow the official viper repo's tested stack; the plan
+# (docs/implementation_plan.md) explains any intentional drift.
+name: vipergpt
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pytorch=2.1.*
+  - torchvision=0.16.*
+  - pytorch-cuda=12.1
+  - numpy
+  - pandas
+  - pillow
+  - matplotlib
+  - tqdm
+  - pip:
+      - transformers==4.36.2
+      - accelerate==0.25.0
+      - omegaconf==2.3.0
+      - opencv-python==4.8.1.78
+      - timm==0.9.12
+      - einops==0.7.0
+      - bitsandbytes==0.41.3
+      - sentencepiece==0.1.99
+      - accelerate==0.25.0
+      - ftfy==6.1.3
+      - regex
+      - pytest==7.4.4
+      - ruff==0.1.14
+      - word2number==1.1
+      - inflect==7.0.0
+      - nltk==3.8.1

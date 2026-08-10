@@ -1,0 +1,11 @@
+# Experiment: reproduce Table 3 (OK-VQA, external knowledge).
+dataset:
+  name: okvqa
+  split: val          # OK-VQA reports on the validation/test set
+  batch_size: 20
+load_models:
+  glip: true
+  xvlm: true
+  blip2: true         # simple_query
+  depth: false
+  llm_qa: true        # llm_query — external knowledge (open LLM, replaces GPT-3)

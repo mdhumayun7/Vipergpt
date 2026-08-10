@@ -1,0 +1,12 @@
+# Experiment: reproduce Table 1 (RefCOCO / RefCOCO+ visual grounding).
+# Overrides configs/default.yaml. Finalized in Phase 3/5.
+dataset:
+  name: refcoco
+  split: testA        # paper reports testA
+  batch_size: 20
+load_models:
+  glip: true          # find is the load-bearing module for grounding
+  xvlm: true
+  blip2: false
+  depth: true
+  llm_qa: false

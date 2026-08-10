@@ -1,0 +1,11 @@
+# Experiment: reproduce Table 2 (GQA compositional VQA, test-dev).
+dataset:
+  name: gqa
+  split: testdev_balanced
+  batch_size: 20
+load_models:
+  glip: true
+  xvlm: true
+  blip2: true         # simple_query
+  depth: true
+  llm_qa: false
