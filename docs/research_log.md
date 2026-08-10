@@ -238,3 +238,35 @@ return rate is a prompt-specification gap, not a Qwen limitation.
 Next: prompts/api_grounding.prompt adds an explicit return-type contract plus two
 grounding examples (one 2D, one depth-based). Measuring the before/after delta on
 the same 500 queries. Original preserved as prompts/api.prompt.orig.
+
+## 2026-08-11 — Prompt specification gap: quantified and fixed
+
+Jobs 29187 (original prompt) and 29193 (grounding contract). Same 500 queries,
+RefCOCO/testA and RefCOCO+/testA, Qwen2.5-Coder-7B-Instruct, greedy decoding.
+
+| Metric                              | api.prompt | api_grounding.prompt |
+|-------------------------------------|-----------:|---------------------:|
+| Task-invalid return, RefCOCO        |      98.8% |                 0.2% |
+| Task-invalid return, RefCOCO+       |      98.2% |                 0.0% |
+| Spatial constraint dropped, RefCOCO |      17.3% |                 1.7% |
+| Spatial constraint dropped, RefCOCO+|      31.9% |                 2.1% |
+| Parse rate, RefCOCO                 |      99.8% |                96.6% |
+| Parse rate, RefCOCO+                |      99.6% |                92.6% |
+| Mean API calls, RefCOCO             |       2.45 |                 1.66 |
+
+FINDING: the released ViperGPT prompt is task-agnostic. It never states that a
+grounding program must return an ImagePatch, and its in-context examples all
+return strings. With an open-weights generator this makes ~99% of programs
+task-invalid — they parse, they run, and they return a sentence where a box is
+required. Adding an explicit return-type contract and two grounding examples
+reduces this to 0.2%.
+
+COST: parse rate falls 99.8 -> 96.6 (RefCOCO) and 99.6 -> 92.6 (RefCOCO+). The
+stricter contract makes a small fraction of generations syntactically invalid.
+Reported, not hidden.
+
+Consistency: a 30-query pilot gave 0.0%, the 500-query run gave 0.2%.
+
+This is a reproducibility result. Codex is retired, so anyone reproducing ViperGPT
+today must substitute an open model, and will hit this wall unannounced — the
+paper does not mention the contract because Codex apparently inferred it.
