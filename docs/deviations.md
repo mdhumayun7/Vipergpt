@@ -26,3 +26,37 @@ zips. Contents are byte-identical to the originals.
 resolved latest. Frozen to `requirements.lock.txt`.
 **Effect on results:** none for the text-only Milestone 1 path. Material risk for
 Milestone 2 — the GLIP fork's CUDA kernels predate sm_90.
+
+## D5 — GLIP build for H100 (sm_90)
+**Paper/official:** torch 1.13.1 + pytorch-cuda 11.6 (setup_env.sh). CUDA 11.6 has no
+sm_90 support, so the published environment cannot run on H100 at all.
+**Used instead:** torch 2.1.2+cu121, nvcc 12.8, TORCH_CUDA_ARCH_LIST="8.0;9.0".
+**Source patches (7 files under maskrcnn_benchmark/csrc/cuda/):**
+- `#include <THC/THCAtomics.cuh>` -> `<ATen/cuda/Atomic.cuh>`
+- `#include <THC/THCDeviceUtils.cuh>` -> `<ATen/cuda/CUDAContext.h>`
+  (THC/* was removed in torch 1.11+. THCCeilDiv/THCudaMalloc/THCState were not
+  used in live code, so no further rewrites were needed.)
+- setup.py: added `-gencode arch=compute_80,code=sm_80` and `compute_90/sm_90`.
+**Build must run on a GPU node:** setup.py gates CUDAExtension on
+`torch.cuda.is_available()`, so a login-node build silently produces a CPU-only
+extension with no error.
+**Backups:** *.cu.bak, setup.py.bak alongside the originals.
+**Effect on results:** none expected; kernels are unchanged, only headers and target
+architectures. To be confirmed by numerical equivalence on a fixed input.
+
+## D5 — GLIP build for H100 (sm_90)
+**Paper/official:** torch 1.13.1 + pytorch-cuda 11.6 (setup_env.sh). CUDA 11.6 has no
+sm_90 support, so the published environment cannot run on H100 at all.
+**Used instead:** torch 2.1.2+cu121, nvcc 12.8, TORCH_CUDA_ARCH_LIST="8.0;9.0".
+**Source patches (7 files under maskrcnn_benchmark/csrc/cuda/):**
+- `#include <THC/THCAtomics.cuh>` -> `<ATen/cuda/Atomic.cuh>`
+- `#include <THC/THCDeviceUtils.cuh>` -> `<ATen/cuda/CUDAContext.h>`
+  (THC/* was removed in torch 1.11+. THCCeilDiv/THCudaMalloc/THCState were not
+  used in live code, so no further rewrites were needed.)
+- setup.py: added `-gencode arch=compute_80,code=sm_80` and `compute_90/sm_90`.
+**Build must run on a GPU node:** setup.py gates CUDAExtension on
+`torch.cuda.is_available()`, so a login-node build silently produces a CPU-only
+extension with no error.
+**Backups:** *.cu.bak, setup.py.bak alongside the originals.
+**Effect on results:** none expected; kernels are unchanged, only headers and target
+architectures. To be confirmed by numerical equivalence on a fixed input.
