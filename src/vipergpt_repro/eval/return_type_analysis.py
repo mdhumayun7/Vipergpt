@@ -1,4 +1,7 @@
-import ast, json, re, sys, glob
+import ast
+import glob
+import json
+
 POS = {"left","right","upper","lower","horizontal_center","vertical_center",
        "compute_depth","distance","overlaps_with","width","height","area"}
 def returns_patch(code):

@@ -11,10 +11,10 @@ channel-first float tensor [3, H, W]. `lower` < `upper` in this convention.
 """
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, List, Union
+from typing import TYPE_CHECKING, Union
 
 if TYPE_CHECKING:  # avoid importing torch at module import for CPU-only smoke
-    import torch
+    pass
 
 
 class ImagePatch:
@@ -50,7 +50,7 @@ class ImagePatch:
 
     # ---- perception API (dispatched through the bus) ----
 
-    def find(self, object_name: str) -> List["ImagePatch"]:
+    def find(self, object_name: str) -> list[ImagePatch]:
         boxes = self._bus.call("find", self.cropped_image, object_name)
         patches = []
         for (left, lower, right, upper) in boxes:
@@ -73,7 +73,7 @@ class ImagePatch:
     def verify_property(self, object_name: str, visual_property: str) -> bool:
         return bool(self._bus.call("verify_property", self.cropped_image, object_name, visual_property))
 
-    def best_text_match(self, option_list: List[str], prefix: str | None = None) -> str:
+    def best_text_match(self, option_list: list[str], prefix: str | None = None) -> str:
         return self._bus.call("best_text_match", self.cropped_image, option_list, prefix)
 
     def simple_query(self, question: str | None = None) -> str:
@@ -87,7 +87,7 @@ class ImagePatch:
 
     # ---- geometry helpers (pure python) ----
 
-    def crop(self, left: int, lower: int, right: int, upper: int) -> "ImagePatch":
+    def crop(self, left: int, lower: int, right: int, upper: int) -> ImagePatch:
         return ImagePatch(self.cropped_image, left, lower, right, upper, bus=self._bus)
 
     def overlaps_with(self, left, lower, right, upper) -> bool:
@@ -97,7 +97,7 @@ class ImagePatch:
         return f"ImagePatch(left={self.left}, lower={self.lower}, right={self.right}, upper={self.upper})"
 
 
-def best_image_match(list_patches: List[ImagePatch], content: List[str], return_index: bool = False):
+def best_image_match(list_patches: list[ImagePatch], content: list[str], return_index: bool = False):
     if not list_patches:
         return None
     bus = list_patches[0]._bus

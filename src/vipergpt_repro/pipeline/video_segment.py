@@ -5,7 +5,7 @@ ImagePatch objects. `select_answer` delegates to the text LLM for multiple-choic
 """
 from __future__ import annotations
 
-from typing import Iterator
+from collections.abc import Iterator
 
 from vipergpt_repro.pipeline.image_patch import ImagePatch
 
@@ -26,7 +26,7 @@ class VideoSegment:
     def frame_from_index(self, index: int) -> ImagePatch:
         return ImagePatch(self.video[min(max(index, 0), self.T - 1)], bus=self._bus)
 
-    def trim(self, start: int | None = None, end: int | None = None) -> "VideoSegment":
+    def trim(self, start: int | None = None, end: int | None = None) -> VideoSegment:
         start = self.start if start is None else max(self.start, start)
         end = self.end if end is None else min(self.end, end)
         return VideoSegment(self.video, start, end, bus=self._bus)

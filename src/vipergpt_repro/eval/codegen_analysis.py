@@ -1,6 +1,16 @@
 """Milestone 1 - program-generation analysis. Needs only the code generator."""
 from __future__ import annotations
-import argparse, ast, json, logging, os, pickle, re, sys, time, subprocess
+
+import argparse
+import ast
+import json
+import logging
+import os
+import pickle
+import re
+import subprocess
+import sys
+import time
 from collections import Counter
 from pathlib import Path
 
