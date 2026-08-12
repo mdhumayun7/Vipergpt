@@ -542,3 +542,38 @@ rate 0.0% on all three seeds.
 Seed 2 took 2141s against 319s and 507s — 32 timeouts, against 1 each for the other
 seeds. Sampling occasionally produces pathological loops. Worth noting for compute
 budgeting; no effect on correctness since timeouts score 0 like any other failure.
+
+## 2026-08-12 — Model sweep: 1.5B (job 29321)
+
+Greedy decoding, RefCOCO/testA, n=500, both prompt conditions. Directly comparable
+to the 7B greedy headline numbers.
+
+| Metric | 1.5B base | 1.5B grounding | 7B base | 7B grounding |
+|---|---:|---:|---:|---:|
+| Task-invalid return rate | 95.8% | 0.0% | 98.8% | 0.2% |
+| Spatial constraint dropped | 31.5% | 2.1% | 17.3% | 1.7% |
+| Parse rate | 99.8% | 100.0% | 99.8% | 96.6% |
+| Mean API calls | 2.18 | 1.17 | 2.45 | 1.66 |
+
+THE EFFECT IS NOT SCALE-DEPENDENT. A model 4.7x smaller fails the released prompt in
+the same way (95.8% vs 98.8% task-invalid) and is repaired by the same three
+sentences (0.0% vs 0.2%). This removes the most obvious objection to Result 1 —
+that it is an artefact of one mid-sized open model rather than a property of the
+prompt.
+
+Two secondary observations:
+
+1. Parse rate MOVES IN OPPOSITE DIRECTIONS with the contract: 1.5B improves
+   (99.8 -> 100.0) while 7B degrades (99.8 -> 96.6). The 1.5B programs are also much
+   simpler (1.17 API calls against 7B's 1.66). A plausible reading is that 1.5B
+   copies the exemplars closely, which is syntactically safe but may not generalise;
+   7B attempts more and occasionally breaks. Execution will test this — if 1.5B
+   copies without understanding, its accuracy should trail 7B despite the better
+   parse rate.
+
+2. Baseline spatial-constraint drop is nearly twice as high on 1.5B (31.5% vs 17.3%).
+   The smaller model discards spatial language more readily when nothing in the
+   prompt requires it.
+
+32B pending (needs 75 of 94 shards on one node). Execution of all four new runs to
+follow once it completes.

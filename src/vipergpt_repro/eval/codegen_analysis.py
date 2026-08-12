@@ -118,6 +118,11 @@ def main():
     except Exception:
         pass
     _dec = "greedy" if a.temperature == 0 else f"t{a.temperature}s{a.seed}"
+    # model + prompt in the run name: the sweep runs several models under the same
+    # decoding, and without this they would all collide on "..._greedy".
+    _m = a.model.split("/")[-1].replace("Qwen2.5-Coder-", "").replace("-Instruct", "")
+    _p = Path(a.prompt).stem.replace("api_", "").replace("api", "base")
+    _dec = f"{_m}_{_p}_{_dec}"
     run_dir = Path("outputs/runs")/f"{time.strftime('%Y%m%dT%H%M%S')}__{sha}__m1_{a.version}_{a.split}_{_dec}"
     run_dir.mkdir(parents=True, exist_ok=True)
     logger.info("Run dir: %s", run_dir)
