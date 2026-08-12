@@ -308,3 +308,24 @@ Caveats: this is raw GLIP top-box accuracy, NOT ViperGPT accuracy — no program
 executed and no spatial reasoning is applied, so it is not comparable to the paper's
 72.0. The 40% no-detection rate needs investigation; the head-noun heuristic is crude
 (`"player number 8"` -> `"8"`, which is discarded by the isalpha filter).
+
+| no detection | 8/20 |
+
+Threshold sweep (same 20 samples):
+
+| Threshold | Scored | Mean IoU | IoU>=0.5 |
+|---|---|---|---|
+| 0.5 | 12/20 | 0.491 | 41.7% |
+| 0.3 | 19/20 | 0.578 | 52.6% |
+| 0.2 | 19/20 | 0.776 | 78.9% |
+
+The default 0.5 is badly miscalibrated for this use: it loses 8 of 20 detections
+outright. At 0.2, detections do not increase further (19 either way) but mean IoU
+rises sharply, so the lower threshold is selecting better boxes rather than simply
+returning more. Threshold to be fixed by config, recorded as a deviation, and not
+tuned per-experiment.
+
+Caveats: this is raw GLIP top-box accuracy, NOT ViperGPT accuracy. No program is
+executed and no spatial reasoning is applied, so 78.9% is not comparable to the
+paper's 72.0 on RefCOCO. The head-noun heuristic is also crude: "player number 8"
+reduces to "8", which the isalpha filter then discards.
