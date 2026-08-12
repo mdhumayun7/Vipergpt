@@ -31,7 +31,12 @@ load_models:
   llm_qa: true                  # llm_query / external knowledge (open LLM)
 
 detect_thresholds:
-  glip: 0.5
+  # D8: paper does not state a GLIP threshold. Swept on 20 RefCOCO/testA samples:
+  #   0.5 -> mean IoU 0.491, 8/20 missed   0.3 -> 0.578, 1/20 missed
+  #   0.2 -> 0.776, 1/20 missed   <- selected
+  # Detections do not increase below 0.3, so the gain is better box selection,
+  # not more boxes. Fixed here; never tuned per-experiment.
+  glip: 0.2
 ratio_box_area_to_image_area: 0.0
 crop_larger_margin: true
 

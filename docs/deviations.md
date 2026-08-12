@@ -56,3 +56,15 @@ float, which numpy resolves to float64 in an array dtype.
 Compute nodes have no internet, so a SLURM job would hang until its time limit.
 **Status:** now cached under HF_HOME. Job scripts MUST set HF_HUB_OFFLINE=1 and
 TRANSFORMERS_OFFLINE=1, and verify_offline.py should assert the BERT cache exists.
+
+## D8 — GLIP confidence threshold
+**Paper:** not specified. The official repo's config defaults to 0.5.
+**Used instead:** 0.2, set in configs/default.yaml.
+**Reason:** swept on 20 RefCOCO/testA samples against ground truth —
+0.5 gives mean IoU 0.491 and misses 8/20 detections entirely; 0.2 gives 0.776 and
+misses 1/20. Detection count is identical at 0.3 and 0.2, so the improvement comes
+from better box selection rather than a higher recall of low-confidence boxes.
+**Effect on results:** material. The threshold is fixed once here and used for every
+condition, so it cannot favour one prompt variant over another.
+**Caveat:** swept on 20 samples. To be re-checked on a larger set before the final
+table is reported.

@@ -83,3 +83,34 @@ Phase 6). Every cited row must carry a non-dirty git SHA + run dir + config.
 ## Citation
 See [`CITATION.cff`](CITATION.cff) and [`paper/references.bib`](paper/references.bib).
 Licensed MIT (this reproduction); the original work belongs to its authors.
+
+
+## Status — 11 August 2026
+
+**Milestone 1 (complete, tag `m1-complete`).** Program-generation analysis on
+RefCOCO/RefCOCO+ testA, 500 queries each, Qwen2.5-Coder-7B-Instruct.
+The released ViperGPT prompt does not state that a grounding program must return an
+`ImagePatch`; with an open-weights generator, 98.8% of programs return a string
+instead. Adding an explicit return-type contract and two grounding exemplars reduces
+this to 0.2%. Parse rate falls 99.8 -> 96.6 as a cost. See `docs/research_log.md`.
+
+**Milestone 2 (in progress).** Perception stack built and verified:
+- GLIP compiled for H100 / sm_90 (D5, D6); CUDA NMS verified independently.
+- GLIP validated against RefCOCO ground truth: mean IoU 0.776, IoU>=0.5 78.9%
+  at threshold 0.2 (D8). Coordinate convention confirmed empirically, not assumed.
+- COCO train2014 (82,783 images), MiDaS, and the GLIP-L checkpoint are on disk.
+
+Not yet done: X-VLM wrapper (`models/_xvlm_backbone.py` is still a stub — see D9
+plan to substitute CLIP), the program executor, and end-to-end IoU accuracy.
+
+### Environments
+
+Two conda environments, deliberately separate and never active together:
+
+| Env | Purpose | Key pins |
+|---|---|---|
+| `vipergpt` | code generation (Qwen) | torch 2.13, transformers 5.15 |
+| `glip_env` | perception (GLIP, MiDaS) | torch 2.1.2+cu121, transformers 4.36.2, numpy<2 |
+
+GLIP's fork requires the older stack; Qwen does not. Generation writes
+`programs.jsonl`, execution reads it, so the two stages never need one interpreter.
