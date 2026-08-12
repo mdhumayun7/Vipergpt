@@ -1,0 +1,33 @@
+{
+  "tag": "grounding_s3",
+  "programs": "outputs/runs/20260812T142930__nogit__m1_refcoco_testA_t0.7s3/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.3786,
+  "acc_iou50": 38.0,
+  "return_kinds": {
+    "patch": 415,
+    "error": 85
+  },
+  "errors": {
+    "SyntaxError": 8,
+    "AttributeError": 40,
+    "NameError": 15,
+    "TypeError": 16,
+    "RuntimeError": 2,
+    "ValueError": 2,
+    "timeout after 60s": 1,
+    "IndexError": 1
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.3531,
+    "acc_iou50": 36.68
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.4135,
+    "acc_iou50": 39.81
+  },
+  "elapsed_s": 506.6,
+  "git_sha": "nogit"
+}

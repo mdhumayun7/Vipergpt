@@ -1,0 +1,33 @@
+{
+  "tag": "grounding_s1",
+  "programs": "outputs/runs/20260812T141257__nogit__m1_refcoco_testA_t0.7s1/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.3476,
+  "acc_iou50": 34.6,
+  "return_kinds": {
+    "patch": 410,
+    "error": 90
+  },
+  "errors": {
+    "AttributeError": 42,
+    "TypeError": 15,
+    "NameError": 14,
+    "SyntaxError": 14,
+    "timeout after 60s": 1,
+    "ValueError": 2,
+    "IndentationError": 1,
+    "IndexError": 1
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.3092,
+    "acc_iou50": 30.45
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.4002,
+    "acc_iou50": 40.28
+  },
+  "elapsed_s": 318.8,
+  "git_sha": "nogit"
+}

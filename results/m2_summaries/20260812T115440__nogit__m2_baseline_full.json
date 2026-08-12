@@ -1,0 +1,32 @@
+{
+  "tag": "baseline_full",
+  "programs": "outputs/runs/20260810T232336__nogit__m1_refcoco_testA/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.0,
+  "acc_iou50": 0.0,
+  "return_kinds": {
+    "str": 336,
+    "error": 163,
+    "bool": 1
+  },
+  "errors": {
+    "program did not define execute_command": 136,
+    "NameError": 3,
+    "SyntaxError": 1,
+    "AttributeError": 12,
+    "IndexError": 3,
+    "TypeError": 8
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "elapsed_s": 230.0,
+  "git_sha": "nogit"
+}
