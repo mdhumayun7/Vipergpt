@@ -45,3 +45,4 @@ venv/
 Thumbs.db
 .idea/
 .vscode/
+debug_*.py
