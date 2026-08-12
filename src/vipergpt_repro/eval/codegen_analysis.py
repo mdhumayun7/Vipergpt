@@ -93,6 +93,9 @@ def main():
     p.add_argument("--data-root", default=os.environ.get("DATA_PATH",
         str(Path.home()/"hpc-prog/humayun/vipergpt_store/data")))
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--temperature", type=float, default=0.0,
+                   help="0.0 = greedy (paper setting). >0 enables sampling for variance estimates.")
     a = p.parse_args()
 
     logging.basicConfig(level=logging.INFO, stream=sys.stdout,
@@ -104,7 +107,18 @@ def main():
             sha += "-dirty"
     except Exception:
         sha = "nogit"
-    run_dir = Path("outputs/runs")/f"{time.strftime('%Y%m%dT%H%M%S')}__{sha}__m1_{a.version}_{a.split}"
+    import random
+    import numpy as _np
+    random.seed(a.seed)
+    _np.random.seed(a.seed)
+    try:
+        import torch as _t
+        _t.manual_seed(a.seed)
+        _t.cuda.manual_seed_all(a.seed)
+    except Exception:
+        pass
+    _dec = "greedy" if a.temperature == 0 else f"t{a.temperature}s{a.seed}"
+    run_dir = Path("outputs/runs")/f"{time.strftime('%Y%m%dT%H%M%S')}__{sha}__m1_{a.version}_{a.split}_{_dec}"
     run_dir.mkdir(parents=True, exist_ok=True)
     logger.info("Run dir: %s", run_dir)
 
@@ -147,8 +161,14 @@ def main():
             tokenize=False, add_generation_prompt=True) for q in chunk]
         enc = tok(prompts, return_tensors="pt", padding=True).to(model.device)
         with torch.no_grad():
-            gen = model.generate(**enc, max_new_tokens=a.max_new_tokens,
-                do_sample=False, pad_token_id=tok.pad_token_id)
+            gen_kw = dict(max_new_tokens=a.max_new_tokens, pad_token_id=tok.pad_token_id)
+            if a.temperature > 0:
+                # Sampling path: used only for variance estimates. The paper runs
+                # Codex at temperature 0, so greedy remains the headline setting.
+                gen_kw.update(do_sample=True, temperature=a.temperature, top_p=0.95)
+            else:
+                gen_kw.update(do_sample=False)
+            gen = model.generate(**enc, **gen_kw)
         for j, q in enumerate(chunk):
             txt = tok.decode(gen[j][enc["input_ids"].shape[1]:], skip_special_tokens=True)
             prog = extract(txt)
