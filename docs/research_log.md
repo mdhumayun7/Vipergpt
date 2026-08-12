@@ -435,3 +435,37 @@ Context: the paper reports 72.0 on RefCOCO. Raw GLIP top-box accuracy on this da
 is 78.9% (n=20, threshold 0.2), so perception alone caps us near 79% and program
 selection loses ~40 points from there. Known contributors: D1 (Codex->Qwen),
 D9 (X-VLM->CLIP), D8 (threshold tuned on only 20 samples).
+
+## 2026-08-12 — RefCOCO+ control (job 29292, n=500)
+
+| Metric | Baseline | + grounding contract |
+|---|---:|---:|
+| Accuracy IoU>=0.5 | 0.00% | 31.80% |
+| Mean IoU | 0.0000 | 0.3245 |
+| Returned a patch | 0/500 | 386/500 |
+| No execute_command defined | 214/500 | 0 |
+| spatial acc (n=47) | 0.00% | 6.38% |
+| non-spatial acc (n=453) | 0.00% | 34.44% |
+
+PREDICTION FALSIFIED. We expected the spatial/non-spatial gap to shrink or vanish
+on RefCOCO+, since that dataset forbids spatial relations. It widened instead:
+
+| Dataset | Spatial | Non-spatial | Gap |
+|---|---:|---:|---:|
+| RefCOCO  | 35.29% (n=289) | 44.55% (n=211) | 9.3 pts |
+| RefCOCO+ | 6.38% (n=47)   | 34.44% (n=453) | 28.1 pts |
+
+Reading: because RefCOCO+ forbids spatial language, the 47 queries our lexicon
+flags there are not ordinary spatial queries — they are annotation-guideline
+violations or words used non-spatially. They are edge cases, and the system fails
+on them almost completely. This does not contradict the spatial hypothesis; it says
+the RefCOCO+ spatial subset is not the clean control we assumed. n=47 means 6.38%
+is 3 of 47, so the interval is wide — the direction is informative, the value is not.
+
+Overall RefCOCO+ accuracy is also lower than RefCOCO (31.80% vs 39.20%). Expected:
+RefCOCO+ expressions are attribute-based, so they lean on verify_property, which is
+CLIP here rather than X-VLM (D9). This is the deviation most likely to be costing us.
+
+The format effect is stronger here: 214/500 baseline generations (42.8%) never
+defined execute_command, against 136/500 (27.2%) on RefCOCO. Zero under the
+grounding contract on both.
