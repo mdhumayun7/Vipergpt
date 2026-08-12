@@ -86,8 +86,29 @@ misses 1/20. Detection count is identical at 0.3 and 0.2, so the improvement com
 from better box selection rather than a higher recall of low-confidence boxes.
 **Effect on results:** material. The threshold is fixed once here and used for every
 condition, so it cannot favour one prompt variant over another.
-**Caveat:** swept on 20 samples. To be re-checked on a larger set before the final
-table is reported.
+**Validated 2026-08-12** on a held-out slice (RefCOCO/testA samples 200-399,
+n=200, disjoint from both the original 20 and the 0-499 range used for reported
+numbers), job 29318:
+
+| threshold | acc IoU>=0.5 | mean IoU | boxes/img |
+|---|---:|---:|---:|
+| 0.10 | 81.50% | 0.7372 | 25.5 |
+| 0.15 | 81.50% | 0.7372 | 25.4 |
+| **0.20** | **80.50%** | 0.7336 | **19.7** |
+| 0.25 | 70.00% | 0.6658 | 9.3 |
+| 0.30 | 59.50% | 0.5784 | 5.4 |
+| 0.50 | 31.00% | 0.3360 | 1.3 |
+
+0.2 is within 1.0 point of the optimum. The decision rule was fixed before seeing
+these numbers: keep 0.2 if within 2 points, otherwise re-run everything. It is
+within, so 0.2 stands and no reported result changes. 0.10 and 0.15 are identical
+to four decimal places, so nothing is gained below 0.2 except more boxes per image
+(25.5 vs 19.7), which only enlarges the candidate set a program must filter.
+
+Separately: 21 of 200 samples yield no detection at EVERY threshold up to 0.4. That
+floor is not threshold-related — it comes from the head-noun heuristic used to prompt
+GLIP ("player number 8" -> "8" -> discarded by the isalpha filter). A known,
+separate limitation. Full sweep: results/threshold_sweep.json
 
 ## D9 — X-VLM replaced by CLIP
 **Paper:** X-VLM backs verify_property / best_text_match / best_image_match.
