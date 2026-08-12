@@ -469,3 +469,41 @@ CLIP here rather than X-VLM (D9). This is the deviation most likely to be costin
 The format effect is stronger here: 214/500 baseline generations (42.8%) never
 defined execute_command, against 136/500 (27.2%) on RefCOCO. Zero under the
 grounding contract on both.
+
+### Manual audit of the RefCOCO+ spatial subset (n=47)
+
+The "edge case / annotation violation" reading was wrong. The 47 flagged queries are
+genuinely spatial — they are simply a DIFFERENT KIND of spatial from RefCOCO's:
+
+  RefCOCO   : 2D image-plane      "man on right", "person bottom left", "left kid"
+  RefCOCO+  : depth & relational  "man closest to us", "farthest man", "surfer
+                                   closest", "umpire behind catcher", "nearest guy",
+                                   "woman between man and dark hair woman"
+
+This is why RefCOCO+ forbidding spatial language did not remove spatial queries: it
+removed *viewer-frame directional* language, and what remains is depth-ordering and
+inter-object relations.
+
+The distinction is exactly the one the dissertation targets:
+
+| Spatial type | Resolvable by | Accuracy |
+|---|---|---:|
+| 2D image-plane (RefCOCO) | base Python on patch attributes | 35.29% |
+| Depth / relational (RefCOCO+) | requires compute_depth or 3D geometry | 6.38% |
+
+2D relations are handled by sorting patch coordinates
+(`sort(key=lambda p: p.horizontal_center)`), which the released prompt explicitly
+endorses. Depth relations cannot be. Milestone 1 showed compute_depth is invoked 29
+times against 547 for find, so in practice depth is essentially never used — and the
+queries that need it score 6.38%.
+
+Supporting detail: all three hits in this subset are depth queries scoring very high
+(0.97 "umpire behind catcher", 0.96 "girl closest to hydrant", 0.92 "farthest man").
+When depth ordering is resolved correctly the localisation is excellent; it is
+usually not attempted.
+
+Caveats: n=47, so 6.38% is 3/47 and the interval is wide. The lexicon also produces
+roughly 5 false positives here ("writing on back", "long sleeved" matching 'side'),
+which if anything makes the true depth-query accuracy lower still.
+
+Full audit: results/spatial_audit.txt
