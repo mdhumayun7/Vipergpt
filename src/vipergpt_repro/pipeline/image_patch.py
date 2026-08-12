@@ -54,17 +54,27 @@ class ImagePatch:
         boxes = self._bus.call("find", self.cropped_image, object_name)
         patches = []
         for (left, lower, right, upper) in boxes:
-            # boxes are relative to this crop; offset back into this patch's frame
-            patches.append(
-                ImagePatch(
-                    self.cropped_image,
-                    int(left),
-                    int(lower),
-                    int(right),
-                    int(upper),
-                    bus=self._bus,
-                )
+            # The detector sees only `cropped_image`, so its boxes are in CROP
+            # coordinates. Child patches are constructed from `cropped_image` with
+            # those crop-relative bounds (so the pixel slice is right), then their
+            # reported coordinates are shifted into THIS patch's frame. Without the
+            # shift, any program that crops before finding reports boxes in the
+            # wrong coordinate space — silently, and only for nested calls.
+            child = ImagePatch(
+                self.cropped_image,
+                int(left),
+                int(lower),
+                int(right),
+                int(upper),
+                bus=self._bus,
             )
+            child.left += self.left
+            child.right += self.left
+            child.lower += self.lower
+            child.upper += self.lower
+            child.horizontal_center = (child.left + child.right) / 2
+            child.vertical_center = (child.lower + child.upper) / 2
+            patches.append(child)
         return patches
 
     def exists(self, object_name: str) -> bool:

@@ -329,3 +329,70 @@ Caveats: this is raw GLIP top-box accuracy, NOT ViperGPT accuracy. No program is
 executed and no spatial reasoning is applied, so 78.9% is not comparable to the
 paper's 72.0 on RefCOCO. The head-noun heuristic is also crude: "player number 8"
 reduces to "8", which the isalpha filter then discards.
+
+## 2026-08-12 — Milestone 2: end-to-end execution, first real accuracy
+
+Same 50 programs from each Milestone 1 run, executed through GLIP(0.2) + CLIP(D9)
++ MiDaS. Non-patch returns score 0 rather than being excluded — a program that
+returns a sentence has failed the task, and dropping it would flatter the baseline.
+
+| Metric | Baseline prompt | + grounding contract |
+|---|---:|---:|
+| Accuracy IoU>=0.5 | 0.00% | 36.00% |
+| Mean IoU | 0.0000 | 0.3508 |
+| Returned a patch | 0/50 | 44/50 |
+| Runtime errors | 45 | 6 |
+| spatial acc (n=28) | 0.00% | 28.57% |
+| non-spatial acc (n=22) | 0.00% | 45.45% |
+
+The Milestone 1 static prediction — that ~99% of baseline programs are structurally
+incapable of scoring — is confirmed by execution: zero of fifty returned a patch.
+
+CAVEAT, to resolve before reporting: baseline failure is over-determined. Of 50
+programs, 45 raised at execution (KeyError x28) and only 5 got as far as returning
+a string. The KeyErrors are almost certainly `llm_query`, which the baseline prompt
+invoked 265 times in the 500-program trace and which this bus does not register
+(load_models.llm_qa=False). So the baseline scores 0% for two independent reasons:
+wrong return type, and a module we chose not to load. These must be separated —
+either enable llm_qa, or report the two failure modes distinctly. As it stands the
+0% is correct but not cleanly attributable.
+
+Grounding-run errors (6) are AttributeError x4, NameError, KeyError — to be
+inspected individually.
+
+Context for the 36%: the paper reports 72.0. Raw GLIP top-box accuracy on this data
+is 78.9% (threshold 0.2), so perception caps us well below the paper before any
+program runs. Known contributors to the gap: D1 (Codex->Qwen), D9 (X-VLM->CLIP),
+D8 (threshold tuned on only 20 samples).
+
+Notable: spatial queries score 28.57% against 45.45% for non-spatial. That gap is
+the dissertation's actual target.
+
+Grounding-run errors (6) are AttributeError x4, NameError, KeyError.
+
+### Confound removed (D10)
+
+The first run's baseline was over-determined: 28 of 45 errors were KeyError from
+simple_query (10) and llm_query (18), modules this bus does not load. That made the
+0% partly OUR configuration's fault, not the programs'. Registering neutral
+empty-string fallbacks for those calls lets every program run to completion.
+
+| Metric | Baseline v2 | Grounding v2 |
+|---|---:|---:|
+| Accuracy IoU>=0.5 | 0.00% | 36.00% |
+| Mean IoU | 0.0000 | 0.3569 |
+| Returned a patch | 0/50 | 45/50 |
+| Returned a string | 33/50 | 0/50 |
+| Errors | 17 | 5 |
+
+33 baseline programs now execute cleanly end to end and still score exactly zero,
+because they return a sentence where a box is required. The failure is now
+attributable to the return type alone. The fallbacks change grounding by almost
+nothing (36.00% either way, mean IoU 0.3508 -> 0.3569), which is itself evidence:
+programs written under the grounding contract do not need the text-answering calls.
+
+Remaining errors are genuine program bugs, and are a finding in their own right —
+Qwen invents API surface that does not exist: `crop_area`, `.area`, `.text`,
+and the builtin `next` (deliberately absent from the executor's safe builtins).
+Two `.text` cases were queries requiring OCR ("number 8", "2"), a capability the
+ViperGPT API does not expose at all.

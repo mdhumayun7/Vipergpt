@@ -68,3 +68,22 @@ from better box selection rather than a higher recall of low-confidence boxes.
 condition, so it cannot favour one prompt variant over another.
 **Caveat:** swept on 20 samples. To be re-checked on a larger set before the final
 table is reported.
+
+## D9 — X-VLM replaced by CLIP
+**Paper:** X-VLM backs verify_property / best_text_match / best_image_match.
+**Used instead:** openai/clip-vit-large-patch14 (models/clip_vlm.py).
+**Reason:** X-VLM weights are distributed via Google Drive and cannot be fetched by
+script; models/_xvlm_backbone.py remains a stub.
+**Effect:** X-VLM has fine-grained region-text alignment; CLIP scores globally, so
+attribute verification should be weaker. Treat as a lower bound. Impact on RefCOCO
+is limited — find is called 547 times against 109 for verify_property.
+
+## D10 — Neutral fallbacks for unloaded text modules
+**Paper:** BLIP-2 backs simple_query, a text LLM backs llm_query.
+**Used instead:** both return "" when not loaded.
+**Reason:** loading BLIP-2-XXL (40GB) and an 8B text LLM is out of scope for visual
+grounding. Without a fallback, any program calling them raises KeyError, making its
+failure attributable to our configuration rather than to the program.
+**Effect:** none on grounding (36.00% with or without; mean IoU 0.3508 -> 0.3569),
+and it strictly favours the baseline by letting 33 more programs run to completion.
+Grounding requires an ImagePatch, which no string can satisfy.

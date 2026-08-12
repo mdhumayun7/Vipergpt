@@ -62,7 +62,9 @@ class ModuleBus:
     def _register_real(self):
         """Lazily wire real models based on cfg.load_models. Imported on first use
         so that importing this module never requires torch/transformers/GPU."""
-        from vipergpt_repro.models import blip2, codegen, depth, glip, text_llm, xvlm  # noqa: F401
+        from vipergpt_repro.models import (  # noqa: F401
+            blip2, clip_vlm, codegen, depth, glip, text_llm, xvlm,
+        )
 
         lm = self.cfg.load_models
 
@@ -76,6 +78,15 @@ class ModuleBus:
             self.register("best_text_match", x.best_text_match)
             self.register("best_image_match", x.best_image_match)
             self._loaded["xvlm"] = x
+        elif lm.get("clip", False):
+            # DEVIATION D9: CLIP substitutes for X-VLM on verify_property /
+            # best_text_match / best_image_match. See models/clip_vlm.py.
+            c = clip_vlm.CLIPModel_(self.cfg)
+            self.register("verify_property", c.verify_property)
+            self.register("best_text_match", c.best_text_match)
+            self.register("best_image_match", c.best_image_match)
+            self._loaded["clip"] = c
+            logger.warning("Using CLIP for verify_property/best_match (D9): X-VLM not built.")
         if lm.get("blip2", False):
             b = blip2.BLIP2Model(self.cfg)
             self.register("simple_query", b.simple_query)
@@ -89,3 +100,15 @@ class ModuleBus:
             self.register("llm_query", t.llm_query)
             self.register("select_answer", t.select_answer)
             self._loaded["llm_qa"] = t
+
+        # D10: neutral fallbacks for the text-answering calls we do not load
+        # (BLIP-2-XXL and an 8B text LLM are out of scope for the grounding task).
+        # Without these, a program calling simple_query/llm_query raises KeyError and
+        # its failure is attributable to OUR configuration rather than to the program.
+        # Returning "" lets such programs run to completion and fail, if they fail,
+        # on the return type alone — which is what we are actually measuring.
+        # Grounding cannot be answered by a string, so this concedes nothing.
+        for _name in ("simple_query", "llm_query", "select_answer"):
+            if _name not in self._handlers:
+                self.register(_name, lambda *a, **k: "")
+                logger.warning("D10: '%s' unhandled -> neutral empty-string fallback.", _name)
