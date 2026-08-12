@@ -43,3 +43,16 @@ extension with no error.
 **Backups:** *.cu.bak, setup.py.bak alongside the originals.
 **Effect on results:** none expected; kernels are unchanged, only headers and target
 architectures. To be confirmed by numerical equivalence on a fixed input.
+
+## D6 — NumPy 2.0 aliases in GLIP
+**Issue:** 5 files under maskrcnn_benchmark/ use `np.float`, removed in NumPy 1.24.
+GLIP construction fails in anchor_generator.py before any inference.
+**Fix:** np.float -> np.float64, np.int -> np.int64, np.bool -> bool, np.object -> object.
+Backups as *.npbak. Semantics unchanged: np.float was always an alias for builtin
+float, which numpy resolves to float64 in an array dtype.
+
+## D7 — GLIP downloads a BERT tokenizer at load time
+**Issue:** GLIPDemo pulls bert-base-uncased (440MB) from the Hub on first construction.
+Compute nodes have no internet, so a SLURM job would hang until its time limit.
+**Status:** now cached under HF_HOME. Job scripts MUST set HF_HUB_OFFLINE=1 and
+TRANSFORMERS_OFFLINE=1, and verify_offline.py should assert the BERT cache exists.

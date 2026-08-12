@@ -30,10 +30,7 @@ echo "Filesystem headroom: ${AVAIL_GB}G — proceeding."
 
 # --- 1. program generator pi (DEVIATION D1: replaces deprecated Codex) ---------
 echo ">>> Qwen2.5-Coder-7B-Instruct"
-hf download Qwen/Qwen2.5-Coder-7B-Instruct \
-    --exclude "*.pth" "original/*" \
-  || huggingface-cli download Qwen/Qwen2.5-Coder-7B-Instruct \
-       --exclude "*.pth" "original/*"
+hf download Qwen/Qwen2.5-Coder-7B-Instruct
 
 # --- 2. perception modules (Milestone 2 only) ---------------------------------
 if [[ $FULL -eq 1 ]]; then

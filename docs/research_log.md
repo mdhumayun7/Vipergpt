@@ -270,3 +270,41 @@ Consistency: a 30-query pilot gave 0.0%, the 500-query run gave 0.2%.
 This is a reproducibility result. Codex is retired, so anyone reproducing ViperGPT
 today must substitute an open model, and will hit this wall unannounced — the
 paper does not mention the contract because Codex apparently inferred it.
+
+## 2026-08-11 — Milestone 2: GLIP built and verified on H100
+
+GLIP compiles and runs on sm_90. CUDA NMS verified independently (keep=[0,2] on a
+hand-checked case). Inference ~0.15 s/image on H100 NVL.
+
+Three fixes were needed beyond the CUDA header work (D5):
+
+1. **D6 — NumPy 2.0 aliases.** 5 files used `np.float`, removed in NumPy 1.24.
+   Construction failed in anchor_generator.py before any inference.
+2. **D7 — BERT tokenizer downloaded at load time.** GLIPDemo fetches
+   bert-base-uncased (440MB) on first construction; now cached, but SLURM jobs must
+   set HF_HUB_OFFLINE=1 or they will hang on an offline compute node.
+3. **The decisive one — `tensor_inputs`.** GLIPDemo defaults to `tensor_inputs=False`,
+   which assumes HWC numpy input and derives the image size as
+   `original_image.shape[:-1]`. We pass CHW tensors, so it read (3, H) and rescaled
+   every box into a 3-pixel-wide image. Every IoU was *exactly* 0.000 — not low,
+   zero — which is what pointed at a coordinate-space bug rather than a detection
+   quality problem. Passing `tensor_inputs=True` selects `build_tensor_transforms()`
+   and `shape[-2:]`, and fixes it.
+
+Validation against RefCOCO ground truth (20 samples, testA, threshold 0.5,
+GLIP prompted with the head noun only):
+
+| Metric | Value |
+|---|---|
+| mean IoU (flipped, as returned) | 0.491 |
+| mean IoU (unflipped control) | 0.364 |
+| IoU >= 0.5 | 41.7% |
+| no detection | 8/20 |
+
+Flipped scoring beats unflipped, which confirms the bottom-left origin convention
+rather than assuming it. Best individual cases: 0.951, 0.949, 0.856.
+
+Caveats: this is raw GLIP top-box accuracy, NOT ViperGPT accuracy — no program is
+executed and no spatial reasoning is applied, so it is not comparable to the paper's
+72.0. The 40% no-detection rate needs investigation; the head-noun heuristic is crude
+(`"player number 8"` -> `"8"`, which is discarded by the isalpha filter).
