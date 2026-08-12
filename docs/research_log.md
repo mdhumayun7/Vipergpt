@@ -396,3 +396,42 @@ Qwen invents API surface that does not exist: `crop_area`, `.area`, `.text`,
 and the builtin `next` (deliberately absent from the executor's safe builtins).
 Two `.text` cases were queries requiring OCR ("number 8", "2"), a capability the
 ViperGPT API does not expose at all.
+## 2026-08-12 — Milestone 2 full run (n=500), job 29290
+
+Confirmed on GPU (node2, H100 NVL). An earlier 500-sample attempt ran on the LOGIN
+node and produced RuntimeError x481 with a 7-second "grounding" run; those results
+were discarded. The job script now asserts torch.cuda.is_available() and aborts
+otherwise. Silent CPU fallback is the most dangerous failure mode seen so far — it
+produces a complete, plausible, entirely fake results table.
+
+RefCOCO/testA, 500 programs per condition, GLIP(0.2) + CLIP(D9) + MiDaS, D10 fallbacks.
+
+| Metric | Baseline prompt | + grounding contract |
+|---|---:|---:|
+| Accuracy IoU>=0.5 | 0.00% | 39.20% |
+| Mean IoU | 0.0000 | 0.3856 |
+| Returned a patch | 0/500 | 443/500 |
+| Returned a string | 336/500 | 1/500 |
+| Errors | 163 | 56 |
+| spatial acc (n=289) | 0.00% | 35.29% |
+| non-spatial acc (n=211) | 0.00% | 44.55% |
+
+Runtimes: baseline 230s, grounding 500s. The grounding run is slower because its
+programs actually call the perception stack instead of returning early.
+
+SECOND EFFECT OF THE CONTRACT, not anticipated: under the baseline prompt, 136 of
+500 generations (27.2%) did not define `execute_command` at all — the model emitted
+prose or malformed markdown that the extractor could not recover. Under the
+grounding prompt this drops to zero. The contract disciplines output FORMAT as well
+as return type; these are separable failures and should be reported separately.
+
+Baseline scores exactly 0/500 with 336 programs running to completion and returning
+a string. No configuration excuse remains: the failure is the return type.
+
+Spatial queries score 35.29% against 44.55% for non-spatial — a 9.3-point gap on
+identical infrastructure. This is the quantity the dissertation contribution targets.
+
+Context: the paper reports 72.0 on RefCOCO. Raw GLIP top-box accuracy on this data
+is 78.9% (n=20, threshold 0.2), so perception alone caps us near 79% and program
+selection loses ~40 points from there. Known contributors: D1 (Codex->Qwen),
+D9 (X-VLM->CLIP), D8 (threshold tuned on only 20 samples).
