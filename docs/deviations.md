@@ -11,6 +11,26 @@ results table. No silent substitutions.
 
 More rows added as implementation proceeds.
 
+## D1 — Codex replaced by Qwen2.5-Coder-7B-Instruct
+**Paper:** the program generator pi is OpenAI Codex (`code-davinci-002`).
+**Used instead:** Qwen/Qwen2.5-Coder-7B-Instruct, bfloat16, greedy decoding.
+**Reason:** Codex was retired by OpenAI and is unavailable to anyone. Any
+present-day reproduction must substitute a different generator; there is no
+faithful option.
+**Effect on results:** central to this work rather than incidental. The
+substitution is what exposed the prompt-specification gap measured in Milestone 1
+(98.8% task-invalid returns under the released prompt, 0.2% once the grounding
+contract is stated). It is also a primary contributor to the gap against the
+paper's reported 72.0 on RefCOCO.
+
+## D2 — Scope restricted to visual grounding
+**Paper:** four tasks — RefCOCO/RefCOCO+ grounding, GQA, OK-VQA, NExT-QA.
+**Used instead:** RefCOCO and RefCOCO+ only (Table 1).
+**Reason:** the full four-table setup needs roughly 250GB against ~231GB of quota;
+NExT-QA alone requires 100GB+ of video, and OK-VQA needs GPT-3, also retired.
+**Effect on results:** no cross-task claims are made. The grounding numbers stand
+on their own.
+
 ## D3 — RefCOCO annotation source
 **Paper/official repo:** `https://bvisionweb1.cs.unc.edu/licheng/referit/data/`
 **Used instead:** Internet Archive snapshots (20220413011718 / 20220413011656).
