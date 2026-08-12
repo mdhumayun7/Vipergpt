@@ -507,3 +507,38 @@ roughly 5 false positives here ("writing on back", "long sleeved" matching 'side
 which if anything makes the true depth-query accuracy lower still.
 
 Full audit: results/spatial_audit.txt
+
+## 2026-08-12 — Seed variance (jobs 29301 generation, 29306 execution)
+
+Greedy decoding is deterministic, so variance was estimated by sampling at T=0.7,
+top_p=0.95, seeds 1-3, RefCOCO/testA, n=500, grounding prompt. Greedy remains the
+headline setting because that is what the paper uses for Codex.
+
+| Seed | Accuracy | Mean IoU | spatial | non-spatial |
+|---|---:|---:|---:|---:|
+| 1 | 34.60% | 0.3476 | 30.45% | 40.28% |
+| 2 | 35.60% | 0.3515 | 31.49% | 41.23% |
+| 3 | 38.00% | 0.3786 | 36.68% | 39.81% |
+| mean +- std | 36.07 +- 1.75 | 0.359 +- 0.017 | 32.87 +- 3.35 | 40.44 +- 0.72 |
+| greedy (headline) | 39.20% | 0.3856 | 35.29% | 44.55% |
+
+Greedy beats all three sampled seeds, as expected for a task with one correct
+program shape.
+
+TWO OBSERVATIONS.
+
+1. Spatial variance is ~4x non-spatial variance (+-3.35 vs +-0.72). Programs handling
+   spatial relations are not merely less accurate, they are less STABLE: across seeds
+   the same query is sometimes resolved by sorting and sometimes has its spatial
+   constraint dropped. This strengthens the case for providing explicit geometric
+   primitives rather than relying on the generator to improvise base-Python sorting.
+
+2. The spatial/non-spatial gap holds on every seed (30.45/40.28, 31.49/41.23,
+   36.68/39.81) and on greedy (35.29/44.55). It is not a decoding artefact.
+
+Generation-stage stability was also good: parse rate 97.0 / 97.8 / 98.4, collapse
+rate 0.0% on all three seeds.
+
+Seed 2 took 2141s against 319s and 507s — 32 timeouts, against 1 each for the other
+seeds. Sampling occasionally produces pathological loops. Worth noting for compute
+budgeting; no effect on correctness since timeouts score 0 like any other failure.
