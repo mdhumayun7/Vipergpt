@@ -625,3 +625,95 @@ Anomaly: under the released prompt, 32B failed to define execute_command in 304/
 generations against 16/500 for 1.5B. The larger instruction-tuned model is more prone
 to answering in prose when the prompt does not demand a function. That is why 32B
 scores 0.00% where 1.5B manages 0.80%.
+
+## 2026-08-14 — Depth wrapper: sign bug found and fixed, and a second bottleneck
+
+### Sign bug (would have inverted the entire contribution)
+
+The original depth.py loaded MiDaS via torch.hub (network — hangs on an offline
+compute node) and returned the raw median. I then "fixed" it by inverting, on the
+assumption that MiDaS returns inverse depth. verify_depth.py caught that this was
+also wrong:
+
+| | with inversion | without |
+|---|---|---|
+| synthetic near vs far | 0.0018 vs 0.0013 (WRONG) | 565.6 vs 758.6 (correct) |
+| real images agreeing with size-distance | 8/25 = 32% | 16/25 = 64% |
+
+32% -> 64% on flipping is systematic inversion, not noise. The HF
+`Intel/dpt-hybrid-midas` checkpoint exposes `predicted_depth` already oriented so
+larger = further, unlike the torch.hub entrypoint. No inversion is applied. Verified
+before building anything on top, which is the lesson from the GLIP tensor_inputs bug.
+
+### The second bottleneck: detection is tuned for detection, not selection
+
+Depth-word queries from RefCOCO+ testA, picking the nearest/farthest box by depth:
+
+| GLIP threshold | depth_order correct | oracle (any box hits) | boxes/img |
+|---|---:|---:|---:|
+| 0.2 | 0/15 = 0% | 11/15 = 73% | 41.3 |
+| 0.5 | 2/15 = 13% | 6/15 = 40% | 2.8 |
+| 0.7 | 2/4 = 50% | 3/4 = 75% | 2.2 |
+
+At threshold 0.2 the correct box is PRESENT in 73% of cases and depth ordering picks
+it 0% of the time. The candidate set contains 41 boxes per image, mostly overlapping
+duplicates, and ordering 41 noisy depth estimates is close to random. At 0.7 the set
+shrinks to 2.2 boxes and depth_order recovers 50% against an oracle of 75% — two
+thirds of what is achievable.
+
+D8 fixed threshold=0.2 because it maximises TOP-BOX accuracy (81.5%), which is the
+right criterion when you take the single best detection. It is the wrong criterion
+when a program must SELECT among candidates. These are different operating points
+and the pipeline currently uses one threshold for both.
+
+This makes the contribution two-part rather than one, and both parts are now
+measured rather than assumed:
+  1. the API cannot express depth relations -> add depth_order and friends
+  2. the candidate set is not calibrated for selection -> NMS / dedup / top-k before
+     any ordering primitive can work
+
+## 2026-08-14 — Depth wrapper: sign bug found and fixed, and a second bottleneck
+
+### Sign bug (would have inverted the entire contribution)
+
+The original depth.py loaded MiDaS via torch.hub (network — hangs on an offline
+compute node) and returned the raw median. I then "fixed" it by inverting, on the
+assumption that MiDaS returns inverse depth. verify_depth.py caught that this was
+also wrong:
+
+| | with inversion | without |
+|---|---|---|
+| synthetic near vs far | 0.0018 vs 0.0013 (WRONG) | 565.6 vs 758.6 (correct) |
+| real images agreeing with size-distance | 8/25 = 32% | 16/25 = 64% |
+
+32% -> 64% on flipping is systematic inversion, not noise. The HF
+`Intel/dpt-hybrid-midas` checkpoint exposes `predicted_depth` already oriented so
+larger = further, unlike the torch.hub entrypoint. No inversion is applied. Verified
+before building anything on top, which is the lesson from the GLIP tensor_inputs bug.
+
+### The second bottleneck: detection is tuned for detection, not selection
+
+Depth-word queries from RefCOCO+ testA, picking the nearest/farthest box by depth:
+
+| GLIP threshold | depth_order correct | oracle (any box hits) | boxes/img |
+|---|---:|---:|---:|
+| 0.2 | 0/15 = 0% | 11/15 = 73% | 41.3 |
+| 0.5 | 2/15 = 13% | 6/15 = 40% | 2.8 |
+| 0.7 | 2/4 = 50% | 3/4 = 75% | 2.2 |
+
+At threshold 0.2 the correct box is PRESENT in 73% of cases and depth ordering picks
+it 0% of the time. The candidate set contains 41 boxes per image, mostly overlapping
+duplicates, and ordering 41 noisy depth estimates is close to random. At 0.7 the set
+shrinks to 2.2 boxes and depth_order recovers 50% against an oracle of 75% — two
+thirds of what is achievable.
+
+D8 fixed threshold=0.2 because it maximises TOP-BOX accuracy (81.5%), which is the
+right criterion when you take the single best detection. It is the wrong criterion
+when a program must SELECT among candidates. These are different operating points
+and the pipeline currently uses one threshold for both.
+
+This makes the contribution two-part rather than one, and both parts are now
+measured rather than assumed:
+  1. the API cannot express depth relations -> add depth_order and friends
+  2. the candidate set is not calibrated for selection -> NMS / dedup / top-k before
+     any ordering primitive can work
