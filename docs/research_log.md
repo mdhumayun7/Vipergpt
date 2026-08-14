@@ -577,3 +577,51 @@ Two secondary observations:
 
 32B pending (needs 75 of 94 shards on one node). Execution of all four new runs to
 follow once it completes.
+
+## 2026-08-14 — Model sweep complete (jobs 29321, 29352 generation; 29404 execution)
+
+Greedy, RefCOCO/testA, n=500, both prompts, three model sizes.
+
+| Model | Baseline acc | Grounding acc | Delta |
+|---|---:|---:|---:|
+| 1.5B | 0.80% | 34.40% | +33.6 |
+| 7B | 0.00% | 39.20% | +39.2 |
+| 32B | 0.00% | 40.80% | +40.8 |
+
+Static side:
+
+| Model | Task-invalid, base | Task-invalid, grounding |
+|---|---:|---:|
+| 1.5B | 95.8% | 0.0% |
+| 7B | 98.8% | 0.2% |
+| 32B | 87.6% | 0.0% |
+
+RESULT 1 IS SCALE-INDEPENDENT. A 32B model still emits 87.6% task-invalid programs
+under the released prompt and still scores 0.00%. Three sentences repair it at every
+scale. Scaling 1.5B -> 32B (20x parameters) buys 6.4 accuracy points; the prompt
+contract buys 33-41. The prompt effect dominates model capacity by roughly 6x.
+
+THE SPATIAL SUBSET DOES NOT RESPOND TO SCALE AT ALL:
+
+| Model | spatial | non-spatial | gap |
+|---|---:|---:|---:|
+| 1.5B | 34.95% | 33.65% | -1.3 |
+| 7B | 35.29% | 44.55% | +9.3 |
+| 32B | 34.95% | 48.82% | +13.9 |
+
+Spatial accuracy is 34.95 / 35.29 / 34.95 — flat to within noise, with 1.5B and 32B
+identical to two decimal places. Non-spatial rises 33.65 -> 48.82 (+15.2). So a
+larger generator writes better programs for everything EXCEPT spatial relations,
+where it writes programs that are exactly as wrong.
+
+This is the strongest evidence yet for the dissertation's premise. If the spatial
+deficit were a program-synthesis problem, capacity would help — it demonstrably does
+for non-spatial queries on the same images with the same perception stack. It does
+not help here because the bottleneck is the API: `compute_depth` returns one scalar,
+and no amount of model capacity can express a depth relation the interface cannot
+represent.
+
+Anomaly: under the released prompt, 32B failed to define execute_command in 304/500
+generations against 16/500 for 1.5B. The larger instruction-tuned model is more prone
+to answering in prose when the prompt does not demand a function. That is why 32B
+scores 0.00% where 1.5B manages 0.80%.

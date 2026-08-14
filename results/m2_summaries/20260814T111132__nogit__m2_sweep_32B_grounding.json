@@ -1,0 +1,31 @@
+{
+  "tag": "sweep_32B_grounding",
+  "programs": "outputs/runs/20260814T081039__nogit__m1_refcoco_testA_32B_grounding_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.423,
+  "acc_iou50": 40.8,
+  "return_kinds": {
+    "patch": 492,
+    "error": 8
+  },
+  "errors": {
+    "RuntimeError": 1,
+    "AttributeError": 1,
+    "ValueError": 2,
+    "NameError": 1,
+    "TypeError": 2,
+    "timeout after 60s": 1
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.3772,
+    "acc_iou50": 34.95
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.4857,
+    "acc_iou50": 48.82
+  },
+  "elapsed_s": 1316.8,
+  "git_sha": "nogit"
+}

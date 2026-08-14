@@ -1,0 +1,35 @@
+{
+  "tag": "sweep_32B_base",
+  "programs": "outputs/runs/20260814T073350__nogit__m1_refcoco_testA_32B_base_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.0,
+  "acc_iou50": 0.0,
+  "return_kinds": {
+    "error": 316,
+    "str": 179,
+    "bool": 2,
+    "none": 1,
+    "patch": 2
+  },
+  "errors": {
+    "program did not define execute_command": 304,
+    "SyntaxError": 3,
+    "TypeError": 2,
+    "ValueError": 2,
+    "AttributeError": 3,
+    "RuntimeError": 1,
+    "NameError": 1
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "elapsed_s": 290.8,
+  "git_sha": "nogit"
+}
