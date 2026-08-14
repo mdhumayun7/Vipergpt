@@ -158,7 +158,10 @@ def main():
             pairs = [(b, v) for b, v in zip(cand, dep) if v is not None]
             if len(pairs) < 2:
                 continue
-            pairs.sort(key=lambda t_: t_[1])          # near -> far, after inversion
+            # crop_region returns RAW inverse depth (larger = CLOSER), unlike
+            # DepthModel.compute_depth which inverts. Sorting ascending would put the
+            # FURTHEST object first. Descending gives near -> far.
+            pairs.sort(key=lambda t_: t_[1], reverse=True)
             pick = pairs[0][0] if s["near"] else pairs[-1][0]
             e = st[m]
             e["n"] += 1

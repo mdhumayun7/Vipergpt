@@ -812,3 +812,48 @@ What IS established and safe to build on:
 
 Variant A is the configuration to carry forward. The aggregation and ranking choices
 become ablation rows rather than blockers.
+
+
+
+
+
+## 2026-08-14 — Third sign bug, and both of yesterday's conclusions retracted
+
+test_score_filter.py sorted candidates by RAW inverse depth ascending. crop_region()
+reads _inverse_depth_map() directly (larger = CLOSER) while DepthModel.compute_depth()
+inverts. Sorting ascending therefore put the FURTHEST object first — the selection was
+systematically backwards. One `reverse=True`:
+
+| ranking | boxes/img | acc | oracle | recovered |
+|---|---:|---:|---:|---:|
+| none | 39.5 | 29.0% | 83.9% | 34.6% |
+| area top-6 | 5.8 | 25.8% | 61.3% | 42.1% |
+| score top-6 | 5.8 | 29.0% | 45.2% | 64.3% |
+| score + NMS + top-6 | 5.8 | 32.3% | 48.4% | 66.7% |
+
+BOTH CONCLUSIONS FROM 2026-08-13 ARE WITHDRAWN.
+
+1. "Candidate filtering is necessary (9.7% -> 22.6%)" is FALSE. Unfiltered scores
+   29.0% and filtered 25.8-32.3%. The apparent 2.3x gain was an artefact of the
+   inverted sort interacting with set size, not a real effect of filtering.
+2. "Detector confidence ranks worse than box area" is FALSE and backwards. Score
+   ranking beats area on accuracy (29.0 vs 25.8) and decisively on recovered
+   (64.3% vs 42.1%). Its oracle is genuinely lower (45.2 vs 61.3) — GLIP's most
+   confident proposals are not always its best localised — but it converts what it
+   keeps far more effectively.
+
+Those rows were flagged unresolved and excluded from every table, so no reported
+result was contaminated. That flag is the only reason this is a correction and not a
+retraction.
+
+BEST CONFIGURATION: score ranking + NMS(0.5) + top-6, 32.3% on the RefCOCO+
+depth-word subset against a 6.38% no-depth baseline — 5x. recovered = 66.7% means
+two thirds of achievable cases are now captured; the binding constraint is oracle
+(48.4%), i.e. detection, not depth ordering.
+
+THIRD SIGN ERROR IN TWO DAYS (compute_depth twice, now the sort). Every site that
+compares depth must state its convention explicitly. Mitigation: add
+DepthModel.depth_of_region(map, box, W, H) returning a distance-like value, and
+forbid callers from reading _inverse_depth_map directly.
+
+
