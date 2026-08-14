@@ -129,15 +129,19 @@ class DepthModel:
         v = self._center_stat(m)
         if v is None:
             return 0.0
-        # EMPIRICALLY VERIFIED, not assumed. The HF `Intel/dpt-hybrid-midas`
-        # checkpoint exposes `predicted_depth` already oriented so that LARGER means
-        # FURTHER — unlike the torch.hub MiDaS entrypoint, which returns raw inverse
-        # depth. An earlier version inverted this on the assumption that it was
-        # inverse depth, and verify_depth.py caught it: the synthetic scene gave
-        # near=0.0018 > far=0.0013, and only 8/25 real images agreed with the
-        # size-distance heuristic (32%, i.e. systematically backwards rather than
-        # random). No inversion is applied.
-        return float(v)
+        # MiDaS predicts INVERSE depth: larger = CLOSER. We return a distance-like
+        # quantity so that larger = FURTHER, matching the API docstring and what any
+        # generated program assumes.
+        #
+        # This sign was established the hard way. A synthetic test scene suggested no
+        # inversion was needed, but that scene was invalid — it used a brightness
+        # gradient the model read as depth. The decisive evidence is real: on 25
+        # RefCOCO+ depth queries scored against GROUND-TRUTH boxes with no detector
+        # involved, the target lands at the correct depth extreme 80% of the time
+        # with the inversion and 8% without, against a 26% chance baseline
+        # (3.8 objects per image). 8% is far BELOW chance, which is the signature of
+        # a systematically inverted signal rather than a weak one.
+        return 1.0 / max(v, _EPS)
 
     def position_3d(self, image, box, image_size) -> tuple:
         """(X, Y, Z) of the patch centroid in camera coordinates.

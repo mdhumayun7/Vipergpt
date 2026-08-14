@@ -1,0 +1,36 @@
+{
+  "threshold": 0.2,
+  "nms_iou": 0.5,
+  "k": 6,
+  "n_queries": 40,
+  "results": {
+    "none": {
+      "n": 31,
+      "boxes_per_img": 39.5,
+      "depth_order_acc": 9.7,
+      "oracle": 83.9,
+      "recovered_pct": 11.5
+    },
+    "nms": {
+      "n": 31,
+      "boxes_per_img": 27.4,
+      "depth_order_acc": 9.7,
+      "oracle": 77.4,
+      "recovered_pct": 12.5
+    },
+    "topk": {
+      "n": 31,
+      "boxes_per_img": 5.8,
+      "depth_order_acc": 22.6,
+      "oracle": 61.3,
+      "recovered_pct": 36.8
+    },
+    "nms+topk": {
+      "n": 31,
+      "boxes_per_img": 5.8,
+      "depth_order_acc": 22.6,
+      "oracle": 67.7,
+      "recovered_pct": 33.3
+    }
+  }
+}

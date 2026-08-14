@@ -717,3 +717,63 @@ measured rather than assumed:
   1. the API cannot express depth relations -> add depth_order and friends
   2. the candidate set is not calibrated for selection -> NMS / dedup / top-k before
      any ordering primitive can work
+
+### The sign, settled properly
+
+The depth sign flipped twice today before being pinned down, and the reason is worth
+recording because it cost hours.
+
+I first assumed MiDaS returns inverse depth and inverted it. A SYNTHETIC test scene
+then said the inversion was wrong, so I removed it. The synthetic scene was invalid:
+it was built from a brightness gradient with a large dark object low in frame, and
+the model read the brightness as depth. A test I designed to be unambiguous was
+measuring the wrong thing.
+
+The decisive experiment removes both the detector and the synthetic data. Take
+RefCOCO+ testA queries containing closest/nearest/farthest, use GROUND-TRUTH boxes
+only, and ask whether the annotated target sits at the correct end of the depth
+ordering:
+
+| | correct |
+|---|---:|
+| without inversion | 2/25 = 8% |
+| with inversion | 20/25 = 80% |
+| chance (3.8 objects/image) | 26% |
+
+8% is far BELOW chance — the signature of a systematically inverted signal, not a
+weak one. MiDaS does return inverse depth (larger = closer); the inversion is
+correct and is now documented in depth.py with this evidence.
+
+LESSON: synthetic scenes are unreliable for validating perceptual signals, because
+the model latches onto whatever cue the synthetic image actually contains (here,
+brightness). Validate against real annotations, and do it first.
+
+### Candidate filtering ablation, with the sign correct
+
+RefCOCO+ depth queries, GLIP threshold 0.2, n=31 usable:
+
+| filter | boxes/img | depth_order | oracle | recovered |
+|---|---:|---:|---:|---:|
+| none | 39.5 | 9.7% | 83.9% | 11.5% |
+| nms (IoU 0.5) | 27.4 | 9.7% | 77.4% | 12.5% |
+| top-k (k=6, by area) | 5.8 | 22.6% | 61.3% | 36.8% |
+| nms + top-k | 5.8 | 22.6% | 67.7% | 33.3% |
+
+Reference point: the grounding-contract pipeline scores 6.38% on the full RefCOCO+
+spatial subset with no depth reasoning at all. Depth ordering over a filtered
+candidate set reaches 22.6% on the depth-word subset — roughly 3.5x.
+
+NMS alone does nothing (9.7% either way): the duplicates it removes were not what
+confused the ordering. Top-k is what matters, cutting 39.5 candidates to 5.8 and
+more than doubling accuracy. It also costs oracle (83.9 -> 61.3), so it discards
+correct boxes too — nms+topk keeps more oracle (67.7) at identical accuracy, so that
+combination is preferred.
+
+The remaining gap (22.6% achieved against 67.7% achievable) is now the target. Likely
+contributors: area is a poor stand-in for detection confidence (the GLIP wrapper
+discards scores), and median depth over a box mixes object and background pixels.
+
+CONTRIBUTION IS NOW THREE PARTS, ALL MEASURED:
+  1. correct depth semantics (sign + per-image normalisation)
+  2. candidate filtering before ordering (top-k, ideally by real confidence)
+  3. depth_order as an exposed API primitive
