@@ -1,0 +1,60 @@
+
+20260810T232336__nogit__m1_refcoco_testA
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 98.8%
+  spatial query, NO positional op : 17.3%
+
+20260810T235315__nogit__m1_refcoco+_testA
+  n=500  spatial=47
+  returns a STRING (task-invalid) : 98.2%
+  spatial query, NO positional op : 31.9%
+
+20260811T003848__nogit__m1_refcoco_testA
+  n=30  spatial=20
+  returns a STRING (task-invalid) : 0.0%
+  spatial query, NO positional op : 0.0%
+
+20260811T005114__nogit__m1_refcoco_testA
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 0.2%
+  spatial query, NO positional op : 1.7%
+
+20260811T012433__nogit__m1_refcoco+_testA
+  n=500  spatial=47
+  returns a STRING (task-invalid) : 0.0%
+  spatial query, NO positional op : 2.1%
+
+20260812T141257__nogit__m1_refcoco_testA_t0.7s1
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 0.0%
+  spatial query, NO positional op : 2.4%
+
+20260812T142049__nogit__m1_refcoco_testA_t0.7s2
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 0.0%
+  spatial query, NO positional op : 2.4%
+
+20260812T142930__nogit__m1_refcoco_testA_t0.7s3
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 0.0%
+  spatial query, NO positional op : 2.8%
+
+20260812T220515__nogit__m1_refcoco_testA_1.5B_base_greedy
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 95.8%
+  spatial query, NO positional op : 31.5%
+
+20260812T220721__nogit__m1_refcoco_testA_1.5B_grounding_greedy
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 0.0%
+  spatial query, NO positional op : 2.1%
+
+20260814T073350__nogit__m1_refcoco_testA_32B_base_greedy
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 87.6%
+  spatial query, NO positional op : 3.1%
+
+20260814T081039__nogit__m1_refcoco_testA_32B_grounding_greedy
+  n=500  spatial=289
+  returns a STRING (task-invalid) : 0.0%
+  spatial query, NO positional op : 1.4%

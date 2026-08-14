@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "version": "refcoco",
+    "split": "testA",
+    "sha": "nogit"
+  },
+  "summary": {
+    "n_total": 500,
+    "all": {
+      "n": 500,
+      "parse": 96.6,
+      "collapse": 0.0,
+      "mean_api": 1.66
+    },
+    "spatial": {
+      "n": 289,
+      "parse": 98.6,
+      "collapse": 0.0,
+      "mean_api": 1.53
+    },
+    "non_spatial": {
+      "n": 211,
+      "parse": 93.8,
+      "collapse": 0.0,
+      "mean_api": 1.85
+    },
+    "freq": {
+      "find": 607,
+      "verify_property": 92,
+      "overlaps_with": 42,
+      "compute_depth": 23,
+      "simple_query": 15,
+      "distance": 11,
+      "crop": 9,
+      "llm_query": 2
+    }
+  }
+}
