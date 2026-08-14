@@ -5,7 +5,7 @@ message: >-
 title: "Reproduction of ViperGPT: Visual Inference via Python Execution for Reasoning"
 type: software
 authors:
-  - given-names: Sankarshan
+  - given-names: MD Humayun
     email: sankarshan703@gmail.com
 repository-code: "https://github.com/USERNAME/vipergpt-repro"
 abstract: >-
