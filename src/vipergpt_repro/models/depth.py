@@ -154,6 +154,56 @@ class DepthModel:
         # a systematically inverted signal rather than a weak one.
         return 1.0 / max(v, _EPS)
 
+
+    # ------------------------------------------------------------------ safe API
+    def depth_map_for(self, image):
+        """Whole-image depth map, cached by object identity of the input tensor.
+
+        Callers should NOT use this directly for comparisons — use
+        depth_of_region(), which fixes the sign. This exists so a batch of boxes
+        from one image costs one forward pass instead of N.
+        """
+        key = id(image)
+        if getattr(self, "_map_key", None) == key:
+            return self._map_cache
+        m = self._inverse_depth_map(image)
+        self._map_key, self._map_cache = key, m
+        return m
+
+    def depth_of_region(self, image, box, image_size):
+        """Distance-like depth of a box: LARGER = FURTHER. Always use this.
+
+        `box` is (left, lower, right, upper) in BOTTOM-LEFT origin; `image_size` is
+        (W, H) of the original image. The map is resampled to image size upstream, so
+        box coordinates index it directly after the row flip.
+
+        The inversion lives here and in compute_depth, and nowhere else. Reading
+        _inverse_depth_map() and comparing values is the bug that produced three
+        separate sign errors; do not do it.
+        """
+        import numpy as np
+
+        m = self.depth_map_for(image)
+        if m is None:
+            return None
+        W, H = image_size
+        left, lower, right, upper = [int(v) for v in box]
+        y0, y1 = max(H - upper, 0), max(H - lower, 1)
+        x0, x1 = max(left, 0), max(right, 1)
+        reg = m[y0:max(y1, y0 + 1), x0:max(x1, x0 + 1)]
+        if reg.size == 0:
+            return None
+        h, w = reg.shape
+        f = self.center_frac
+        core = reg[int(h*(1-f)/2):max(int(h*(1+f)/2), int(h*(1-f)/2)+1),
+                   int(w*(1-f)/2):max(int(w*(1+f)/2), int(w*(1-f)/2)+1)]
+        v = float(np.median(core if core.size else reg))
+        return 1.0 / max(v, _EPS)      # inverse depth -> distance-like
+
+    def depth_batch(self, image, boxes, image_size):
+        """Distance-like depth for many boxes, one forward pass. Larger = further."""
+        return [self.depth_of_region(image, b, image_size) for b in boxes]
+
     def position_3d(self, image, box, image_size) -> tuple:
         """(X, Y, Z) of the patch centroid in camera coordinates.
 

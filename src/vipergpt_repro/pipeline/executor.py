@@ -66,6 +66,12 @@ def build_namespace(bus) -> dict:
         "VideoSegment": VideoSegmentFactory,
         "best_image_match": ip.best_image_match,
         "distance": ip.distance,
+        # contribution: depth-grounded primitives
+        "depth_order": ip.depth_order,
+        "is_behind": ip.is_behind,
+        "is_in_front_of": ip.is_in_front_of,
+        "distance_3d": ip.distance_3d,
+        "is_between_3d": ip.is_between_3d,
         "bool_to_yesno": ip.bool_to_yesno,
         "coerce_to_numeric": ip.coerce_to_numeric,
         "List": list,
