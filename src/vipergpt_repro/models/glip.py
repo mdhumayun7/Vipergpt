@@ -31,6 +31,11 @@ class GLIPModel:
         self.crop_larger_margin = bool(cfg.get("crop_larger_margin", True))
         self.min_area_ratio = float(cfg.get("ratio_box_area_to_image_area", 0.0))
         self.device = cfg.get("device", "cuda:0")
+        # Keep at most this many detections, ranked by the detector's own confidence.
+        # 0 disables filtering, which is the behaviour every result before
+        # 2026-08-14 was produced under. See docs/deviations.md D11.
+        self.max_detections = int(cfg.get("max_detections", 0))
+        self.nms_iou = float(cfg.get("find_nms_iou", 0.0))  # 0 disables
         self._demo = None
 
     # ------------------------------------------------------------------ loading
@@ -114,12 +119,21 @@ class GLIPModel:
                 self._demo.transforms = self._demo.build_transform()
 
         boxes = out.bbox.detach().cpu().numpy()  # (x1, y1, x2, y2), top-left origin
+        # The detector's own confidence. Ranking by this rather than by box area is
+        # the difference between discarding duplicates and discarding small correct
+        # detections.
+        try:
+            scores = out.get_field("scores").detach().cpu().numpy()
+        except Exception:  # noqa: BLE001 - field name differs across GLIP variants
+            scores = None
+        if scores is None or len(scores) != len(boxes):
+            scores = [0.0] * len(boxes)
         height = int(img.shape[-2])
         width = int(img.shape[-1])
         area_img = height * width
 
-        result = []
-        for x1, y1, x2, y2 in boxes:
+        scored = []
+        for (x1, y1, x2, y2), sc in zip(boxes, scores):
             if self.crop_larger_margin:
                 mw, mh = 0.05 * (x2 - x1), 0.05 * (y2 - y1)
                 x1, y1, x2, y2 = x1 - mw, y1 - mh, x2 + mw, y2 + mh
@@ -128,8 +142,40 @@ class GLIPModel:
             if (x2 - x1) * (y2 - y1) < self.min_area_ratio * area_img:
                 continue
             # top-left origin -> bottom-left origin
-            result.append((int(x1), int(height - y2), int(x2), int(height - y1)))
-        return result
+            scored.append(((int(x1), int(height - y2), int(x2), int(height - y1)),
+                           float(sc)))
+
+        # Highest confidence first, so any truncation keeps the best.
+        scored.sort(key=lambda t: t[1], reverse=True)
+
+        if self.nms_iou > 0:
+            scored = _greedy_nms(scored, self.nms_iou)
+        if self.max_detections > 0:
+            scored = scored[: self.max_detections]
+
+        self.last_scores = [sc for _, sc in scored]
+        return [b for b, _ in scored]
 
     def exists(self, image, object_name: str) -> bool:
         return len(self.find(image, object_name)) > 0
+
+
+def _greedy_nms(scored, iou_thr):
+    """Greedy NMS over (box, score) pairs, assumed already sorted by score.
+
+    Boxes are (left, lower, right, upper) in bottom-left origin, but IoU is
+    orientation-independent so no conversion is needed.
+    """
+    kept = []
+    for box, sc in scored:
+        if all(_iou(box, k) < iou_thr for k, _ in kept):
+            kept.append((box, sc))
+    return kept
+
+
+def _iou(a, b):
+    ix1, iy1 = max(a[0], b[0]), max(a[1], b[1])
+    ix2, iy2 = min(a[2], b[2]), min(a[3], b[3])
+    inter = max(0.0, ix2 - ix1) * max(0.0, iy2 - iy1)
+    ua = (a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - inter
+    return inter / ua if ua > 0 else 0.0

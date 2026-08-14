@@ -97,7 +97,18 @@ class DepthModel:
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
         with self._torch.no_grad():
             out = self._model(**inputs).predicted_depth
-        return out.squeeze().detach().cpu().numpy().astype(np.float32)
+        # The DPT processor resizes to a SQUARE (384x384 for dpt-hybrid), so the
+        # map does not share the image's aspect ratio (640x480 -> 384x384 here).
+        # Reading a box by proportional scaling then samples a horizontally squashed
+        # region and picks up neighbouring content. Resample to the original size so
+        # box pixel coordinates index the map directly.
+        W, H = pil.size
+        if out.ndim == 2:
+            out = out.unsqueeze(0)
+        out = self._torch.nn.functional.interpolate(
+            out.unsqueeze(1), size=(H, W), mode="bicubic", align_corners=False
+        ).squeeze()
+        return out.detach().cpu().numpy().astype(np.float32)
 
     def _center_stat(self, m):
         """Median over the central region, avoiding background at the box edges."""

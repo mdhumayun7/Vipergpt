@@ -777,3 +777,38 @@ CONTRIBUTION IS NOW THREE PARTS, ALL MEASURED:
   1. correct depth semantics (sign + per-image normalisation)
   2. candidate filtering before ordering (top-k, ideally by real confidence)
   3. depth_order as an exposed API primitive
+
+### Ranking and depth-aggregation ablations (inconclusive, recorded as-is)
+
+| variant | depth aggregation | ranking | acc | oracle | recovered |
+|---|---|---|---:|---:|---:|
+| A | per-crop inference | area top-6 | 22.6% | 61.3% | 36.8% |
+| B | per-image map | area top-6 | 9.7% | 61.3% | 15.8% |
+| C | per-image map | score top-6 | 0.0% | 45.2% | 0.0% |
+| D | per-image map | score+NMS top-6 | 0.0% | 48.4% | 0.0% |
+
+Two expectations were wrong.
+
+1. Per-image depth was expected to BEAT per-crop, since relative depth is normalised
+   per image and values from separate crops should not be comparable. It does worse
+   (9.7 vs 22.6). A plausible reason is that running the model on a tight crop lets
+   it use the whole frame for that object, while reading a small region out of a
+   whole-image map averages over a coarse, downsampled estimate. Not established.
+
+2. Detector confidence was expected to rank better than box area. It ranks worse,
+   and notably its ORACLE is lower (45.2 vs 61.3) at identical k: GLIP's most
+   confident proposals for a phrase are not its best-localised ones. Score ranking
+   discards correct boxes that area ranking keeps.
+
+Variant C/D scoring exactly 0/31 while oracle is 45-48% is not yet explained and may
+still be a coordinate bug in the per-image region reader rather than a real result.
+FLAGGED AS UNRESOLVED — these two rows must not be cited until re-verified.
+
+What IS established and safe to build on:
+  - the depth signal is real (80% vs 26% chance on ground-truth boxes)
+  - candidate filtering is necessary (39.5 -> 5.8 boxes, 9.7% -> 22.6%)
+  - variant A at 22.6% against the 6.38% no-depth baseline is a 3.5x improvement
+    on the depth-word subset
+
+Variant A is the configuration to carry forward. The aggregation and ranking choices
+become ablation rows rather than blockers.

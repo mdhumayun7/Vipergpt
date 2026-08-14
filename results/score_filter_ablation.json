@@ -1,0 +1,33 @@
+{
+  "k": 6,
+  "results": {
+    "all": {
+      "n": 31,
+      "boxes": 39.5,
+      "acc": 0.0,
+      "oracle": 83.9,
+      "recovered": 0.0
+    },
+    "area_topk": {
+      "n": 31,
+      "boxes": 5.8,
+      "acc": 9.7,
+      "oracle": 61.3,
+      "recovered": 15.8
+    },
+    "score_topk": {
+      "n": 31,
+      "boxes": 5.8,
+      "acc": 0.0,
+      "oracle": 45.2,
+      "recovered": 0.0
+    },
+    "score_nms_topk": {
+      "n": 31,
+      "boxes": 5.8,
+      "acc": 0.0,
+      "oracle": 48.4,
+      "recovered": 0.0
+    }
+  }
+}
