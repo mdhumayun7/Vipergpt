@@ -950,3 +950,28 @@ CAVEAT: RefCOCO+ shows 40 timeouts under C4 against 1 under C3. Those 40 samples
 score 0, so 35.40% is a lower bound on that cell. The cause is unexamined — likely
 programs looping over depth comparisons on large candidate sets. Worth a look before
 the final table, and worth raising the executor timeout to check.
+
+### The 40 timeouts are a compute bottleneck, not a logic bug
+
+C4 on RefCOCO+ produced 40 timeouts against 1 for C3. Inspecting the programs: none
+loop. They call `verify_property` on every candidate patch —
+
+    person_patches = image_patch.find("person")
+    black = [p for p in person_patches if p.verify_property("person", "black shirt")]
+
+At threshold 0.2 `find` returns ~40 boxes, so that comprehension is ~40 CLIP forward
+passes and exceeds the 60s executor limit.
+
+The cause is the C4 routing instruction itself: it directs attribute queries to
+`verify_property`, and RefCOCO+ is an attribute-based dataset. The instruction is
+correct and it exposed a compute bottleneck in the CLIP path.
+
+Consequence: 35.40% on RefCOCO+ is a LOWER BOUND. Those 40 samples score 0 for being
+slow, not for being wrong. Re-running all three RefCOCO+ conditions at timeout=300
+for a fair comparison. RefCOCO is unaffected (0 timeouts in every condition).
+
+This is a third instance of the same underlying issue: the detection threshold is
+tuned for top-box accuracy and is wrong for anything that consumes the candidate set
+— first for depth ordering, now for per-candidate attribute checks. The
+`max_detections` knob added to the GLIP wrapper is the principled fix, but changing
+it would alter every reported number, so it is deferred to a documented ablation.
