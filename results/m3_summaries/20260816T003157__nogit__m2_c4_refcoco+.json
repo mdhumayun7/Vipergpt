@@ -1,0 +1,34 @@
+{
+  "tag": "c4_refcoco+",
+  "programs": "outputs/runs/20260816T001337__nogit__m1_refcoco+_testA_7B_depth_cond_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.3577,
+  "acc_iou50": 35.4,
+  "return_kinds": {
+    "error": 70,
+    "patch": 428,
+    "none": 1,
+    "list": 1
+  },
+  "errors": {
+    "timeout after 60s": 40,
+    "AttributeError": 13,
+    "TypeError": 4,
+    "NameError": 8,
+    "SyntaxError": 2,
+    "IndexError": 2,
+    "RuntimeError": 1
+  },
+  "spatial": {
+    "n": 47,
+    "mean_iou": 0.1975,
+    "acc_iou50": 19.15
+  },
+  "non_spatial": {
+    "n": 453,
+    "mean_iou": 0.3743,
+    "acc_iou50": 37.09
+  },
+  "elapsed_s": 2806.0,
+  "git_sha": "nogit"
+}

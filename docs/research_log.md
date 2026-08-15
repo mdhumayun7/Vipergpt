@@ -907,3 +907,46 @@ only when the query expresses a depth relation (closest/nearest/farthest/behind/
 front), and that 2D and attribute queries should not use them. If the non-spatial
 loss disappears while the spatial gain survives, the contribution is a strict
 improvement rather than a trade.
+
+## 2026-08-16 — C4: conditional depth prompt. Strict improvement, no trade.
+
+Job 29524. Identical to C3 except for three routing instructions and two negative
+examples stating when NOT to use the depth functions.
+
+ADOPTION, as designed:
+
+| run | depth_order (C3) | depth_order (C4) | find |
+|---|---:|---:|---:|
+| RefCOCO+ | 167 | 33 | 588 |
+| RefCOCO | 119 | 37 | 559 |
+
+RefCOCO+ has 47 depth-word queries and C4 makes 33 depth_order calls: the primitive
+is now applied where it belongs rather than everywhere.
+
+ACCURACY, IoU >= 0.5, n=500 per cell:
+
+| Dataset | Subset | C1 base | C2 grounding | C3 depth | C4 conditional |
+|---|---|---:|---:|---:|---:|
+| RefCOCO+ | overall | 0.00 | 30.80 | 28.00 | 35.40 |
+| RefCOCO+ | spatial (n=47) | 0.00 | 4.26 | 19.15 | 19.15 |
+| RefCOCO+ | non-spatial | 0.00 | 33.55 | 28.92 | 37.09 |
+| RefCOCO | overall | 0.00 | 39.20 | 36.40 | 42.00 |
+| RefCOCO | spatial (n=289) | 0.00 | 34.26 | 36.68 | 37.02 |
+| RefCOCO | non-spatial | 0.00 | 45.97 | 36.02 | 48.82 |
+
+C4 BEATS C2 IN EVERY CELL. The C3 hypothesis was right: the -10 point non-spatial
+loss was over-application, not a defect in the primitives. Telling the generator when
+the depth functions apply recovers it entirely and then some — non-spatial rises
+above C2 as well (45.97 -> 48.82 on RefCOCO), presumably because the negative
+examples also clarify the 2D and attribute paths.
+
+Headline: depth-word queries 4.26% -> 19.15% (4.5x) with no subset degraded, and
+overall RefCOCO accuracy 39.20% -> 42.00%.
+
+Execution robustness improved too: RefCOCO errors 55 (C2) -> 24 (C3) -> 11 (C4),
+patch returns 444 -> 475 -> 488.
+
+CAVEAT: RefCOCO+ shows 40 timeouts under C4 against 1 under C3. Those 40 samples
+score 0, so 35.40% is a lower bound on that cell. The cause is unexamined — likely
+programs looping over depth comparisons on large candidate sets. Worth a look before
+the final table, and worth raising the executor timeout to check.
