@@ -857,3 +857,53 @@ DepthModel.depth_of_region(map, box, W, H) returning a distance-like value, and
 forbid callers from reading _inverse_depth_map directly.
 
 
+## 2026-08-15 — Milestone 3 result: depth primitives work, with a cost
+
+Jobs 29459 (generation), 29523 (execution). Qwen2.5-Coder-7B, greedy, n=500 per cell.
+
+ADOPTION FIRST. The risk flagged in the contribution spec — that the generator would
+ignore the new API as it ignores compute_depth — did not materialise:
+
+| run | depth primitives | depth_order | find |
+|---|---:|---:|---:|
+| RefCOCO+ depth | 248 | 167 | 672 |
+| RefCOCO+ grounding | 0 | 0 | 747 |
+| RefCOCO depth | 182 | 119 | 598 |
+| RefCOCO grounding | 0 | 0 | 639 |
+
+Zero adoption under both older prompts, strong adoption under the new one. The
+per-find ratio for geometric calls rises from 0.05 (compute_depth alone) to 0.37.
+
+ACCURACY, IoU >= 0.5:
+
+| Dataset | Subset | base | grounding | depth |
+|---|---|---:|---:|---:|
+| RefCOCO+ | overall | 0.00% | 30.80% | 28.00% |
+| RefCOCO+ | spatial (n=47) | 0.00% | 4.26% | 19.15% |
+| RefCOCO+ | non-spatial | 0.00% | 33.55% | 28.92% |
+| RefCOCO | overall | 0.00% | 39.20% | 36.40% |
+| RefCOCO | spatial (n=289) | 0.00% | 34.26% | 36.68% |
+| RefCOCO | non-spatial | 0.00% | 45.97% | 36.02% |
+
+PRIMARY CLAIM HOLDS. RefCOCO+ depth-word queries go 4.26% -> 19.15%, a 4.5x
+improvement. That subset is exactly what the primitives were built for.
+
+CONTROL HOLDS. RefCOCO's spatial subset is 2D (left/right/top) and must not degrade
+if the depth prompt is to be a gain rather than a trade. It does not: 34.26 -> 36.68.
+
+BUT NON-SPATIAL DEGRADES. RefCOCO non-spatial 45.97 -> 36.02 (-10.0), RefCOCO+
+33.55 -> 28.92 (-4.6). Overall accuracy therefore falls slightly (39.20 -> 36.40)
+despite the spatial gain. The likely cause is over-application: depth_order is
+invoked 119 times on RefCOCO, where most queries need no depth at all. Given a new
+primitive, the generator reaches for it indiscriminately.
+
+Secondary effect, in the other direction: the depth prompt sharply reduces runtime
+errors (RefCOCO 55 -> 24 errors, patch returns 444 -> 475; RefCOCO+ 121 -> 60). More
+worked examples appear to discipline generation generally, consistent with parse rate
+rising to 100.0% / 99.4% from 96.6% / 92.2%.
+
+NEXT: make the primitive conditional. State in the prompt that depth functions apply
+only when the query expresses a depth relation (closest/nearest/farthest/behind/in
+front), and that 2D and attribute queries should not use them. If the non-spatial
+loss disappears while the spatial gain survives, the contribution is a strict
+improvement rather than a trade.

@@ -1,0 +1,30 @@
+{
+  "tag": "m3_refcoco+_base",
+  "programs": "outputs/runs/20260814T165620__nogit__m1_refcoco+_testA_7B_base_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.0,
+  "acc_iou50": 0.0,
+  "return_kinds": {
+    "error": 219,
+    "str": 281
+  },
+  "errors": {
+    "AttributeError": 1,
+    "program did not define execute_command": 212,
+    "TypeError": 2,
+    "NameError": 3,
+    "SyntaxError": 1
+  },
+  "spatial": {
+    "n": 47,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "non_spatial": {
+    "n": 453,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "elapsed_s": 125.8,
+  "git_sha": "nogit"
+}
