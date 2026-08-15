@@ -1,0 +1,33 @@
+{
+  "tag": "t300_depth_cond",
+  "programs": "outputs/runs/20260816T001337__nogit__m1_refcoco+_testA_7B_depth_cond_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.3842,
+  "acc_iou50": 37.6,
+  "return_kinds": {
+    "patch": 467,
+    "error": 31,
+    "none": 1,
+    "list": 1
+  },
+  "errors": {
+    "AttributeError": 14,
+    "TypeError": 4,
+    "NameError": 8,
+    "SyntaxError": 2,
+    "IndexError": 2,
+    "RuntimeError": 1
+  },
+  "spatial": {
+    "n": 47,
+    "mean_iou": 0.2176,
+    "acc_iou50": 21.28
+  },
+  "non_spatial": {
+    "n": 453,
+    "mean_iou": 0.4015,
+    "acc_iou50": 39.29
+  },
+  "elapsed_s": 443.7,
+  "git_sha": "nogit"
+}

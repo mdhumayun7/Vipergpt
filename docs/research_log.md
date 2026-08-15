@@ -975,3 +975,33 @@ tuned for top-box accuracy and is wrong for anything that consumes the candidate
 — first for depth ordering, now for per-candidate attribute checks. The
 `max_detections` knob added to the GLIP wrapper is the principled fix, but changing
 it would alter every reported number, so it is deferred to a documented ablation.
+### Timeout fix: RefCOCO+ re-run at timeout=300 (job 29525)
+
+All three RefCOCO+ conditions re-executed at the higher limit so the comparison stays
+matched. C2 and C3 are unchanged to two decimal places (30.80, 28.00) — they had no
+timeouts. C4 improves throughout:
+
+| C4 RefCOCO+ | timeout 60 | timeout 300 |
+|---|---:|---:|
+| overall | 35.40% | 37.60% |
+| spatial (n=47) | 19.15% | 21.28% |
+| non-spatial | 37.09% | 39.29% |
+| timeouts | 40 | 0 |
+| errors | 70 | 31 |
+| patch returns | 428 | 467 |
+
+The 40 timeouts were compute, not logic: verify_property over ~40 candidates is ~40
+CLIP forward passes. 35.40% was indeed a lower bound.
+
+FINAL TABLE, IoU >= 0.5, n=500 per cell, greedy:
+
+| Dataset | Subset | C1 base | C2 grounding | C3 depth | C4 conditional |
+|---|---|---:|---:|---:|---:|
+| RefCOCO+ | overall | 0.00 | 30.80 | 28.00 | 37.60 |
+| RefCOCO+ | spatial (n=47) | 0.00 | 4.26 | 19.15 | 21.28 |
+| RefCOCO+ | non-spatial | 0.00 | 33.55 | 28.92 | 39.29 |
+| RefCOCO | overall | 0.00 | 39.20 | 36.40 | 42.00 |
+| RefCOCO | spatial (n=289) | 0.00 | 34.26 | 36.68 | 37.02 |
+| RefCOCO | non-spatial | 0.00 | 45.97 | 36.02 | 48.82 |
+
+Depth-word queries 4.26 -> 21.28 (5x). C4 beats C2 in every cell on both datasets.
