@@ -128,3 +128,31 @@ failure attributable to our configuration rather than to the program.
 **Effect:** none on grounding (36.00% with or without; mean IoU 0.3508 -> 0.3569),
 and it strictly favours the baseline by letting 33 more programs run to completion.
 Grounding requires an ImagePatch, which no string can satisfy.
+
+## D11 — Depth model: offline loading and sign correction
+**Original wrapper:** loaded MiDaS via `torch.hub.load()` and returned the raw median.
+**Two defects:** torch.hub reaches the network, which hangs on an offline compute
+node; and MiDaS predicts INVERSE depth (larger = closer), so the returned value was
+monotonically decreasing in true distance — the opposite of the API docstring and of
+what any generated program assumes.
+**Now:** loads the cached HF checkpoint `Intel/dpt-hybrid-midas`, resamples the
+prediction to image size (the DPT processor emits a square map, so proportional
+region reads were sampling squashed regions), and inverts so larger = further.
+**Evidence for the sign:** on 25 RefCOCO+ depth queries scored against ground-truth
+boxes with no detector involved, the target lands at the correct depth extreme 80%
+of the time with the inversion and 8% without, against 26% chance. 8% is far below
+chance, i.e. systematically inverted rather than weak.
+**Effect on results:** every depth-based number depends on this. Pinned by
+test_depth_api.py (18 assertions on ordering semantics).
+
+## D12 — GLIP wrapper: detection scores and candidate filtering
+**Paper/official:** `find` returns boxes only.
+**Added:** the wrapper now also exposes per-box confidence (`last_scores`) and two
+optional knobs, `max_detections` and `find_nms_iou`.
+**Reason:** at the tuned threshold (0.2, D8) `find` returns ~40 boxes per image. That
+is right for top-box detection accuracy (81.5%) and wrong for any program that must
+SELECT among candidates — depth ordering and per-candidate attribute checks both
+degrade on a set that large.
+**Defaults are OFF** (`max_detections=0`, `find_nms_iou=0`), so every reported number
+predates and is unaffected by this change. Enabling it is a documented ablation, not
+part of the main results.
