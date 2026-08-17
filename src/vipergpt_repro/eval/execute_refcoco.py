@@ -124,7 +124,15 @@ def main():
         "crop_larger_margin": False,
         "ratio_box_area_to_image_area": 0.0,
         "device": "cuda:0",
+        # D12: candidate-set controls, read from the environment so an ablation can
+        # sweep them without touching code. Both default to 0 = disabled, which is
+        # the configuration every previously reported number was produced under.
+        "max_detections": int(os.environ.get("MAX_DET", "0")),
+        "find_nms_iou": float(os.environ.get("FIND_NMS", "0")),
     })
+    if cfg["max_detections"] or cfg["find_nms_iou"]:
+        logger.info("D12 candidate cap active: max_detections=%s find_nms_iou=%s",
+                    cfg["max_detections"], cfg["find_nms_iou"])
 
     # ---- programs
     with open(args.programs) as f:
@@ -220,6 +228,8 @@ def main():
         },
         "elapsed_s": round(time.time() - t0, 1),
         "git_sha": sha,
+        "max_detections": cfg["max_detections"],
+        "find_nms_iou": cfg["find_nms_iou"],
     }
     with open(os.path.join(run_dir, "summary.json"), "w") as f:
         json.dump(summary, f, indent=2)

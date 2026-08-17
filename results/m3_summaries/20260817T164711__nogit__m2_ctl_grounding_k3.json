@@ -1,0 +1,34 @@
+{
+  "tag": "ctl_grounding_k3",
+  "programs": "outputs/runs/20260814T172311__nogit__m1_refcoco_testA_7B_grounding_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.509,
+  "acc_iou50": 52.2,
+  "return_kinds": {
+    "patch": 443,
+    "error": 56,
+    "str": 1
+  },
+  "errors": {
+    "AttributeError": 26,
+    "NameError": 4,
+    "SyntaxError": 17,
+    "TypeError": 3,
+    "ValueError": 5,
+    "IndexError": 1
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.5576,
+    "acc_iou50": 57.09
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.4424,
+    "acc_iou50": 45.5
+  },
+  "elapsed_s": 248.1,
+  "git_sha": "nogit",
+  "max_detections": 3,
+  "find_nms_iou": 0.5
+}

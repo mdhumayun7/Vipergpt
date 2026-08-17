@@ -1,0 +1,32 @@
+{
+  "tag": "d12_refcoco_k12",
+  "programs": "outputs/runs/20260816T002237__nogit__m1_refcoco_testA_7B_depth_cond_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.4557,
+  "acc_iou50": 45.2,
+  "return_kinds": {
+    "patch": 488,
+    "error": 11,
+    "bool": 1
+  },
+  "errors": {
+    "SyntaxError": 2,
+    "NameError": 4,
+    "AttributeError": 3,
+    "TypeError": 2
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.4233,
+    "acc_iou50": 41.52
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.5001,
+    "acc_iou50": 50.24
+  },
+  "elapsed_s": 414.3,
+  "git_sha": "nogit",
+  "max_detections": 12,
+  "find_nms_iou": 0.5
+}
