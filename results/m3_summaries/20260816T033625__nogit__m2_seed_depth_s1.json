@@ -1,0 +1,31 @@
+{
+  "tag": "seed_depth_s1",
+  "programs": "outputs/runs/20260816T024055__nogit__m1_refcoco_testA_7B_depth_t0.7s1/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.3544,
+  "acc_iou50": 34.8,
+  "return_kinds": {
+    "patch": 459,
+    "error": 41
+  },
+  "errors": {
+    "IndexError": 4,
+    "AttributeError": 11,
+    "NameError": 6,
+    "TypeError": 13,
+    "SyntaxError": 4,
+    "ValueError": 3
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.3387,
+    "acc_iou50": 34.95
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.3758,
+    "acc_iou50": 34.6
+  },
+  "elapsed_s": 401.0,
+  "git_sha": "nogit"
+}
