@@ -1,0 +1,37 @@
+{
+  "tag": "seedplus_depth_s2",
+  "programs": "outputs/runs/20260819T122908__nogit__m1_refcoco+_testA_7B_depth_t0.7s2/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.2849,
+  "acc_iou50": 26.6,
+  "return_kinds": {
+    "patch": 428,
+    "error": 68,
+    "list": 2,
+    "none": 2
+  },
+  "errors": {
+    "NameError": 8,
+    "AttributeError": 29,
+    "TypeError": 21,
+    "ValueError": 2,
+    "SyntaxError": 3,
+    "RuntimeError": 3,
+    "timeout after 300s": 1,
+    "IndexError": 1
+  },
+  "spatial": {
+    "n": 47,
+    "mean_iou": 0.1842,
+    "acc_iou50": 19.15
+  },
+  "non_spatial": {
+    "n": 453,
+    "mean_iou": 0.2953,
+    "acc_iou50": 27.37
+  },
+  "elapsed_s": 1167.6,
+  "git_sha": "nogit",
+  "max_detections": 0,
+  "find_nms_iou": 0.0
+}

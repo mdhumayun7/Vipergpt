@@ -1142,3 +1142,32 @@ reproducible, not merely better.
 Also: C4 sampled (42.07) matches C4 greedy (42.00) almost exactly, while C2 sampled
 (36.07) falls well short of C2 greedy (39.20). The conditional prompt leaves less
 room for the decoder to go wrong.
+
+## 2026-08-19 — RefCOCO+ seed variance (job 29651)
+
+Sampling T=0.7, seeds 1-3, RefCOCO+/testA, n=500. Closes the asymmetry noted on
+2026-08-17, where seeds covered RefCOCO only.
+
+| Condition | overall | spatial (n=47) | non-spatial (n=453) |
+|---|---|---|---|
+| C3 + depth | 26.60 ± 0.40 | 14.89 ± 4.26 | 27.81 ± 0.45 |
+| C4 + routing | 37.33 ± 0.42 | 19.15 ± 2.13 | 39.22 ± 0.56 |
+
+C4 separates from C3 by 10.7 points overall against standard deviations of 0.4.
+The overall claim is not a decoding artefact.
+
+GREEDY FLATTERS C4 ON THE DEPTH SUBSET. Greedy gives 21.28 on the spatial subset;
+the sampled seeds give 17.02, 19.15 and 21.28, so the greedy value is the TOP of the
+range rather than the centre. On RefCOCO the two agreed (42.00 greedy, 42.07 sampled);
+here they do not. The headline remains the greedy figure, because the paper decodes at
+temperature zero and every other condition is reported the same way, but the sampled
+mean of 19.15 must be quoted alongside it wherever the depth result is claimed.
+
+THE VARIANCE IS EXACTLY ONE SAMPLE. At n=47 a single query is worth 2.13 percentage
+points, and the three seeds score 8/47, 9/47 and 10/47. The standard deviation of
+±2.13 is therefore precisely ±1 sample. C3 spans 5/47, 9/47 and 7/47, i.e. ±2 samples.
+This is the clearest available statement of the subset's limitation: the direction of
+the 4.26 -> 19.15 improvement is secure (2/47 -> 9/47), the value is not.
+
+Consistent with the earlier finding that the primitives buy stability: C4's spatial
+spread is half of C3's (±1 sample against ±2).
