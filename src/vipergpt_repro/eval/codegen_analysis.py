@@ -147,12 +147,18 @@ def main():
         return 1
 
     logger.info("Loading %s ...", a.model)
-    tok = AutoTokenizer.from_pretrained(a.model, padding_side="left")
+    # OpenCoder ships a custom tokenizer/model class in its repository, so loading
+    # it requires trust_remote_code. The models used here are all from established
+    # publishers and the code is read from the local cache, not fetched at run time.
+    tok = AutoTokenizer.from_pretrained(a.model, padding_side="left",
+                                        trust_remote_code=("OpenCoder" in a.model))
     if tok.pad_token is None: tok.pad_token = tok.eos_token
     try:
-        model = AutoModelForCausalLM.from_pretrained(a.model, dtype=torch.bfloat16, device_map="auto")
+        model = AutoModelForCausalLM.from_pretrained(
+            a.model, dtype=torch.bfloat16, device_map="auto", trust_remote_code=("OpenCoder" in a.model))
     except TypeError:
-        model = AutoModelForCausalLM.from_pretrained(a.model, torch_dtype=torch.bfloat16, device_map="auto")
+        model = AutoModelForCausalLM.from_pretrained(
+            a.model, torch_dtype=torch.bfloat16, device_map="auto", trust_remote_code=("OpenCoder" in a.model))
     model.eval()
     logger.info("Loaded on %s", model.device)
 

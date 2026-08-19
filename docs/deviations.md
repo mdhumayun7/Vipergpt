@@ -227,3 +227,25 @@ objects.
 **Effect on results:** none. The inline values are what ran and are recorded in every
 run summary. The file is nonetheless misleading to a reader and should be either
 corrected to match, or removed in favour of the per-run summaries.
+
+## D15 — trust_remote_code enabled for OpenCoder only
+**Reason:** OpenCoder-8B-Instruct ships custom tokenizer and model classes in its
+repository, and transformers refuses to load them without this flag.
+**Scope:** applied to OpenCoder alone, not to every generator. Enabling it globally
+broke DeepSeek-Coder-V2-Lite: the flag forces transformers to load the repository's own
+`modeling_deepseek.py`, which imports `is_torch_fx_available` — removed in
+transformers 5.x — instead of using the library's built-in class. The flag is
+therefore made conditional on the model identifier.
+**Security note:** the code executed is read from the local HuggingFace cache,
+populated on the login node before any job ran. Compute nodes are offline, so nothing
+is fetched at run time.
+**Effect on results:** none. The flag governs what may be loaded, not how generation
+behaves.
+
+## D16 — Additional tokenizer dependencies
+**Added:** `tiktoken` and `blobfile` (Yi-Coder reads a tiktoken-format tokenizer);
+`sentencepiece` and `protobuf` (OpenCoder).
+**Note:** Yi-Coder's `tokenizer.model` initially failed to parse because the file had
+downloaded incompletely; the cached copy was replaced with `--force-download`. A
+truncated tokenizer produces a parse error rather than a checksum failure, so tokenizer
+files warrant the same verification as weight shards.
