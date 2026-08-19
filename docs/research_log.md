@@ -1171,3 +1171,15 @@ the 4.26 -> 19.15 improvement is secure (2/47 -> 9/47), the value is not.
 
 Consistent with the earlier finding that the primitives buy stability: C4's spatial
 spread is half of C3's (±1 sample against ±2).
+
+### Resumability bug: an empty run directory looked complete
+
+The grid driver skipped a cell if its run directory existed. But
+codegen_analysis.py creates the run directory before loading the model, so the
+DeepSeek job that crashed at model load (D15, trust_remote_code) left eight empty
+directories behind. The next submission then skipped all eight and reported success
+having generated nothing.
+
+Fixed by testing for programs.jsonl rather than for the directory. Worth noting as a
+general point about resumable pipelines: the marker of completion must be the
+artefact, not the container that was created in order to hold it.

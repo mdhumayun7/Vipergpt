@@ -94,7 +94,10 @@ from pathlib import Path
 s = Path('prompts/$PROMPT').stem.replace('api_','').replace('api','base')
 print(s)")
     EXPECT="outputs/runs/*m1_${DS}_testA_${SHORT}_${TAG}_greedy"
-    if compgen -G "$EXPECT" > /dev/null; then
+    # Check for programs.jsonl, not merely the directory: codegen_analysis.py
+    # creates its run directory before loading the model, so a crash during model
+    # load leaves an empty directory that would otherwise look complete.
+    if compgen -G "$EXPECT/programs.jsonl" > /dev/null; then
       echo ""
       echo ">>> SKIP  $DS | $PROMPT  (already generated)"
       SKIP=$((SKIP+1))
