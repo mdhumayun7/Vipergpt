@@ -1,6 +1,6 @@
 # Contribution spec — a depth-grounded spatial API for ViperGPT
 
-**Status:** design, not yet implemented.
+**Status:** implemented and evaluated; see docs/research_log.md, 2026-08-15 to 08-17.
 **Motivated by:** `results/reproduction_table.md`, Table 2, and
 `results/spatial_audit.txt`.
 

@@ -1096,3 +1096,49 @@ query needs to distinguish. NMS is therefore also left off.
 This is the second time a tuned knob produced a large apparent gain that dissolved
 under a control (the first being the depth sign, where a synthetic test gave the
 wrong answer). Both were caught before anything was claimed.
+
+## Correction to the perception ceiling (recorded, not rewritten)
+
+Entries above quote a raw GLIP top-box accuracy of 78.9% from a 20-sample check. That
+figure is superseded by the held-out sweep of 2026-08-12 (job 29318), which measured
+81.5% on RefCOCO/testA samples 200-399 — a slice disjoint from every sample on which
+results are reported.
+
+The earlier entries are deliberately left as written. A research log records what was
+believed at the time; editing it retroactively would misrepresent the order in which
+the work happened. All forward-facing documents (the reproduction table, the report,
+and Figure 10) use 81.5% with the held-out sample size stated.
+
+## 2026-08-17 — Seed variance for C3 and C4 (job 29526)
+
+Sampling T=0.7, seeds 1-3, RefCOCO/testA, n=500. C2 figures from the earlier seed run.
+
+| Condition | overall | spatial | non-spatial |
+|---|---|---|---|
+| C2 contract | 36.07 ± 1.75 | 32.87 ± 3.35 | 40.44 ± 0.72 |
+| C3 + depth | 34.40 ± 0.40 | 34.02 ± 0.80 | 34.92 ± 0.55 |
+| C4 + routing | 42.07 ± 0.61 | 38.29 ± 0.72 | 47.23 ± 1.19 |
+
+C4 SEPARATES FROM C2 BY FAR MORE THAN THE SPREAD: 6.0 points against standard
+deviations of 0.61 and 1.75. The main claim is not a decoding artefact.
+
+C3 sits BELOW C2 overall (34.40 vs 36.07), confirming under sampling what greedy
+showed: offering depth primitives without saying when they apply is a net loss.
+
+NEW FINDING — THE PRIMITIVES BUY STABILITY, NOT JUST ACCURACY. Spatial-query
+standard deviation:
+
+  C2  ± 3.35
+  C3  ± 0.80
+  C4  ± 0.72        (4.6x smaller than C2)
+
+Under C2 the generator has to improvise spatial logic on every sample — sometimes
+sorting by coordinate, sometimes dropping the relation entirely — and which it does
+varies with the seed. Once depth_order exists there is one way to express the
+relation, and the variance collapses. This was not anticipated and is arguably as
+interesting as the accuracy gain: an explicit primitive makes the system's behaviour
+reproducible, not merely better.
+
+Also: C4 sampled (42.07) matches C4 greedy (42.00) almost exactly, while C2 sampled
+(36.07) falls well short of C2 greedy (39.20). The conditional prompt leaves less
+room for the decoder to go wrong.

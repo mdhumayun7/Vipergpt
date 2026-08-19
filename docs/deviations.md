@@ -11,6 +11,12 @@ results table. No silent substitutions.
 
 More rows added as implementation proceeds.
 
+
+> **Note.** The summary table above is the original planning-stage register and
+> retains placeholder wording for some rows. It is **SUPERSEDED — see the detailed
+> entries below**, which record what was actually done, with reasons and measured
+> effects. Where the two disagree, the detailed entries are authoritative.
+
 ## D1 — Codex replaced by Qwen2.5-Coder-7B-Instruct
 **Paper:** the program generator pi is OpenAI Codex (`code-davinci-002`).
 **Used instead:** Qwen/Qwen2.5-Coder-7B-Instruct, bfloat16, greedy decoding.
@@ -195,3 +201,29 @@ distinguish.
 
 **What survives:** C4's advantage over C2 holds under both settings (3.8 points
 uncapped, 5.4 capped), so no claim in this work depends on the cap.
+
+## D13 — crop_larger_margin disabled
+**Paper / official configuration:** `crop_larger_margin: true`, expanding each detection
+by 10%.
+**Used instead:** `False` in every evaluation configuration.
+**Reason:** not a deliberate choice. The evaluation scripts build their configuration
+inline rather than reading `configs/default.yaml`, and the inline default is `False`.
+Identified during the audit of the dissertation, after all results had been produced.
+**Effect on results:** unmeasured. A 10% margin raises IoU on tight detections and
+lowers it on loose ones, so the direction is not predictable without running it.
+Recorded as an open item rather than as a controlled decision.
+
+## D14 — Evaluation configuration is not read from configs/default.yaml
+**Repository principle:** "ALL hyperparameters live in `configs/` — never hardcode them
+in `src/`."
+**Actual behaviour:** `eval/execute_refcoco.py` and the analysis scripts construct their
+configuration inline. `configs/default.yaml` therefore describes no run that was
+actually performed. It lists `xvlm`, `blip2` and `llm_qa` as loaded (none were),
+`crop_larger_margin: true` (False was used), `max_new_tokens: 512` (320 was used) and
+`batch_size: 20` (8 was used).
+**Reason:** the two-environment split. The execution stage runs in `glip_env`, which
+does not have `omegaconf`, so the runner cannot load the project's configuration
+objects.
+**Effect on results:** none. The inline values are what ran and are recorded in every
+run summary. The file is nonetheless misleading to a reader and should be either
+corrected to match, or removed in favour of the per-run summaries.
