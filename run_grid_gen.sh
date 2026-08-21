@@ -36,7 +36,7 @@ case "$KEY" in
   qwen7b)    MODEL=Qwen/Qwen2.5-Coder-7B-Instruct              ; BATCH=8  ;;
   qwen1p5b)  MODEL=Qwen/Qwen2.5-Coder-1.5B-Instruct            ; BATCH=16 ;;
   qwen32b)   MODEL=Qwen/Qwen2.5-Coder-32B-Instruct             ; BATCH=4  ;;
-  deepseek)  MODEL=deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct ; BATCH=6  ;;
+  deepseek)  MODEL=deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct ; BATCH=2  ;;
   yicoder)   MODEL=01-ai/Yi-Coder-9B-Chat                      ; BATCH=8  ;;
   opencoder) MODEL=infly/OpenCoder-8B-Instruct                 ; BATCH=8  ;;
   *) echo "unknown model key: $KEY"; exit 2 ;;

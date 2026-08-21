@@ -1,0 +1,28 @@
+{
+  "tag": "grid_refcoco+_DeepSeek-Coder-V2-Lite_base",
+  "programs": "outputs/runs/20260819T205148__nogit__m1_refcoco+_testA_DeepSeek-Coder-V2-Lite_base_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.0,
+  "acc_iou50": 0.0,
+  "return_kinds": {
+    "error": 500
+  },
+  "errors": {
+    "SyntaxError": 497,
+    "program did not define execute_command": 3
+  },
+  "spatial": {
+    "n": 47,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "non_spatial": {
+    "n": 453,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "elapsed_s": 1.2,
+  "git_sha": "nogit",
+  "max_detections": 0,
+  "find_nms_iou": 0.0
+}

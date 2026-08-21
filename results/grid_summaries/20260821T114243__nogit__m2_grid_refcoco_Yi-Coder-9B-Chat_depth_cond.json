@@ -1,0 +1,34 @@
+{
+  "tag": "grid_refcoco_Yi-Coder-9B-Chat_depth_cond",
+  "programs": "outputs/runs/20260819T165317__nogit__m1_refcoco_testA_Yi-Coder-9B-Chat_depth_cond_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.4389,
+  "acc_iou50": 45.4,
+  "return_kinds": {
+    "patch": 481,
+    "error": 18,
+    "list": 1
+  },
+  "errors": {
+    "TypeError": 4,
+    "AttributeError": 5,
+    "timeout after 300s": 1,
+    "SyntaxError": 3,
+    "NameError": 2,
+    "IndexError": 3
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.3884,
+    "acc_iou50": 40.48
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.5081,
+    "acc_iou50": 52.13
+  },
+  "elapsed_s": 1277.1,
+  "git_sha": "nogit",
+  "max_detections": 0,
+  "find_nms_iou": 0.0
+}

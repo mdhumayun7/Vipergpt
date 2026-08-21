@@ -1,0 +1,40 @@
+{
+  "tag": "grid_refcoco_Yi-Coder-9B-Chat_base",
+  "programs": "outputs/runs/20260819T161942__nogit__m1_refcoco_testA_Yi-Coder-9B-Chat_base_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.0376,
+  "acc_iou50": 3.8,
+  "return_kinds": {
+    "error": 367,
+    "str": 71,
+    "patch": 48,
+    "bool": 5,
+    "list": 1,
+    "int": 5,
+    "none": 3
+  },
+  "errors": {
+    "program did not define execute_command": 329,
+    "SyntaxError": 17,
+    "AttributeError": 7,
+    "IndexError": 4,
+    "NameError": 5,
+    "TypeError": 1,
+    "ImportError": 3,
+    "ValueError": 1
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.0635,
+    "acc_iou50": 6.57
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.0021,
+    "acc_iou50": 0.0
+  },
+  "elapsed_s": 197.3,
+  "git_sha": "nogit",
+  "max_detections": 0,
+  "find_nms_iou": 0.0
+}

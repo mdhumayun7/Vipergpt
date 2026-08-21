@@ -1,0 +1,500 @@
+{"index": 0, "query": "guy holding purp umbrella in corner near us", "is_spatial": true, "kind": "error", "error": "AttributeError: 'ImagePatch' object has no attribute 'get_coordinates'", "pred_xyxy": null, "gt_xyxy": [3.24, 159.31, 159.64000000000001, 472.12], "iou": 0.0}
+{"index": 1, "query": "black shirt person holding umbrella", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [3.24, 159.31, 159.64000000000001, 472.12], "iou": 0.0}
+{"index": 2, "query": "man in black shirt and jeans", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [3.24, 159.31, 159.64000000000001, 472.12], "iou": 0.0}
+{"index": 3, "query": "guy in blue hat jacket", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [385.79, 208.07, 509.76, 413.24], "iou": 0.0}
+{"index": 4, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [385.79, 208.07, 509.76, 413.24], "iou": 0.0}
+{"index": 5, "query": "man on bench", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [385.79, 208.07, 509.76, 413.24], "iou": 0.0}
+{"index": 6, "query": "yellow boots", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [125.75, 207.3, 265.07, 399.71000000000004], "iou": 0.0}
+{"index": 7, "query": "brown boots", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [125.75, 207.3, 265.07, 399.71000000000004], "iou": 0.0}
+{"index": 8, "query": "yellow boots", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [125.75, 207.3, 265.07, 399.71000000000004], "iou": 0.0}
+{"index": 9, "query": "dark car", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [315.17, 166.18, 640.0, 392.53], "iou": 0.0}
+{"index": 10, "query": "blue car in back of the man with hat", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [315.17, 166.18, 640.0, 392.53], "iou": 0.0}
+{"index": 11, "query": "white car", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.0, 163.4, 212.72, 376.85], "iou": 0.0}
+{"index": 12, "query": "white car", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.0, 163.4, 212.72, 376.85], "iou": 0.0}
+{"index": 13, "query": "the white car", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.0, 163.4, 212.72, 376.85], "iou": 0.0}
+{"index": 14, "query": "man out of frame", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [117.75, 143.6, 251.77, 352.28999999999996], "iou": 0.0}
+{"index": 15, "query": "blue shirted arm", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [117.75, 143.6, 251.77, 352.28999999999996], "iou": 0.0}
+{"index": 16, "query": "man in blue shirt halfway on screen", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [117.75, 143.6, 251.77, 352.28999999999996], "iou": 0.0}
+{"index": 17, "query": "man on tv", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [239.33, 169.44, 503.53999999999996, 366.65], "iou": 0.0}
+{"index": 18, "query": "white guy on tv", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [239.33, 169.44, 503.53999999999996, 366.65], "iou": 0.0}
+{"index": 19, "query": "man on cscreen", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [239.33, 169.44, 503.53999999999996, 366.65], "iou": 0.0}
+{"index": 20, "query": "blue shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [61.59, 77.39, 279.37, 480.0], "iou": 0.0}
+{"index": 21, "query": "blue", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [61.59, 77.39, 279.37, 480.0], "iou": 0.0}
+{"index": 22, "query": "blue shirt lady", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [61.59, 77.39, 279.37, 480.0], "iou": 0.0}
+{"index": 23, "query": "black shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [318.09, 44.0, 517.74, 480.0], "iou": 0.0}
+{"index": 24, "query": "man in blackjacket holding skate board", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [318.09, 44.0, 517.74, 480.0], "iou": 0.0}
+{"index": 25, "query": "man with skateboard", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [318.09, 44.0, 517.74, 480.0], "iou": 0.0}
+{"index": 26, "query": "woman white hair", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [171.28, 156.97, 243.54000000000002, 489.58000000000004], "iou": 0.0}
+{"index": 27, "query": "old lady in white", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [171.28, 156.97, 243.54000000000002, 489.58000000000004], "iou": 0.0}
+{"index": 28, "query": "old lady", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [171.28, 156.97, 243.54000000000002, 489.58000000000004], "iou": 0.0}
+{"index": 29, "query": "red shirt man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.4, 146.28, 64.17, 478.73], "iou": 0.0}
+{"index": 30, "query": "man in red brown shorts", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [0.4, 146.28, 64.17, 478.73], "iou": 0.0}
+{"index": 31, "query": "red shirt brown shorts", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [0.4, 146.28, 64.17, 478.73], "iou": 0.0}
+{"index": 32, "query": "orange guy", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [37.39, 56.09, 302.02, 625.62], "iou": 0.0}
+{"index": 33, "query": "black socks", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [37.39, 56.09, 302.02, 625.62], "iou": 0.0}
+{"index": 34, "query": "white man coaching", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [37.39, 56.09, 302.02, 625.62], "iou": 0.0}
+{"index": 35, "query": "the man in white pants", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [199.27, 44.37, 358.14, 629.4], "iou": 0.0}
+{"index": 36, "query": "thanks buy in blue with lighter shoes", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [199.27, 44.37, 358.14, 629.4], "iou": 0.0}
+{"index": 37, "query": "blue shirt being patted by leland", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [199.27, 44.37, 358.14, 629.4], "iou": 0.0}
+{"index": 38, "query": "player with no head", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [375.49, 0.09, 527.02, 204.04], "iou": 0.0}
+{"index": 39, "query": "man in white shorts on line", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [375.49, 0.09, 527.02, 204.04], "iou": 0.0}
+{"index": 40, "query": "guy with no head", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [375.49, 0.09, 527.02, 204.04], "iou": 0.0}
+{"index": 41, "query": "red shirt player next to striped shirt guy", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [328.79, 52.51, 563.23, 403.21999999999997], "iou": 0.0}
+{"index": 42, "query": "full photo red shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [328.79, 52.51, 563.23, 403.21999999999997], "iou": 0.0}
+{"index": 43, "query": "player number 8", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [328.79, 52.51, 563.23, 403.21999999999997], "iou": 0.0}
+{"index": 44, "query": "the number 2", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [183.8, 51.69, 449.93, 420.26], "iou": 0.0}
+{"index": 45, "query": "number 2", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [183.8, 51.69, 449.93, 420.26], "iou": 0.0}
+{"index": 46, "query": "number 2", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [183.8, 51.69, 449.93, 420.26], "iou": 0.0}
+{"index": 47, "query": "kid standing", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [32.7, 56.07, 204.74, 292.47], "iou": 0.0}
+{"index": 48, "query": "boy standing up", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [32.7, 56.07, 204.74, 292.47], "iou": 0.0}
+{"index": 49, "query": "kid standing", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [32.7, 56.07, 204.74, 292.47], "iou": 0.0}
+{"index": 50, "query": "standing kid holding skateboard", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [32.7, 56.07, 204.74, 292.47], "iou": 0.0}
+{"index": 51, "query": "kid sitting", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [47.19, 280.9, 202.25, 486.52], "iou": 0.0}
+{"index": 52, "query": "sitting kid", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [47.19, 280.9, 202.25, 486.52], "iou": 0.0}
+{"index": 53, "query": "boy on ground", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [47.19, 280.9, 202.25, 486.52], "iou": 0.0}
+{"index": 54, "query": "taller baby", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [219.59, 32.94, 472.97, 369.09], "iou": 0.0}
+{"index": 55, "query": "with brush", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [219.59, 32.94, 472.97, 369.09], "iou": 0.0}
+{"index": 56, "query": "baby with brush", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [219.59, 32.94, 472.97, 369.09], "iou": 0.0}
+{"index": 57, "query": "kid with hand in mouth", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [15.24, 72.59, 294.58, 370.56000000000006], "iou": 0.0}
+{"index": 58, "query": "boy with fingers in mouth", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [15.24, 72.59, 294.58, 370.56000000000006], "iou": 0.0}
+{"index": 59, "query": "getting hair cut", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [11.14, 237.24, 398.34999999999997, 640.0], "iou": 0.0}
+{"index": 60, "query": "black and white shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [11.14, 237.24, 398.34999999999997, 640.0], "iou": 0.0}
+{"index": 61, "query": "fat girl", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [11.14, 237.24, 398.34999999999997, 640.0], "iou": 0.0}
+{"index": 62, "query": "blond haired woman click black smock", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [117.93, 14.38, 520.63, 632.81], "iou": 0.0}
+{"index": 63, "query": "lady standing", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [117.93, 14.38, 520.63, 632.81], "iou": 0.0}
+{"index": 64, "query": "dryer in hand", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [117.93, 14.38, 520.63, 632.81], "iou": 0.0}
+{"index": 65, "query": "person holding bat and one knee up", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [376.84, 104.53, 617.96, 475.59000000000003], "iou": 0.0}
+{"index": 66, "query": "knee up", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [376.84, 104.53, 617.96, 475.59000000000003], "iou": 0.0}
+{"index": 67, "query": "tallest man", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [376.84, 104.53, 617.96, 475.59000000000003], "iou": 0.0}
+{"index": 68, "query": "guy both players locking at", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [91.0, 142.41, 307.83000000000004, 497.43999999999994], "iou": 0.0}
+{"index": 69, "query": "batter closest to pole", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [91.0, 142.41, 307.83000000000004, 497.43999999999994], "iou": 0.0}
+{"index": 70, "query": "plater other two are looking at", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [91.0, 142.41, 307.83000000000004, 497.43999999999994], "iou": 0.0}
+{"index": 71, "query": "batter covering logo", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [259.89, 138.61, 451.63, 498.98], "iou": 0.0}
+{"index": 72, "query": "malcolm in the", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [259.89, 138.61, 451.63, 498.98], "iou": 0.0}
+{"index": 73, "query": "middle player", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [259.89, 138.61, 451.63, 498.98], "iou": 0.0}
+{"index": 74, "query": "boy reaching", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [112.21, 46.13, 341.61, 266.81], "iou": 0.0}
+{"index": 75, "query": "boy pointing", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [112.21, 46.13, 341.61, 266.81], "iou": 0.0}
+{"index": 76, "query": "younger boy", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [112.21, 46.13, 341.61, 266.81], "iou": 0.0}
+{"index": 77, "query": "the man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [330.07, 20.49, 546.88, 255.64000000000001], "iou": 0.0}
+{"index": 78, "query": "man wearing glasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [330.07, 20.49, 546.88, 255.64000000000001], "iou": 0.0}
+{"index": 79, "query": "man with glasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [330.07, 20.49, 546.88, 255.64000000000001], "iou": 0.0}
+{"index": 80, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [412.97, 150.27, 501.62, 467.03], "iou": 0.0}
+{"index": 81, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [412.97, 150.27, 501.62, 467.03], "iou": 0.0}
+{"index": 82, "query": "girl", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [412.97, 150.27, 501.62, 467.03], "iou": 0.0}
+{"index": 83, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [330.07, 128.18, 431.46, 456.09000000000003], "iou": 0.0}
+{"index": 84, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [330.07, 128.18, 431.46, 456.09000000000003], "iou": 0.0}
+{"index": 85, "query": "man with tie", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [330.07, 128.18, 431.46, 456.09000000000003], "iou": 0.0}
+{"index": 86, "query": "man with hand open", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [40.77, 0.5, 339.58, 424.0], "iou": 0.0}
+{"index": 87, "query": "standing man reaching", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [40.77, 0.5, 339.58, 424.0], "iou": 0.0}
+{"index": 88, "query": "man reaching to woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [40.77, 0.5, 339.58, 424.0], "iou": 0.0}
+{"index": 89, "query": "lady", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [262.95, 84.72, 625.0799999999999, 418.65], "iou": 0.0}
+{"index": 90, "query": "blond pony", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [262.95, 84.72, 625.0799999999999, 418.65], "iou": 0.0}
+{"index": 91, "query": "catwoman rachindg and sitting", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [262.95, 84.72, 625.0799999999999, 418.65], "iou": 0.0}
+{"index": 92, "query": "closest red shirt on side", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [470.87, 157.13, 639.89, 480.0], "iou": 0.0}
+{"index": 93, "query": "corner person", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [470.87, 157.13, 639.89, 480.0], "iou": 0.0}
+{"index": 94, "query": "lady overlooking two others", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [470.87, 157.13, 639.89, 480.0], "iou": 0.0}
+{"index": 95, "query": "red by bananas", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [259.96, 204.94, 381.84, 389.39], "iou": 0.0}
+{"index": 96, "query": "young girl sitting", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [259.96, 204.94, 381.84, 389.39], "iou": 0.0}
+{"index": 97, "query": "middle person", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [259.96, 204.94, 381.84, 389.39], "iou": 0.0}
+{"index": 98, "query": "gray hoddie", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [138.72, 176.42, 265.89, 401.28], "iou": 0.0}
+{"index": 99, "query": "hoodie", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [138.72, 176.42, 265.89, 401.28], "iou": 0.0}
+{"index": 100, "query": "woman wearing hoodie", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [138.72, 176.42, 265.89, 401.28], "iou": 0.0}
+{"index": 101, "query": "ball in hand", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [279.91, 129.46, 421.03000000000003, 479.35], "iou": 0.0}
+{"index": 102, "query": "guy with bat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [279.91, 129.46, 421.03000000000003, 479.35], "iou": 0.0}
+{"index": 103, "query": "man in middlerow", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [279.91, 129.46, 421.03000000000003, 479.35], "iou": 0.0}
+{"index": 104, "query": "tallest", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [383.71, 95.64, 534.16, 484.01], "iou": 0.0}
+{"index": 105, "query": "tallest of the three", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [383.71, 95.64, 534.16, 484.01], "iou": 0.0}
+{"index": 106, "query": "tallest player", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [383.71, 95.64, 534.16, 484.01], "iou": 0.0}
+{"index": 107, "query": "person with opposite knee up", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [132.93, 127.55, 296.21000000000004, 498.43], "iou": 0.0}
+{"index": 108, "query": "the one with hands crossed", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [132.93, 127.55, 296.21000000000004, 498.43], "iou": 0.0}
+{"index": 109, "query": "1 in row with 2 and 3", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [132.93, 127.55, 296.21000000000004, 498.43], "iou": 0.0}
+{"index": 110, "query": "person in white and gray plaid shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [147.58, 56.6, 275.28000000000003, 359.47], "iou": 0.0}
+{"index": 111, "query": "woman on skates", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [147.58, 56.6, 275.28000000000003, 359.47], "iou": 0.0}
+{"index": 112, "query": "woman with white and gray jacket", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [147.58, 56.6, 275.28000000000003, 359.47], "iou": 0.0}
+{"index": 113, "query": "man in dark clothing", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [388.03, 59.58, 508.18999999999994, 340.95], "iou": 0.0}
+{"index": 114, "query": "on color outfit", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [388.03, 59.58, 508.18999999999994, 340.95], "iou": 0.0}
+{"index": 115, "query": "black coat 300", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [388.03, 59.58, 508.18999999999994, 340.95], "iou": 0.0}
+{"index": 116, "query": "blue bib", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [258.72, 68.35, 359.71000000000004, 358.80999999999995], "iou": 0.0}
+{"index": 117, "query": "blue vest", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [258.72, 68.35, 359.71000000000004, 358.80999999999995], "iou": 0.0}
+{"index": 118, "query": "person on bench not using phone", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [56.48, 14.36, 300.59000000000003, 201.99], "iou": 0.0}
+{"index": 119, "query": "rightest guyin black", "is_spatial": false, "kind": "error", "error": "TypeError: ImagePatch.crop() missing 3 required positional arguments: 'left', 'lower', and 'upper'", "pred_xyxy": null, "gt_xyxy": [56.48, 14.36, 300.59000000000003, 201.99], "iou": 0.0}
+{"index": 120, "query": "guy wearing cap", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [56.48, 14.36, 300.59000000000003, 201.99], "iou": 0.0}
+{"index": 121, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [51.58, 0.0, 427.39, 417.52], "iou": 0.0}
+{"index": 122, "query": "man closest to you", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [51.58, 0.0, 427.39, 417.52], "iou": 0.0}
+{"index": 123, "query": "white sweater", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [51.58, 0.0, 427.39, 417.52], "iou": 0.0}
+{"index": 124, "query": "man not holding the bag", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [392.63, 1.44, 640.0, 585.21], "iou": 0.0}
+{"index": 125, "query": "legs with no dog", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [392.63, 1.44, 640.0, 585.21], "iou": 0.0}
+{"index": 126, "query": "without dog between legs", "is_spatial": true, "kind": "error", "error": "NameError: name 'image' is not defined", "pred_xyxy": null, "gt_xyxy": [392.63, 1.44, 640.0, 585.21], "iou": 0.0}
+{"index": 127, "query": "blue jeans around dog", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [53.54, 0.53, 365.46000000000004, 580.64], "iou": 0.0}
+{"index": 128, "query": "with the dog", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [53.54, 0.53, 365.46000000000004, 580.64], "iou": 0.0}
+{"index": 129, "query": "boy with dog", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [53.54, 0.53, 365.46000000000004, 580.64], "iou": 0.0}
+{"index": 130, "query": "woman smiling in tan sweater", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [326.02, 123.1, 455.85, 279.86], "iou": 0.0}
+{"index": 131, "query": "woman brown shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [326.02, 123.1, 455.85, 279.86], "iou": 0.0}
+{"index": 132, "query": "woman with glasses", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [488.55, 149.07, 604.9200000000001, 338.52], "iou": 0.0}
+{"index": 133, "query": "woman in black blouse glasses", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [488.55, 149.07, 604.9200000000001, 338.52], "iou": 0.0}
+{"index": 134, "query": "woman glasses dark sweater", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [488.55, 149.07, 604.9200000000001, 338.52], "iou": 0.0}
+{"index": 135, "query": "brown shirt hair in bun", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [112.46, 138.24, 258.61, 373.02], "iou": 0.0}
+{"index": 136, "query": "gray sweater", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [112.46, 138.24, 258.61, 373.02], "iou": 0.0}
+{"index": 137, "query": "woman in gray shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [112.46, 138.24, 258.61, 373.02], "iou": 0.0}
+{"index": 138, "query": "black woman with watch", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [376.45, 7.55, 639.64, 473.53000000000003], "iou": 0.0}
+{"index": 139, "query": "black woman", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [376.45, 7.55, 639.64, 473.53000000000003], "iou": 0.0}
+{"index": 140, "query": "black lady", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [376.45, 7.55, 639.64, 473.53000000000003], "iou": 0.0}
+{"index": 141, "query": "striped shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [1.08, 103.24, 296.21999999999997, 474.05], "iou": 0.0}
+{"index": 142, "query": "striped shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [1.08, 103.24, 296.21999999999997, 474.05], "iou": 0.0}
+{"index": 143, "query": "half guy striped shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [1.08, 103.24, 296.21999999999997, 474.05], "iou": 0.0}
+{"index": 144, "query": "gray suit white hat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [90.7, 42.28, 243.06, 557.63], "iou": 0.0}
+{"index": 145, "query": "holding a white hat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [90.7, 42.28, 243.06, 557.63], "iou": 0.0}
+{"index": 146, "query": "man holding white hat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [90.7, 42.28, 243.06, 557.63], "iou": 0.0}
+{"index": 147, "query": "black suit", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [238.34, 112.51, 378.8, 599.71], "iou": 0.0}
+{"index": 148, "query": "dark hat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [238.34, 112.51, 378.8, 599.71], "iou": 0.0}
+{"index": 149, "query": "drk suit", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [238.34, 112.51, 378.8, 599.71], "iou": 0.0}
+{"index": 150, "query": "dark suit", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [238.34, 112.51, 378.8, 599.71], "iou": 0.0}
+{"index": 151, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [344.63, 107.88, 640.0, 418.05], "iou": 0.0}
+{"index": 152, "query": "lady", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [344.63, 107.88, 640.0, 418.05], "iou": 0.0}
+{"index": 153, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [344.63, 107.88, 640.0, 418.05], "iou": 0.0}
+{"index": 154, "query": "man in orange shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [5.63, 63.12, 281.75, 420.37], "iou": 0.0}
+{"index": 155, "query": "orange", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [5.63, 63.12, 281.75, 420.37], "iou": 0.0}
+{"index": 156, "query": "guy", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [5.63, 63.12, 281.75, 420.37], "iou": 0.0}
+{"index": 157, "query": "woman black shirt on elephants head", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [113.74, 121.62, 263.51, 490.99], "iou": 0.0}
+{"index": 158, "query": "lady in black", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [113.74, 121.62, 263.51, 490.99], "iou": 0.0}
+{"index": 159, "query": "woman in black tee", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [113.74, 121.62, 263.51, 490.99], "iou": 0.0}
+{"index": 160, "query": "the man in the yellow shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [26.54, 64.25, 162.01, 331.01], "iou": 0.0}
+{"index": 161, "query": "man in yellow", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [26.54, 64.25, 162.01, 331.01], "iou": 0.0}
+{"index": 162, "query": "yellow shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [26.54, 64.25, 162.01, 331.01], "iou": 0.0}
+{"index": 163, "query": "south eastern corner", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [465.13, 326.3, 640.0, 480.0], "iou": 0.0}
+{"index": 164, "query": "large black blob in snow", "is_spatial": false, "kind": "error", "error": "TypeError: ImagePatch.crop() missing 4 required positional arguments: 'left', 'lower', 'right', and 'upper'", "pred_xyxy": null, "gt_xyxy": [465.13, 326.3, 640.0, 480.0], "iou": 0.0}
+{"index": 165, "query": "red pants", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [297.3, 65.41, 424.86, 397.29999999999995], "iou": 0.0}
+{"index": 166, "query": "standing man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [297.3, 65.41, 424.86, 397.29999999999995], "iou": 0.0}
+{"index": 167, "query": "dude with red pants", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [297.3, 65.41, 424.86, 397.29999999999995], "iou": 0.0}
+{"index": 168, "query": "dad with kids", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [188.51, 106.21, 356.15, 496.18], "iou": 0.0}
+{"index": 169, "query": "man with backpack", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [188.51, 106.21, 356.15, 496.18], "iou": 0.0}
+{"index": 170, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [188.51, 106.21, 356.15, 496.18], "iou": 0.0}
+{"index": 171, "query": "boy on black suitcase", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [132.48, 328.07, 334.14, 562.6800000000001], "iou": 0.0}
+{"index": 172, "query": "child with stripes", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [132.48, 328.07, 334.14, 562.6800000000001], "iou": 0.0}
+{"index": 173, "query": "striped child", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [132.48, 328.07, 334.14, 562.6800000000001], "iou": 0.0}
+{"index": 174, "query": "160", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [396.19, 89.65, 549.46, 338.35], "iou": 0.0}
+{"index": 175, "query": "orange shirt 3 o clock", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [396.19, 89.65, 549.46, 338.35], "iou": 0.0}
+{"index": 176, "query": "orange shirt girl", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [396.19, 89.65, 549.46, 338.35], "iou": 0.0}
+{"index": 177, "query": "skier with googles and black out outfit", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [165.99, 81.7, 365.87, 428.0], "iou": 0.0}
+{"index": 178, "query": "110 lady", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [165.99, 81.7, 365.87, 428.0], "iou": 0.0}
+{"index": 179, "query": "player 110", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [165.99, 81.7, 365.87, 428.0], "iou": 0.0}
+{"index": 180, "query": "woman in pure black dress", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [192.38, 36.54, 273.03, 257.49], "iou": 0.0}
+{"index": 181, "query": "long black dress", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [192.38, 36.54, 273.03, 257.49], "iou": 0.0}
+{"index": 182, "query": "shes in all black almost looks tied up", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [192.38, 36.54, 273.03, 257.49], "iou": 0.0}
+{"index": 183, "query": "green dress", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [43.08, 39.91, 182.69, 258.01], "iou": 0.0}
+{"index": 184, "query": "girl in brown dress", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [43.08, 39.91, 182.69, 258.01], "iou": 0.0}
+{"index": 185, "query": "woman in brown sleeveless dress", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [43.08, 39.91, 182.69, 258.01], "iou": 0.0}
+{"index": 186, "query": "woman in black shirt and jeans", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [283.31, 51.97, 362.1, 257.33000000000004], "iou": 0.0}
+{"index": 187, "query": "girl with jeans and white belt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [283.31, 51.97, 362.1, 257.33000000000004], "iou": 0.0}
+{"index": 188, "query": "girl with black shirt and white belt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [283.31, 51.97, 362.1, 257.33000000000004], "iou": 0.0}
+{"index": 189, "query": "western most with shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [15.11, 61.16, 108.12, 259.45], "iou": 0.0}
+{"index": 190, "query": "woman on end in white", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [15.11, 61.16, 108.12, 259.45], "iou": 0.0}
+{"index": 191, "query": "black shirt flower skirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [500.12, 20.07, 587.9300000000001, 250.06], "iou": 0.0}
+{"index": 192, "query": "end girl black shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [500.12, 20.07, 587.9300000000001, 250.06], "iou": 0.0}
+{"index": 193, "query": "girl on end", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [500.12, 20.07, 587.9300000000001, 250.06], "iou": 0.0}
+{"index": 194, "query": "arms crossed", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [407.37, 24.31, 488.67, 253.98], "iou": 0.0}
+{"index": 195, "query": "girl in colorful dress", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [407.37, 24.31, 488.67, 253.98], "iou": 0.0}
+{"index": 196, "query": "man standing by blue machine with arrows", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [467.28, 225.02, 548.37, 428.0], "iou": 0.0}
+{"index": 197, "query": "guy looking at geisha", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [467.28, 225.02, 548.37, 428.0], "iou": 0.0}
+{"index": 198, "query": "man looking back walking in suit", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [467.28, 225.02, 548.37, 428.0], "iou": 0.0}
+{"index": 199, "query": "man standing with his side to us", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [161.17, 202.75, 248.19, 422.59000000000003], "iou": 0.0}
+{"index": 200, "query": "black coat looking at suitcase black hat", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [161.17, 202.75, 248.19, 422.59000000000003], "iou": 0.0}
+{"index": 201, "query": "person facing sideways black clothing", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [161.17, 202.75, 248.19, 422.59000000000003], "iou": 0.0}
+{"index": 202, "query": "female with arms crossed", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [512.4, 36.46, 611.23, 330.09], "iou": 0.0}
+{"index": 203, "query": "woman in black shirt arms crossed", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [512.4, 36.46, 611.23, 330.09], "iou": 0.0}
+{"index": 204, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [512.4, 36.46, 611.23, 330.09], "iou": 0.0}
+{"index": 205, "query": "man in jeans out of focus", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [369.87, 16.14, 510.21000000000004, 371.08], "iou": 0.0}
+{"index": 206, "query": "man in jeans in background", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [369.87, 16.14, 510.21000000000004, 371.08], "iou": 0.0}
+{"index": 207, "query": "gray shirt guy", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [369.87, 16.14, 510.21000000000004, 371.08], "iou": 0.0}
+{"index": 208, "query": "groom", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [259.19, 31.04, 421.16999999999996, 395.83000000000004], "iou": 0.0}
+{"index": 209, "query": "groom", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [259.19, 31.04, 421.16999999999996, 395.83000000000004], "iou": 0.0}
+{"index": 210, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [259.19, 31.04, 421.16999999999996, 395.83000000000004], "iou": 0.0}
+{"index": 211, "query": "bride", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [286.21, 59.92, 558.22, 471.49], "iou": 0.0}
+{"index": 212, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [286.21, 59.92, 558.22, 471.49], "iou": 0.0}
+{"index": 213, "query": "bride", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [286.21, 59.92, 558.22, 471.49], "iou": 0.0}
+{"index": 214, "query": "man with his profile view lifiting his hand with a white hat and he is white", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [265.58, 150.67, 364.73, 427.0], "iou": 0.0}
+{"index": 215, "query": "7 o clock guy", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [48.46, 167.93, 176.06, 427.0], "iou": 0.0}
+{"index": 216, "query": "man closest to us facing back looks like hes waking", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [48.46, 167.93, 176.06, 427.0], "iou": 0.0}
+{"index": 217, "query": "man not close to huddle", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [48.46, 167.93, 176.06, 427.0], "iou": 0.0}
+{"index": 218, "query": "last man with one foot up", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [393.26, 156.87, 507.0, 420.98], "iou": 0.0}
+{"index": 219, "query": "man with foot up", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [393.26, 156.87, 507.0, 420.98], "iou": 0.0}
+{"index": 220, "query": "player 3 o clock", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [393.26, 156.87, 507.0, 420.98], "iou": 0.0}
+{"index": 221, "query": "guy who seems to be starting the fight", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [170.22, 163.01, 278.9, 422.67], "iou": 0.0}
+{"index": 222, "query": "player 3 with back turned hand in air", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [170.22, 163.01, 278.9, 422.67], "iou": 0.0}
+{"index": 223, "query": "tall guy", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [234.54, 103.45, 334.1, 367.67], "iou": 0.0}
+{"index": 224, "query": "surfer behidnd the board", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [234.54, 103.45, 334.1, 367.67], "iou": 0.0}
+{"index": 225, "query": "talolest man", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [234.54, 103.45, 334.1, 367.67], "iou": 0.0}
+{"index": 226, "query": "surfer closest to us", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [130.19, 144.62, 236.45, 382.03], "iou": 0.0}
+{"index": 227, "query": "surfer closest", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [130.19, 144.62, 236.45, 382.03], "iou": 0.0}
+{"index": 228, "query": "person not hidden by surfboard", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [130.19, 144.62, 236.45, 382.03], "iou": 0.0}
+{"index": 229, "query": "tennis player", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [173.23, 25.23, 478.21000000000004, 388.92], "iou": 0.0}
+{"index": 230, "query": "full visible man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [173.23, 25.23, 478.21000000000004, 388.92], "iou": 0.0}
+{"index": 231, "query": "white shorts", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [173.23, 25.23, 478.21000000000004, 388.92], "iou": 0.0}
+{"index": 232, "query": "tan pants", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [69.22, 1.02, 299.27, 212.75], "iou": 0.0}
+{"index": 233, "query": "man in khaki pants", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [69.22, 1.02, 299.27, 212.75], "iou": 0.0}
+{"index": 234, "query": "man up in air", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [69.22, 1.02, 299.27, 212.75], "iou": 0.0}
+{"index": 235, "query": "arm in air can see her nails", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [3.6, 88.53, 212.56, 349.0], "iou": 0.0}
+{"index": 236, "query": "lady dark brown hair holding phone", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [3.6, 88.53, 212.56, 349.0], "iou": 0.0}
+{"index": 237, "query": "woman smiling big", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [3.6, 88.53, 212.56, 349.0], "iou": 0.0}
+{"index": 238, "query": "woman with long sleeve", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [413.49, 69.26, 605.64, 349.0], "iou": 0.0}
+{"index": 239, "query": "long sleeve white shirt holding phone up", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [413.49, 69.26, 605.64, 349.0], "iou": 0.0}
+{"index": 240, "query": "white long sleeve shirt arm raised", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [413.49, 69.26, 605.64, 349.0], "iou": 0.0}
+{"index": 241, "query": "girl hand raised black sunglasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [292.68, 58.91, 413.2, 344.67999999999995], "iou": 0.0}
+{"index": 242, "query": "woman sunglasses white shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [292.68, 58.91, 413.2, 344.67999999999995], "iou": 0.0}
+{"index": 243, "query": "girl with whit shirt with glasses on", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [292.68, 58.91, 413.2, 344.67999999999995], "iou": 0.0}
+{"index": 244, "query": "goggles of person not wearing yellow helmet", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [170.07, 167.87, 328.58, 402.03], "iou": 0.0}
+{"index": 245, "query": "person without yellow helmet", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [170.07, 167.87, 328.58, 402.03], "iou": 0.0}
+{"index": 246, "query": "person who is not wearing yellow helmet", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [170.07, 167.87, 328.58, 402.03], "iou": 0.0}
+{"index": 247, "query": "man closer", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [221.69, 150.21, 407.13, 413.35], "iou": 0.0}
+{"index": 248, "query": "nearest guy", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [221.69, 150.21, 407.13, 413.35], "iou": 0.0}
+{"index": 249, "query": "yellow helmet person", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [221.69, 150.21, 407.13, 413.35], "iou": 0.0}
+{"index": 250, "query": "the catcher", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [172.5, 214.93, 407.47, 402.34000000000003], "iou": 0.0}
+{"index": 251, "query": "catcher", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [172.5, 214.93, 407.47, 402.34000000000003], "iou": 0.0}
+{"index": 252, "query": "catcher", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [172.5, 214.93, 407.47, 402.34000000000003], "iou": 0.0}
+{"index": 253, "query": "umpire behind cathcer", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [66.83, 156.98, 220.0, 396.47], "iou": 0.0}
+{"index": 254, "query": "ump", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [66.83, 156.98, 220.0, 396.47], "iou": 0.0}
+{"index": 255, "query": "umpire", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [66.83, 156.98, 220.0, 396.47], "iou": 0.0}
+{"index": 256, "query": "the boy in a striped shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [104.39, 129.15, 288.43, 403.59000000000003], "iou": 0.0}
+{"index": 257, "query": "boy", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [104.39, 129.15, 288.43, 403.59000000000003], "iou": 0.0}
+{"index": 258, "query": "boy", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [104.39, 129.15, 288.43, 403.59000000000003], "iou": 0.0}
+{"index": 259, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [226.58, 46.28, 617.45, 472.59000000000003], "iou": 0.0}
+{"index": 260, "query": "last hotdog mess thing", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [226.58, 46.28, 617.45, 472.59000000000003], "iou": 0.0}
+{"index": 261, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [226.58, 46.28, 617.45, 472.59000000000003], "iou": 0.0}
+{"index": 262, "query": "boy not wearing red", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [153.06, 70.94, 279.69, 331.4], "iou": 0.0}
+{"index": 263, "query": "brown hoodie", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [153.06, 70.94, 279.69, 331.4], "iou": 0.0}
+{"index": 264, "query": "gray shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [153.06, 70.94, 279.69, 331.4], "iou": 0.0}
+{"index": 265, "query": "red shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [264.72, 68.01, 492.06000000000006, 332.0], "iou": 0.0}
+{"index": 266, "query": "red", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [264.72, 68.01, 492.06000000000006, 332.0], "iou": 0.0}
+{"index": 267, "query": "boy in red", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [264.72, 68.01, 492.06000000000006, 332.0], "iou": 0.0}
+{"index": 268, "query": "man standing", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [48.89, 147.26, 276.47, 524.3299999999999], "iou": 0.0}
+{"index": 269, "query": "man reaching", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [48.89, 147.26, 276.47, 524.3299999999999], "iou": 0.0}
+{"index": 270, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [48.89, 147.26, 276.47, 524.3299999999999], "iou": 0.0}
+{"index": 271, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [193.91, 258.42, 366.54999999999995, 470.37], "iou": 0.0}
+{"index": 272, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [193.91, 258.42, 366.54999999999995, 470.37], "iou": 0.0}
+{"index": 273, "query": "girl", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [193.91, 258.42, 366.54999999999995, 470.37], "iou": 0.0}
+{"index": 274, "query": "plaid jacket", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [203.43, 68.33, 353.46000000000004, 212.52999999999997], "iou": 0.0}
+{"index": 275, "query": "image away from screen", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [203.43, 68.33, 353.46000000000004, 212.52999999999997], "iou": 0.0}
+{"index": 276, "query": "higher guy hes farther away from us gray", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [203.43, 68.33, 353.46000000000004, 212.52999999999997], "iou": 0.0}
+{"index": 277, "query": "green jacket person", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [215.39, 208.4, 397.28, 337.64], "iou": 0.0}
+{"index": 278, "query": "man in green bending", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [215.39, 208.4, 397.28, 337.64], "iou": 0.0}
+{"index": 279, "query": "green coat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [215.39, 208.4, 397.28, 337.64], "iou": 0.0}
+{"index": 280, "query": "smaller girl", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [1.43, 131.44, 189.42000000000002, 633.69], "iou": 0.0}
+{"index": 281, "query": "pink tank", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [1.43, 131.44, 189.42000000000002, 633.69], "iou": 0.0}
+{"index": 282, "query": "girl in pink shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [1.43, 131.44, 189.42000000000002, 633.69], "iou": 0.0}
+{"index": 283, "query": "woman in white pants", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [185.53, 126.92, 365.3, 630.29], "iou": 0.0}
+{"index": 284, "query": "older woman", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [185.53, 126.92, 365.3, 630.29], "iou": 0.0}
+{"index": 285, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [185.53, 126.92, 365.3, 630.29], "iou": 0.0}
+{"index": 286, "query": "the one facing caseys face", "is_spatial": true, "kind": "error", "error": "NameError: name 'next' is not defined", "pred_xyxy": null, "gt_xyxy": [107.47, 137.22, 251.55, 427.0], "iou": 0.0}
+{"index": 287, "query": "number 7 umpire", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [107.47, 137.22, 251.55, 427.0], "iou": 0.0}
+{"index": 288, "query": "29", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [476.78, 110.1, 586.89, 425.85], "iou": 0.0}
+{"index": 289, "query": "man named robertson", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [476.78, 110.1, 586.89, 425.85], "iou": 0.0}
+{"index": 290, "query": "29", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [476.78, 110.1, 586.89, 425.85], "iou": 0.0}
+{"index": 291, "query": "casey", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [146.81, 113.23, 375.18, 421.24], "iou": 0.0}
+{"index": 292, "query": "21", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [146.81, 113.23, 375.18, 421.24], "iou": 0.0}
+{"index": 293, "query": "21", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [146.81, 113.23, 375.18, 421.24], "iou": 0.0}
+{"index": 294, "query": "black scarf", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [358.1, 24.24, 474.87, 248.0], "iou": 0.0}
+{"index": 295, "query": "woman gray dress", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [358.1, 24.24, 474.87, 248.0], "iou": 0.0}
+{"index": 296, "query": "gray shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [358.1, 24.24, 474.87, 248.0], "iou": 0.0}
+{"index": 297, "query": "person with short hair and white shirt looking at cell phone", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [165.89, 36.31, 246.88, 244.65], "iou": 0.0}
+{"index": 298, "query": "man in white shirt looking at phone", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [165.89, 36.31, 246.88, 244.65], "iou": 0.0}
+{"index": 299, "query": "white shirt boy near the one in plaid", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [165.89, 36.31, 246.88, 244.65], "iou": 0.0}
+{"index": 300, "query": "man sitting in chair", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [53.21, 45.76, 254.34, 288.4], "iou": 0.0}
+{"index": 301, "query": "not praying", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [53.21, 45.76, 254.34, 288.4], "iou": 0.0}
+{"index": 302, "query": "white t shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [53.21, 45.76, 254.34, 288.4], "iou": 0.0}
+{"index": 303, "query": "man on the floor", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [260.34, 88.8, 399.17999999999995, 317.32], "iou": 0.0}
+{"index": 304, "query": "man kneeling", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [260.34, 88.8, 399.17999999999995, 317.32], "iou": 0.0}
+{"index": 305, "query": "on knees", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [260.34, 88.8, 399.17999999999995, 317.32], "iou": 0.0}
+{"index": 306, "query": "lady with glasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [17.22, 139.19, 284.13, 628.52], "iou": 0.0}
+{"index": 307, "query": "woman with glasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [17.22, 139.19, 284.13, 628.52], "iou": 0.0}
+{"index": 308, "query": "glasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [17.22, 139.19, 284.13, 628.52], "iou": 0.0}
+{"index": 309, "query": "glasses in the hair of girl", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [188.9, 176.83, 342.96000000000004, 469.43000000000006], "iou": 0.0}
+{"index": 310, "query": "woman between man and dark hair woman", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [188.9, 176.83, 342.96000000000004, 469.43000000000006], "iou": 0.0}
+{"index": 311, "query": "the blond girl next to man and women in maroon shit", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [188.9, 176.83, 342.96000000000004, 469.43000000000006], "iou": 0.0}
+{"index": 312, "query": "girl in red shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [245.15, 203.16, 404.64, 429.69], "iou": 0.0}
+{"index": 313, "query": "a lady with a red shirt on with other people", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [245.15, 203.16, 404.64, 429.69], "iou": 0.0}
+{"index": 314, "query": "woman in red", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [245.15, 203.16, 404.64, 429.69], "iou": 0.0}
+{"index": 315, "query": "man drinking", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [88.97, 114.97, 241.08, 452.77], "iou": 0.0}
+{"index": 316, "query": "man drinking", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [88.97, 114.97, 241.08, 452.77], "iou": 0.0}
+{"index": 317, "query": "man with stripe shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [88.97, 114.97, 241.08, 452.77], "iou": 0.0}
+{"index": 318, "query": "tallest person", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [492.67, 67.36, 571.23, 372.75], "iou": 0.0}
+{"index": 319, "query": "tallest man", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [492.67, 67.36, 571.23, 372.75], "iou": 0.0}
+{"index": 320, "query": "tallest", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [492.67, 67.36, 571.23, 372.75], "iou": 0.0}
+{"index": 321, "query": "player 900", "is_spatial": false, "kind": "error", "error": "NameError: name 'next' is not defined", "pred_xyxy": null, "gt_xyxy": [43.68, 89.38, 121.88999999999999, 383.95], "iou": 0.0}
+{"index": 322, "query": "kid with black bracelet on arm", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [43.68, 89.38, 121.88999999999999, 383.95], "iou": 0.0}
+{"index": 323, "query": "girl in dark blue and purple not bikini", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [263.54, 42.59, 344.41, 319.21000000000004], "iou": 0.0}
+{"index": 324, "query": "you suck at this game girl closest to hydrant", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [263.54, 42.59, 344.41, 319.21000000000004], "iou": 0.0}
+{"index": 325, "query": "red white and black shirt", "is_spatial": false, "kind": "error", "error": "SyntaxError: invalid syntax (<generated_program>, line 1)", "pred_xyxy": null, "gt_xyxy": [416.17, 13.75, 550.9200000000001, 347.42], "iou": 0.0}
+{"index": 326, "query": "kid with red shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [416.17, 13.75, 550.9200000000001, 347.42], "iou": 0.0}
+{"index": 327, "query": "black red and white shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [416.17, 13.75, 550.9200000000001, 347.42], "iou": 0.0}
+{"index": 328, "query": "light shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [253.92, 10.09, 500.0, 370.79999999999995], "iou": 0.0}
+{"index": 329, "query": "light shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [253.92, 10.09, 500.0, 370.79999999999995], "iou": 0.0}
+{"index": 330, "query": "man with wristwatch", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [253.92, 10.09, 500.0, 370.79999999999995], "iou": 0.0}
+{"index": 331, "query": "in black suit jacket", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [0.0, 9.71, 217.91, 371.2], "iou": 0.0}
+{"index": 332, "query": "black shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [0.0, 9.71, 217.91, 371.2], "iou": 0.0}
+{"index": 333, "query": "man in black", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.0, 9.71, 217.91, 371.2], "iou": 0.0}
+{"index": 334, "query": "standing guy in all black short sleeves", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [420.93, 105.06, 562.45, 480.0], "iou": 0.0}
+{"index": 335, "query": "black shirt writing on back", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [420.93, 105.06, 562.45, 480.0], "iou": 0.0}
+{"index": 336, "query": "man in black with white writing", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [420.93, 105.06, 562.45, 480.0], "iou": 0.0}
+{"index": 337, "query": "man with glasses in long sleeved gray shirt you can see the side of his face", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [405.57, 107.69, 495.1, 439.91], "iou": 0.0}
+{"index": 338, "query": "gray shirt mostly hidden guy", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [405.57, 107.69, 495.1, 439.91], "iou": 0.0}
+{"index": 339, "query": "gray shirt hidden with glasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [405.57, 107.69, 495.1, 439.91], "iou": 0.0}
+{"index": 340, "query": "gray shirt and jeans", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [190.92, 150.2, 321.44, 475.96], "iou": 0.0}
+{"index": 341, "query": "guy back to us completely facing away", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [190.92, 150.2, 321.44, 475.96], "iou": 0.0}
+{"index": 342, "query": "can you see me now", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [417.58, 110.49, 640.0, 473.18], "iou": 0.0}
+{"index": 343, "query": "can u see me now", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [417.58, 110.49, 640.0, 473.18], "iou": 0.0}
+{"index": 344, "query": "back with green letters", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [417.58, 110.49, 640.0, 473.18], "iou": 0.0}
+{"index": 345, "query": "naked guy with arms up", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [193.93, 107.57, 359.71000000000004, 480.0], "iou": 0.0}
+{"index": 346, "query": "guy raising hands", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [193.93, 107.57, 359.71000000000004, 480.0], "iou": 0.0}
+{"index": 347, "query": "arms up", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [193.93, 107.57, 359.71000000000004, 480.0], "iou": 0.0}
+{"index": 348, "query": "man wearing black tee and has goatee", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [395.22, 22.35, 480.0, 355.3], "iou": 0.0}
+{"index": 349, "query": "black no hat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [395.22, 22.35, 480.0, 355.3], "iou": 0.0}
+{"index": 350, "query": "man with bear in black and gray", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [395.22, 22.35, 480.0, 355.3], "iou": 0.0}
+{"index": 351, "query": "plaid shirt dude", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [74.95, 50.45, 188.82999999999998, 371.89], "iou": 0.0}
+{"index": 352, "query": "plaid", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [74.95, 50.45, 188.82999999999998, 371.89], "iou": 0.0}
+{"index": 353, "query": "plaid shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [74.95, 50.45, 188.82999999999998, 371.89], "iou": 0.0}
+{"index": 354, "query": "mans pants of black shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [1.43, 44.52, 117.4, 554.23], "iou": 0.0}
+{"index": 355, "query": "black shirt at 9", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [1.43, 44.52, 117.4, 554.23], "iou": 0.0}
+{"index": 356, "query": "black shirt blue bandana", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [1.43, 44.52, 117.4, 554.23], "iou": 0.0}
+{"index": 357, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [2.88, 48.9, 471.73, 631.37], "iou": 0.0}
+{"index": 358, "query": "grandma", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [2.88, 48.9, 471.73, 631.37], "iou": 0.0}
+{"index": 359, "query": "your grandma playing wii", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [2.88, 48.9, 471.73, 631.37], "iou": 0.0}
+{"index": 360, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [320.72, 0.0, 480.0, 476.92], "iou": 0.0}
+{"index": 361, "query": "girl", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [320.72, 0.0, 480.0, 476.92], "iou": 0.0}
+{"index": 362, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [320.72, 0.0, 480.0, 476.92], "iou": 0.0}
+{"index": 363, "query": "man is stripes", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [61.84, 0.0, 349.48, 574.95], "iou": 0.0}
+{"index": 364, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [61.84, 0.0, 349.48, 574.95], "iou": 0.0}
+{"index": 365, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [61.84, 0.0, 349.48, 574.95], "iou": 0.0}
+{"index": 366, "query": "guy in hat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [102.25, 96.7, 224.72, 433.78], "iou": 0.0}
+{"index": 367, "query": "man with hat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [102.25, 96.7, 224.72, 433.78], "iou": 0.0}
+{"index": 368, "query": "man behind other man", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [102.25, 96.7, 224.72, 433.78], "iou": 0.0}
+{"index": 369, "query": "man jumping", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [165.36, 3.17, 323.26, 490.55], "iou": 0.0}
+{"index": 370, "query": "man with leg up high", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [165.36, 3.17, 323.26, 490.55], "iou": 0.0}
+{"index": 371, "query": "man with leg raised", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [165.36, 3.17, 323.26, 490.55], "iou": 0.0}
+{"index": 372, "query": "high heels", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [201.88, 39.66, 380.87, 596.7199999999999], "iou": 0.0}
+{"index": 373, "query": "woman long hair", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [201.88, 39.66, 380.87, 596.7199999999999], "iou": 0.0}
+{"index": 374, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [201.88, 39.66, 380.87, 596.7199999999999], "iou": 0.0}
+{"index": 375, "query": "black luggage on the side", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.0, 225.8, 106.43, 444.4], "iou": 0.0}
+{"index": 376, "query": "black bag 900", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.0, 225.8, 106.43, 444.4], "iou": 0.0}
+{"index": 377, "query": "man in black with sash over shoulder", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [33.79, 101.86, 120.50999999999999, 330.22], "iou": 0.0}
+{"index": 378, "query": "man with folded arms", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [33.79, 101.86, 120.50999999999999, 330.22], "iou": 0.0}
+{"index": 379, "query": "person in black in background", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [33.79, 101.86, 120.50999999999999, 330.22], "iou": 0.0}
+{"index": 380, "query": "red hair doctor", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [139.24, 226.69, 311.8, 630.39], "iou": 0.0}
+{"index": 381, "query": "red tie man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [139.24, 226.69, 311.8, 630.39], "iou": 0.0}
+{"index": 382, "query": "red tie", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [139.24, 226.69, 311.8, 630.39], "iou": 0.0}
+{"index": 383, "query": "blue tie", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [293.16, 215.05, 425.0, 634.84], "iou": 0.0}
+{"index": 384, "query": "blue tie", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [293.16, 215.05, 425.0, 634.84], "iou": 0.0}
+{"index": 385, "query": "blue tie", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [293.16, 215.05, 425.0, 634.84], "iou": 0.0}
+{"index": 386, "query": "woman in after shot", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [429.11, 31.14, 623.71, 403.81], "iou": 0.0}
+{"index": 387, "query": "tennis player 300", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [429.11, 31.14, 623.71, 403.81], "iou": 0.0}
+{"index": 388, "query": "lady on 300 side", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [429.11, 31.14, 623.71, 403.81], "iou": 0.0}
+{"index": 389, "query": "number one woman", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [108.25, 29.74, 310.12, 405.21000000000004], "iou": 0.0}
+{"index": 390, "query": "one on lefty", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [108.25, 29.74, 310.12, 405.21000000000004], "iou": 0.0}
+{"index": 391, "query": "back wearing black coat", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [493.83, 115.14, 635.0, 461.21999999999997], "iou": 0.0}
+{"index": 392, "query": "big ole ass bending over out of frame with dark coat", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [493.83, 115.14, 635.0, 461.21999999999997], "iou": 0.0}
+{"index": 393, "query": "persons behind", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [493.83, 115.14, 635.0, 461.21999999999997], "iou": 0.0}
+{"index": 394, "query": "taller girl", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.0, 112.89, 316.09, 483.41999999999996], "iou": 0.0}
+{"index": 395, "query": "kid without bangs in her face", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [0.0, 112.89, 316.09, 483.41999999999996], "iou": 0.0}
+{"index": 396, "query": "girl in darker clothes", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [241.71, 164.68, 525.92, 455.53000000000003], "iou": 0.0}
+{"index": 397, "query": "darker coat", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [241.71, 164.68, 525.92, 455.53000000000003], "iou": 0.0}
+{"index": 398, "query": "smallest girl", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [241.71, 164.68, 525.92, 455.53000000000003], "iou": 0.0}
+{"index": 399, "query": "hat woman", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [148.47, 183.78, 322.88, 502.34000000000003], "iou": 0.0}
+{"index": 400, "query": "the woman", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [148.47, 183.78, 322.88, 502.34000000000003], "iou": 0.0}
+{"index": 401, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [148.47, 183.78, 322.88, 502.34000000000003], "iou": 0.0}
+{"index": 402, "query": "boy with black only", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [312.84, 333.48, 405.5, 507.06000000000006], "iou": 0.0}
+{"index": 403, "query": "boy with hanging suspenders", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [312.84, 333.48, 405.5, 507.06000000000006], "iou": 0.0}
+{"index": 404, "query": "boy with darker towel", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [312.84, 333.48, 405.5, 507.06000000000006], "iou": 0.0}
+{"index": 405, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [26.63, 222.45, 417.69, 573.15], "iou": 0.0}
+{"index": 406, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [26.63, 222.45, 417.69, 573.15], "iou": 0.0}
+{"index": 407, "query": "the guy", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [26.63, 222.45, 417.69, 573.15], "iou": 0.0}
+{"index": 408, "query": "black shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [344.91, 158.62, 581.58, 426.37], "iou": 0.0}
+{"index": 409, "query": "black shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [344.91, 158.62, 581.58, 426.37], "iou": 0.0}
+{"index": 410, "query": "black", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [344.91, 158.62, 581.58, 426.37], "iou": 0.0}
+{"index": 411, "query": "lading wearing scrarf around neck", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [45.1, 132.42, 247.56, 427.0], "iou": 0.0}
+{"index": 412, "query": "woman in blue", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [45.1, 132.42, 247.56, 427.0], "iou": 0.0}
+{"index": 413, "query": "woman with light blue shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [45.1, 132.42, 247.56, 427.0], "iou": 0.0}
+{"index": 414, "query": "man walking", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [62.87, 308.83, 154.65, 630.56], "iou": 0.0}
+{"index": 415, "query": "nearest guy", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [62.87, 308.83, 154.65, 630.56], "iou": 0.0}
+{"index": 416, "query": "with hands bhind back", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [62.87, 308.83, 154.65, 630.56], "iou": 0.0}
+{"index": 417, "query": "farthest man", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [174.02, 330.79, 266.07, 583.9100000000001], "iou": 0.0}
+{"index": 418, "query": "person in darker jacket", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [174.02, 330.79, 266.07, 583.9100000000001], "iou": 0.0}
+{"index": 419, "query": "darker coat", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [174.02, 330.79, 266.07, 583.9100000000001], "iou": 0.0}
+{"index": 420, "query": "man with sheeps", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [8.63, 214.29, 237.29999999999998, 629.93], "iou": 0.0}
+{"index": 421, "query": "man by sheep", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [8.63, 214.29, 237.29999999999998, 629.93], "iou": 0.0}
+{"index": 422, "query": "man touching sheep", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [8.63, 214.29, 237.29999999999998, 629.93], "iou": 0.0}
+{"index": 423, "query": "okay the man that is in the barn full of spiders", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [314.68, 125.57, 422.23, 422.15999999999997], "iou": 0.0}
+{"index": 424, "query": "man with boots", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [314.68, 125.57, 422.23, 422.15999999999997], "iou": 0.0}
+{"index": 425, "query": "man in doorway", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [314.68, 125.57, 422.23, 422.15999999999997], "iou": 0.0}
+{"index": 426, "query": "32", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [384.74, 113.7, 549.77, 367.95], "iou": 0.0}
+{"index": 427, "query": "32", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [384.74, 113.7, 549.77, 367.95], "iou": 0.0}
+{"index": 428, "query": "batter", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [384.74, 113.7, 549.77, 367.95], "iou": 0.0}
+{"index": 429, "query": "the catcher crouching down", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [260.78, 201.9, 374.48999999999995, 371.3], "iou": 0.0}
+{"index": 430, "query": "catcher", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [260.78, 201.9, 374.48999999999995, 371.3], "iou": 0.0}
+{"index": 431, "query": "catcher", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [260.78, 201.9, 374.48999999999995, 371.3], "iou": 0.0}
+{"index": 432, "query": "umpure", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [163.7, 102.43, 243.15999999999997, 373.35], "iou": 0.0}
+{"index": 433, "query": "the umpire in blue shirt standing", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [163.7, 102.43, 243.15999999999997, 373.35], "iou": 0.0}
+{"index": 434, "query": "blue shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [163.7, 102.43, 243.15999999999997, 373.35], "iou": 0.0}
+{"index": 435, "query": "man partly offscreen", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [562.29, 164.2, 639.5799999999999, 472.15], "iou": 0.0}
+{"index": 436, "query": "cosest man", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [562.29, 164.2, 639.5799999999999, 472.15], "iou": 0.0}
+{"index": 437, "query": "guy at very edge of frame cut off by edge", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [562.29, 164.2, 639.5799999999999, 472.15], "iou": 0.0}
+{"index": 438, "query": "woman walking along side with man", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [499.9, 180.31, 586.9399999999999, 480.0], "iou": 0.0}
+{"index": 439, "query": "black pants black coat siad", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [499.9, 180.31, 586.9399999999999, 480.0], "iou": 0.0}
+{"index": 440, "query": "woman in black coat", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [499.9, 180.31, 586.9399999999999, 480.0], "iou": 0.0}
+{"index": 441, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [462.7, 126.76, 640.0, 419.23], "iou": 0.0}
+{"index": 442, "query": "purple shirt woman", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [462.7, 126.76, 640.0, 419.23], "iou": 0.0}
+{"index": 443, "query": "purple", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [462.7, 126.76, 640.0, 419.23], "iou": 0.0}
+{"index": 444, "query": "asian man", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [317.2, 117.31, 502.08, 427.0], "iou": 0.0}
+{"index": 445, "query": "brown shirt glasses guy", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [317.2, 117.31, 502.08, 427.0], "iou": 0.0}
+{"index": 446, "query": "man with glasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [317.2, 117.31, 502.08, 427.0], "iou": 0.0}
+{"index": 447, "query": "man in green", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [56.03, 99.5, 232.82, 403.81], "iou": 0.0}
+{"index": 448, "query": "a man in a green polo shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [56.03, 99.5, 232.82, 403.81], "iou": 0.0}
+{"index": 449, "query": "man in green", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [56.03, 99.5, 232.82, 403.81], "iou": 0.0}
+{"index": 450, "query": "girl with pink cami", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [470.95, 115.95, 605.51, 412.26], "iou": 0.0}
+{"index": 451, "query": "lady in pink shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [470.95, 115.95, 605.51, 412.26], "iou": 0.0}
+{"index": 452, "query": "pink tank", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [470.95, 115.95, 605.51, 412.26], "iou": 0.0}
+{"index": 453, "query": "girl white shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [88.11, 25.04, 377.0, 482.93], "iou": 0.0}
+{"index": 454, "query": "woman in the lead of the horse race", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [88.11, 25.04, 377.0, 482.93], "iou": 0.0}
+{"index": 455, "query": "white shirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [88.11, 25.04, 377.0, 482.93], "iou": 0.0}
+{"index": 456, "query": "black horse", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [371.81, 216.8, 484.19, 519.5], "iou": 0.0}
+{"index": 457, "query": "dark horse", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [371.81, 216.8, 484.19, 519.5], "iou": 0.0}
+{"index": 458, "query": "the horse lady in pink is on", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [427.37, 217.71, 584.63, 490.65999999999997], "iou": 0.0}
+{"index": 459, "query": "tan horse", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [427.37, 217.71, 584.63, 490.65999999999997], "iou": 0.0}
+{"index": 460, "query": "white horse", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [427.37, 217.71, 584.63, 490.65999999999997], "iou": 0.0}
+{"index": 461, "query": "spotted horse", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [126.03, 173.98, 320.55, 630.15], "iou": 0.0}
+{"index": 462, "query": "spotted horse in the lead", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [126.03, 173.98, 320.55, 630.15], "iou": 0.0}
+{"index": 463, "query": "spotted horse", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [126.03, 173.98, 320.55, 630.15], "iou": 0.0}
+{"index": 464, "query": "blurry person", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [27.26, 142.54, 328.61, 511.33000000000004], "iou": 0.0}
+{"index": 465, "query": "gray shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [27.26, 142.54, 328.61, 511.33000000000004], "iou": 0.0}
+{"index": 466, "query": "blurry woman in back", "is_spatial": true, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [27.26, 142.54, 328.61, 511.33000000000004], "iou": 0.0}
+{"index": 467, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [77.49, 127.88, 355.87, 628.69], "iou": 0.0}
+{"index": 468, "query": "lady", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [77.49, 127.88, 355.87, 628.69], "iou": 0.0}
+{"index": 469, "query": "lady smileing", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [77.49, 127.88, 355.87, 628.69], "iou": 0.0}
+{"index": 470, "query": "curly dark brown hair black shirt close to us", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [1.08, 279.37, 208.86, 472.08000000000004], "iou": 0.0}
+{"index": 471, "query": "guy with curly hair", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [1.08, 279.37, 208.86, 472.08000000000004], "iou": 0.0}
+{"index": 472, "query": "black shirt curly hair", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [1.08, 279.37, 208.86, 472.08000000000004], "iou": 0.0}
+{"index": 473, "query": "boy with the glasses", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [508.61, 311.01, 640.0, 476.90999999999997], "iou": 0.0}
+{"index": 474, "query": "boy in blue hoodie with blond hair", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [508.61, 311.01, 640.0, 476.90999999999997], "iou": 0.0}
+{"index": 475, "query": "closest blue shirt gut light hair", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [508.61, 311.01, 640.0, 476.90999999999997], "iou": 0.0}
+{"index": 476, "query": "closest head straight brown hair", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [272.37, 354.19, 398.33, 472.62], "iou": 0.0}
+{"index": 477, "query": "head at 600", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [272.37, 354.19, 398.33, 472.62], "iou": 0.0}
+{"index": 478, "query": "closest head darker hair and not curly", "is_spatial": true, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [272.37, 354.19, 398.33, 472.62], "iou": 0.0}
+{"index": 479, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [347.27, 158.79, 590.5899999999999, 418.49], "iou": 0.0}
+{"index": 480, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [347.27, 158.79, 590.5899999999999, 418.49], "iou": 0.0}
+{"index": 481, "query": "woman", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [347.27, 158.79, 590.5899999999999, 418.49], "iou": 0.0}
+{"index": 482, "query": "the man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [94.36, 70.77, 373.78000000000003, 417.97999999999996], "iou": 0.0}
+{"index": 483, "query": "man in tie", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [94.36, 70.77, 373.78000000000003, 417.97999999999996], "iou": 0.0}
+{"index": 484, "query": "man", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [94.36, 70.77, 373.78000000000003, 417.97999999999996], "iou": 0.0}
+{"index": 485, "query": "woman with square patterns", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [326.83, 93.84, 428.21999999999997, 421.75], "iou": 0.0}
+{"index": 486, "query": "blue plaid with jacket", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [326.83, 93.84, 428.21999999999997, 421.75], "iou": 0.0}
+{"index": 487, "query": "not 74 guy othe 1", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [326.83, 93.84, 428.21999999999997, 421.75], "iou": 0.0}
+{"index": 488, "query": "74", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [161.8, 85.03, 289.08000000000004, 429.12], "iou": 0.0}
+{"index": 489, "query": "74", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [161.8, 85.03, 289.08000000000004, 429.12], "iou": 0.0}
+{"index": 490, "query": "74", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [161.8, 85.03, 289.08000000000004, 429.12], "iou": 0.0}
+{"index": 491, "query": "umpire", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [76.58, 131.15, 233.57999999999998, 421.21000000000004], "iou": 0.0}
+{"index": 492, "query": "umpire", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [76.58, 131.15, 233.57999999999998, 421.21000000000004], "iou": 0.0}
+{"index": 493, "query": "umpire", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [76.58, 131.15, 233.57999999999998, 421.21000000000004], "iou": 0.0}
+{"index": 494, "query": "catcher", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [235.8, 237.14, 379.56, 426.0], "iou": 0.0}
+{"index": 495, "query": "catcher of baseball game", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [235.8, 237.14, 379.56, 426.0], "iou": 0.0}
+{"index": 496, "query": "catcher crouching", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [235.8, 237.14, 379.56, 426.0], "iou": 0.0}
+{"index": 497, "query": "man blue shirt", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [216.8, 73.49, 305.86, 359.01], "iou": 0.0}
+{"index": 498, "query": "blue shirt tan shorts", "is_spatial": false, "kind": "error", "error": "program did not define execute_command", "pred_xyxy": null, "gt_xyxy": [216.8, 73.49, 305.86, 359.01], "iou": 0.0}
+{"index": 499, "query": "guy in hard rock cafe tshirt", "is_spatial": false, "kind": "str", "error": null, "pred_xyxy": null, "gt_xyxy": [293.15, 68.21, 371.52, 351.2], "iou": 0.0}

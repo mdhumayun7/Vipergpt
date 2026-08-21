@@ -1,0 +1,35 @@
+{
+  "tag": "grid_refcoco_1.5B_base",
+  "programs": "outputs/runs/20260812T220515__nogit__m1_refcoco_testA_1.5B_base_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.0103,
+  "acc_iou50": 0.8,
+  "return_kinds": {
+    "str": 448,
+    "patch": 18,
+    "error": 34
+  },
+  "errors": {
+    "program did not define execute_command": 16,
+    "TypeError": 6,
+    "ValueError": 4,
+    "IndexError": 4,
+    "UnboundLocalError": 2,
+    "RuntimeError": 1,
+    "SyntaxError": 1
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.0101,
+    "acc_iou50": 0.69
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.0104,
+    "acc_iou50": 0.95
+  },
+  "elapsed_s": 247.7,
+  "git_sha": "nogit",
+  "max_detections": 0,
+  "find_nms_iou": 0.0
+}

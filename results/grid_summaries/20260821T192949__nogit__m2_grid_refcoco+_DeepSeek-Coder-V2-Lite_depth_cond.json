@@ -1,0 +1,33 @@
+{
+  "tag": "grid_refcoco+_DeepSeek-Coder-V2-Lite_depth_cond",
+  "programs": "outputs/runs/20260819T211409__nogit__m1_refcoco+_testA_DeepSeek-Coder-V2-Lite_depth_cond_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.3949,
+  "acc_iou50": 38.4,
+  "return_kinds": {
+    "error": 12,
+    "patch": 487,
+    "list": 1
+  },
+  "errors": {
+    "SyntaxError": 2,
+    "IndexError": 3,
+    "AttributeError": 2,
+    "NameError": 4,
+    "TypeError": 1
+  },
+  "spatial": {
+    "n": 47,
+    "mean_iou": 0.239,
+    "acc_iou50": 19.15
+  },
+  "non_spatial": {
+    "n": 453,
+    "mean_iou": 0.4111,
+    "acc_iou50": 40.4
+  },
+  "elapsed_s": 1315.9,
+  "git_sha": "nogit",
+  "max_detections": 0,
+  "find_nms_iou": 0.0
+}

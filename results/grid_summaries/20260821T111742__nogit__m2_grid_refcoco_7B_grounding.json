@@ -1,0 +1,33 @@
+{
+  "tag": "grid_refcoco_7B_grounding",
+  "programs": "outputs/runs/20260814T172311__nogit__m1_refcoco_testA_7B_grounding_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.3875,
+  "acc_iou50": 39.2,
+  "return_kinds": {
+    "patch": 444,
+    "error": 55,
+    "str": 1
+  },
+  "errors": {
+    "AttributeError": 26,
+    "NameError": 4,
+    "SyntaxError": 17,
+    "TypeError": 3,
+    "ValueError": 5
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.3425,
+    "acc_iou50": 34.26
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.4492,
+    "acc_iou50": 45.97
+  },
+  "elapsed_s": 271.9,
+  "git_sha": "nogit",
+  "max_detections": 0,
+  "find_nms_iou": 0.0
+}

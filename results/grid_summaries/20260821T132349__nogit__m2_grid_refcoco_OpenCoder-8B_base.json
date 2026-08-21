@@ -1,0 +1,36 @@
+{
+  "tag": "grid_refcoco_OpenCoder-8B_base",
+  "programs": "outputs/runs/20260819T200220__nogit__m1_refcoco_testA_OpenCoder-8B_base_greedy/programs.jsonl",
+  "n": 500,
+  "mean_iou": 0.0013,
+  "acc_iou50": 0.2,
+  "return_kinds": {
+    "str": 454,
+    "error": 36,
+    "patch": 5,
+    "list": 3,
+    "none": 1,
+    "float": 1
+  },
+  "errors": {
+    "AttributeError": 18,
+    "TypeError": 12,
+    "RuntimeError": 2,
+    "IndexError": 3,
+    "NameError": 1
+  },
+  "spatial": {
+    "n": 289,
+    "mean_iou": 0.0023,
+    "acc_iou50": 0.35
+  },
+  "non_spatial": {
+    "n": 211,
+    "mean_iou": 0.0,
+    "acc_iou50": 0.0
+  },
+  "elapsed_s": 1607.9,
+  "git_sha": "nogit",
+  "max_detections": 0,
+  "find_nms_iou": 0.0
+}

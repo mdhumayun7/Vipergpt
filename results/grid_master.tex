@@ -1,0 +1,20 @@
+\begin{table}[htbp]\centering\small
+\caption{Master comparison grid. Accuracy at IoU $\geq0.5$, greedy decoding,
+$n=500$ per cell, testA. C1 is the released prompt; C4 adds the depth
+primitives together with the rule stating when they apply.}
+\label{tab:grid}
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+& \multicolumn{4}{c}{\textbf{RefCOCO}} & \multicolumn{4}{c}{\textbf{RefCOCO+}} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+\textbf{Generator} & C1 & C2 & C3 & C4 & C1 & C2 & C3 & C4 \\
+\midrule
+Qwen2.5-Coder-1.5B & 0.80 & 34.40 & --- & --- & --- & --- & --- & --- \\
+Qwen2.5-Coder-32B & 0.00 & 41.60 & --- & --- & --- & --- & --- & --- \\
+Qwen2.5-Coder-7B & 0.00 & 39.20 & 36.40 & 42.00 & 0.00 & 30.80 & 28.00 & 37.60 \\
+DeepSeek-Coder-V2-Lite (16B MoE) & 0.00 & 29.60 & 38.80 & 41.80 & 0.00 & 24.00 & 38.60 & 38.40 \\
+OpenCoder-8B & 0.20 & 40.80 & 37.40 & 43.20 & 0.00 & 30.20 & 28.00 & 31.60 \\
+Yi-Coder-9B & 3.80 & 43.80 & 39.00 & 45.40 & 0.80 & 34.40 & 35.60 & 43.80 \\
+\bottomrule
+\end{tabular}
+\end{table}
