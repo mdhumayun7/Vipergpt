@@ -249,3 +249,22 @@ behaves.
 downloaded incompletely; the cached copy was replaced with `--force-download`. A
 truncated tokenizer produces a parse error rather than a checksum failure, so tokenizer
 files warrant the same verification as weight shards.
+
+## D17 — DeepSeek-Coder-V2-Lite batch size reduced to 1
+**Issue:** at batch_size=6 (used for other models), the RefCOCO/C1 baseline
+generation for this model produced parse=0.4% across 500 samples -- a batching
+corruption rather than a crash. Root cause not fully diagnosed.
+**Fix:** regenerated at batch_size=1. Parse rate recovered to the expected range
+(consistent with the model's other seven cells, all generated at batch_size=2).
+**Effect on results:** none beyond the affected cell, which is now valid. Flagged as
+a fragility of this specific MoE model under batched greedy decoding on this stack;
+not investigated further since a working fix was found.
+
+## D18 — Generalisation grid is not fully crossed with the scale sweep
+**Issue:** the four-model grid (Qwen-7B, DeepSeek, OpenCoder, Yi-9B) and the earlier
+scale sweep (Qwen 1.5B/7B/32B) share only the 7B Qwen cell. Qwen-1.5B and Qwen-32B
+were not extended to the other three prompt conditions across both datasets.
+**Reason:** compute and quota budget; the two sweeps answer different questions
+(does capacity matter vs does family matter) and were run to answer each separately.
+**Effect on results:** no claim in this work requires the full 6x4x2 cross; each
+sweep is complete and internally consistent on its own axis.

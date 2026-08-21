@@ -1183,3 +1183,70 @@ having generated nothing.
 Fixed by testing for programs.jsonl rather than for the directory. Worth noting as a
 general point about resumable pipelines: the marker of completion must be the
 artefact, not the container that was created in order to hold it.
+## 2026-08-19/21 — Four-model generalisation grid (jobs 29677-29855)
+
+Motivation: supervisor asked whether a different generator would close the gap to
+the paper's 72.0. Extended to a proper test: does the C1-C4 story replicate across
+generator families, not just within Qwen's own size sweep.
+
+Models: Qwen2.5-Coder-7B (existing), DeepSeek-Coder-V2-Lite-Instruct (16B MoE, 2.4B
+active), Yi-Coder-9B-Chat, OpenCoder-8B-Instruct. All ungated, no HF token required.
+4 conditions x 2 datasets x 4 models = 32 cells, n=500, greedy.
+
+THREE ENGINEERING FAILURES, EACH FIXED AND WORTH RECORDING.
+
+1. trust_remote_code=True, applied globally to enable OpenCoder's custom classes,
+   broke DeepSeek: it forced transformers to load the repository's own
+   modeling_deepseek.py, which imports is_torch_fx_available -- removed in
+   transformers 5.x -- instead of the library's built-in class. Made conditional on
+   the model identifier (D15).
+
+2. Yi-Coder's tokenizer.model downloaded incompletely and failed to parse
+   (`Error parsing line b'\x0e'`) rather than failing a checksum. Fixed with
+   --force-download (D16).
+
+3. RESUMABILITY BUG. codegen_analysis.py creates its run directory before loading
+   the model, so a crash during model load (failure 1, above) left eight empty
+   DeepSeek directories. The grid driver's skip-check tested for directory
+   existence, so the next submission skipped all eight and reported success having
+   generated nothing. Fixed by testing for programs.jsonl instead of the directory.
+   General lesson: in a resumable pipeline, the completion marker must be the
+   artefact, not the container created to hold it.
+
+4. Even after the resumability fix, DeepSeek's RefCOCO/C1 cell (baseline) generated
+   at batch_size=6 produced parse=0.4% -- a batching-related corruption, not a
+   crash. Regenerated at batch_size=1; parse recovered to the expected range.
+   Root cause not fully diagnosed; flagged as a fragility of this MoE model under
+   batched greedy generation and not investigated further, since the fix worked.
+
+RESULT. See results/grid_master.md for the full table. Headline:
+
+| Model | C1 RefCOCO | C4 RefCOCO | C4 RefCOCO+ | % of paper (72/67) |
+|---|---:|---:|---:|---:|
+| Qwen2.5-Coder-7B | 0.00 | 42.00 | 37.60 | 58% / 56% |
+| DeepSeek-Coder-V2-Lite | 0.00 | 41.80 | 38.40 | 58% / 57% |
+| OpenCoder-8B | 0.20 | 43.20 | 31.60 | 60% / 47% |
+| Yi-Coder-9B | 3.80 | 45.40 | 43.80 | 63% / 65% |
+
+THE SPECIFICATION GAP IS UNIVERSAL. Every model is near-total failure under C1
+(0.00-3.80) and every model recovers substantially under C2. This was the
+supervisor's implicit question -- is the failure Qwen's problem -- and the grid
+answers it directly: no.
+
+YI-CODER-9B IS THE STRONGEST GENERATOR MEASURED, on both datasets, by a margin
+(45.40/43.80 against Qwen's 42.00/37.60). This directly answers the supervisor's
+question: yes, a different generator raises accuracy, by about 3-6 points depending
+on dataset. It does not close the gap to 72.0.
+
+ONE INCONSISTENCY, reported rather than smoothed over: DeepSeek is the one model
+where C4 does NOT beat C3 on RefCOCO (38.60 vs 38.80, a -0.2 point difference).
+Every other model shows C4 > C3 as the main text claims. Sample size per cell is
+500; this is within plausible noise for one model, but it means the "C4 beats C3 in
+every family" claim must be qualified rather than stated as universal.
+
+CAVEATS. DeepSeek's active parameter count (2.4B) is far below the three dense
+models (7-9B); any DeepSeek result is confounded by both architecture and
+effective capacity. All four generators postdate Codex by 2-3 years, so this is
+not a controlled test of the generator's era. Qwen2.5-Coder-1.5B and -32B were not
+extended to the full grid (only 7B was), so the size-sweep and the family-sweep are
+not directly on the same axis.
