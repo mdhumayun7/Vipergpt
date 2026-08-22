@@ -1,0 +1,2112 @@
+% =====================================================================
+%  DISSERTATION — complete, single file
+%
+%  Compile from the repository root (figures are read from
+%  results/figures/*.pdf):
+%
+%      pdflatex dissertation
+%      bibtex   dissertation
+%      pdflatex dissertation
+%      pdflatex dissertation
+%
+%  If IEEEtran.bst is unavailable, change \bibliographystyle to plain.
+% =====================================================================
+\documentclass[12pt,a4paper,oneside]{report}
+
+\usepackage[a4paper,left=3.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\IfFileExists{lmodern.sty}{\usepackage{lmodern}}{}
+\usepackage{textcomp}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{codebg}{RGB}{248,248,250}
+\definecolor{codekw}{RGB}{18,42,86}
+\definecolor{codestr}{RGB}{22,110,72}
+\definecolor{codecom}{RGB}{120,126,134}
+\definecolor{good}{RGB}{22,110,72}
+\definecolor{bad}{RGB}{158,42,42}
+
+\lstdefinestyle{py}{
+  language=Python, basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{codekw}\bfseries, stringstyle=\color{codestr},
+  commentstyle=\color{codecom}\itshape, backgroundcolor=\color{codebg},
+  frame=leftline, framerule=1.2pt, rulecolor=\color{codekw!40},
+  xleftmargin=10pt, framexleftmargin=8pt, breaklines=true,
+  showstringspaces=false, aboveskip=8pt, belowskip=8pt, captionpos=b,
+}
+\lstdefinestyle{plainlist}{
+  language={}, basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{codebg}, frame=leftline, framerule=1.2pt,
+  rulecolor=\color{codekw!40}, xleftmargin=10pt, framexleftmargin=8pt,
+  breaklines=true, showstringspaces=false, aboveskip=8pt, belowskip=8pt,
+}
+\lstset{style=py}
+
+\captionsetup{font=small, labelfont=bf, skip=6pt}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{18pt}{\Large}
+\titlespacing*{\chapter}{0pt}{-20pt}{28pt}
+
+\newcommand{\up}[1]{\textcolor{good}{\textbf{#1}}}
+\newcommand{\down}[1]{\textcolor{bad}{\textbf{#1}}}
+
+\begin{document}
+
+% =====================================================================
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\LARGE\bfseries Spatial Mental Modeling from Limited Views\par}
+\vspace{0.8cm}
+{\Large Reproducing ViperGPT without Codex:\\[3pt]
+a Prompt-Specification Gap and a Depth-Grounded API\par}
+\vspace{2.0cm}
+{\large A Dissertation submitted in partial fulfilment\\
+of the requirements for the degree of\par}
+\vspace{0.5cm}
+{\large\bfseries Master of Technology\par}
+{\large in\par}
+{\large\bfseries Computer Science and Engineering\\
+(Information Security and Privacy)\par}
+\vspace{1.8cm}
+{\large\itshape submitted by\par}
+\vspace{0.25cm}
+{\Large\bfseries MD Humayun\par}
+\vspace{1.4cm}
+{\large\itshape under the supervision of\par}
+\vspace{0.25cm}
+{\Large\bfseries Dr.\ M.\ A.\ Zaveri\par}
+\vfill
+{\large Department of Computer Science and Engineering\\
+Sardar Vallabhbhai National Institute of Technology\\
+Surat, Gujarat, India\par}
+\vspace{0.6cm}
+{\large \the\year\par}
+\end{titlepage}
+
+% =====================================================================
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+ViperGPT answers a visual query by prompting a code-generating language model to emit
+a Python program over pretrained vision modules, and then executing that program. Its
+published generator, OpenAI Codex, has since been withdrawn, so any present-day
+reproduction must substitute a different model. This dissertation reports what that
+substitution reveals.
+
+Rebuilding the pipeline with an open-weights generator produces an accuracy of
+$0.00$ on RefCOCO referring-expression comprehension. The failure is not a crash:
+$332$ of $500$ programs execute to completion and return a natural-language string
+where a bounding box is required. The released API specification never states the
+return type a grounding program must produce, and five of its seven worked examples
+declare \texttt{str}. Stating the contract explicitly raises accuracy to $39.20$.
+The effect is independent of model scale --- it appears at 1.5B, 7B and 32B
+parameters and is repaired at each --- and scaling the generator twentyfold buys
+approximately six accuracy points where stating the contract buys thirty-three to
+forty-one.
+
+A second finding follows. Across those three model sizes, non-spatial accuracy rises
+from $33.65$ to $48.82$ while spatial accuracy remains flat at $34.95$, $34.26$ and
+$34.95$, on identical images with identical perception modules. A larger generator
+writes better programs for everything except spatial relations. The bottleneck is the
+interface: the API exposes a single scalar for depth, from which inter-object
+ordering cannot be expressed, and the prompt directs the generator away from geometry.
+
+The dissertation therefore extends the API with depth-ordering primitives and a
+corrected depth backend. Offered without qualification these improve depth-word
+queries from $4.26$ to $19.15$ but degrade non-spatial accuracy by ten points: given
+a new primitive, the generator applies it indiscriminately. Adding three sentences
+that delimit when the primitives apply improves every subset of both datasets,
+raising depth queries to $21.28$ and overall RefCOCO accuracy to $42.00$
+($42.07 \pm 0.61$ over three seeds against $36.07 \pm 1.75$ for the contract alone),
+while reducing the seed-to-seed variance of spatial queries by a factor of $4.6$.
+
+Two results large enough to be attractive were rejected after control experiments.
+Capping the detector's candidate set raises accuracy by fifteen points, but a
+condition containing no depth primitives gains almost as much, so the improvement
+belongs to the candidate set rather than to the method. Separately, a depth-sign
+correction that a synthetic validation had rejected was reinstated after testing
+against ground-truth annotations, where the uncorrected signal scored below chance.
+
+\vspace{1em}
+\noindent\textbf{Keywords:} visual reasoning, program synthesis, referring expression
+comprehension, reproducibility, spatial grounding, vision--language models.
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% =====================================================================
+\chapter{Introduction}
+\label{ch:introduction}
+
+\section{Background}
+
+A question asked about an image is rarely atomic. \emph{``The man on the right''}
+requires locating every man in the scene and then ordering them; \emph{``the cup
+behind the bottle''} requires locating two object classes and then comparing their
+distance from the camera. Monolithic vision--language models answer such queries in a
+single forward pass, which makes the intermediate reasoning inaccessible: when the
+answer is wrong, there is no step to point at.
+
+An alternative treats the query as a \emph{program to be written}. A large language
+model is shown a specification of an API over pretrained vision modules and asked to
+emit code that composes those modules; the code is then executed against the image.
+Neural Module Networks introduced composition over learned modules
+\cite{andreas2016nmn}, and capable code-generation models made it possible to
+synthesise the composition directly in a general-purpose language. VisProg
+\cite{gupta2023visprog} and ViperGPT \cite{suris2023vipergpt} are the prominent
+instances.
+
+The appeal is threefold. The system is \emph{training-free}: no gradient step is
+taken, and new capabilities are added by extending the API rather than by retraining.
+It is \emph{compositional}: a query never seen during training can be answered if its
+parts can be. And it is \emph{interpretable} in a strong sense, since the intermediate
+reasoning is a Python program a human can read and a machine can execute step by step.
+
+\section{ViperGPT}
+
+ViperGPT formalises this as a two-stage pipeline. A code generator $\pi$ maps a query
+$q$ to a program $z$, and an execution engine $\phi$ runs that program against an
+image $x$:
+\[
+    z = \pi(q), \qquad r = \phi(x, z).
+\]
+The generator is prompted with an API specification describing an \texttt{ImagePatch}
+class and functions over it --- \texttt{find} for open-vocabulary detection,
+\texttt{verify\_property} for attributes, \texttt{simple\_query} for visual question
+answering, \texttt{compute\_depth} for relative depth, and others. The generator never
+sees the image; it sees only the query and the API. Execution binds the API to
+pretrained models: GLIP \cite{li2022glip} for detection, X-VLM \cite{zeng2022xvlm}
+for attributes, BLIP-2 \cite{li2023blip2} for question answering, MiDaS
+\cite{ranftl2020midas} for depth.
+
+On referring-expression comprehension the paper reports $72.0$ on RefCOCO and $67.0$
+on RefCOCO+ (testA), against $55.0$ and $52.2$ for GLIP used directly and $58.6$ and
+$60.5$ for ReCLIP \cite{subramanian2022reclip}.
+
+\section{Problem statement}
+
+The generator used in that work, \texttt{code-davinci-002}, has been withdrawn. Any
+attempt to reproduce or build on ViperGPT today must substitute a different generator,
+and no faithful option exists. This is not a peculiarity of one paper: a published
+system whose central component is reachable only through a proprietary API is
+reproducible only while that API is maintained.
+
+Substitution raises a question the original work had no reason to ask. \emph{Which
+parts of the reported behaviour belong to the method, and which belonged to Codex?}
+An API specification written for one model is an interface contract; if part of that
+contract was carried implicitly by the model's own inference rather than by the text,
+the omission is invisible until the model changes.
+
+A second question follows from the API itself. Of the operations ViperGPT exposes,
+exactly one concerns three-dimensional structure: \texttt{compute\_depth()}, returning
+a single scalar. From one scalar per object it is possible to express \emph{``A is
+behind B''}. It is not possible to express \emph{``the third-closest person''},
+\emph{``between A and B in depth''}, or physical size. Meanwhile the prompt directs
+the generator to resolve \emph{left}, \emph{right}, \emph{up} and \emph{down} using
+base Python on patch coordinates. Whether this suffices for the spatial language
+referring expressions actually contain is an empirical question that an aggregate
+number per dataset does not answer.
+
+\section{Research questions}
+
+\begin{description}[leftmargin=2.2em, style=nextline, itemsep=4pt]
+\item[RQ1] When Codex is replaced by an open-weights code generator, what happens on
+referring-expression comprehension, and how much of any shortfall is attributable to
+the released prompt rather than to the substituted model?
+\item[RQ2] Is that effect a property of the prompt or of the generator's capacity ---
+does it change with model scale?
+\item[RQ3] Does accuracy differ systematically by the \emph{kind} of spatial language
+a query contains, and is any difference explained by the expressiveness of the API?
+\item[RQ4] Does extending the API with depth-ordering primitives improve accuracy on
+the queries that need them, without degrading those that do not?
+\end{description}
+
+\section{Approach}
+
+The work proceeds in three milestones, each stated as a hypothesis and tested.
+
+\textbf{Milestone 1} reproduces the generation stage alone. Programs are synthesised
+for 500 RefCOCO and 500 RefCOCO+ queries and analysed \emph{statically} --- parsed,
+not executed --- so the generator can be studied before the perception stack exists.
+The initial hypothesis, that spatial queries would collapse into a single opaque
+\texttt{simple\_query} call, was rejected; the analysis instead revealed a return-type
+failure affecting $98.8\%$ of programs.
+
+\textbf{Milestone 2} builds the execution stack and measures end-to-end accuracy.
+This required compiling the GLIP fork for the Hopper architecture, which the published
+environment cannot target, and substituting CLIP \cite{radford2021clip} for X-VLM.
+A hypothesis that RefCOCO+ would provide a clean control for spatial language was
+rejected: the gap widened rather than narrowed, and a manual audit established that
+the two datasets contain different \emph{kinds} of spatial language.
+
+\textbf{Milestone 3} extends the API with depth-grounded primitives. A first form,
+offering the primitives without specifying when they apply, improved the target
+queries and degraded the others; the final form adds a routing rule and improves every
+subset measured.
+
+\section{Contributions}
+
+\begin{enumerate}[leftmargin=2.0em, itemsep=5pt]
+\item \textbf{A working reproduction with an open-weights generator}, on hardware the
+published environment cannot run on. The GLIP fork is rebuilt for compute capability
+9.0 and verified independently of the full pipeline.
+
+\item \textbf{Identification and quantification of a specification gap.} The released
+prompt does not state the required return type, and five of its seven worked examples
+declare \texttt{str}. With an open-weights generator, $98.8\%$ of programs return a
+string where a box is required; executed, this yields $0.00$. Stating the contract
+raises it to $39.20$.
+
+\item \textbf{Evidence that this is a property of the specification, not of capacity.}
+The failure occurs at 1.5B, 7B and 32B ($95.8\%$, $98.8\%$, $87.6\%$ task-invalid) and
+is repaired at every scale. Scaling twentyfold buys $\approx 6$ points; the contract
+buys $33$--$41$.
+
+\item \textbf{Evidence that spatial accuracy does not respond to scale.} Non-spatial
+accuracy rises $33.65 \to 48.82$ across the three models while spatial accuracy stays
+at $34.95 / 34.26 / 34.95$ on identical images and modules.
+
+\item \textbf{A depth-grounded API extension} --- \texttt{depth\_order},
+\texttt{is\_behind}, \texttt{is\_in\_front\_of}, \texttt{is\_between\_3d},
+\texttt{distance\_3d} --- with a corrected depth backend. The generator adopts it,
+invoking \texttt{depth\_order} $119$ times across $500$ programs where it invokes the
+original \texttt{compute\_depth} $29$ times.
+
+\item \textbf{The finding that providing a capability is insufficient without
+specifying when it applies.} The primitives alone move depth queries $4.26 \to 19.15$
+and cost ten points of non-spatial accuracy; three sentences delimiting their scope
+improve every subset, reaching $21.28$ on depth queries and $42.00$ overall.
+
+\item \textbf{Two negative results established by control rather than omitted}: a
+15-point apparent gain from capping the candidate set, shown to arise from the
+candidate set rather than from depth reasoning; and a depth-sign error that a
+synthetic validation had endorsed, identified by testing against ground truth.
+\end{enumerate}
+
+\section{Scope}
+
+Evaluation is restricted to referring-expression comprehension on RefCOCO and
+RefCOCO+ --- Table~1 of the original paper. GQA and NExT-QA are excluded for storage
+and compute; OK-VQA depends on GPT-3, likewise withdrawn. No cross-task claim is made.
+
+The reproduction is not faithful and is not presented as such: the final configuration
+reaches $42.00$ against a reported $72.0$, and the responsible deviations are
+enumerated in Chapter~\ref{ch:deviations}. What is reproduced is the \emph{method};
+what is measured is what happens to it when its generator is replaced.
+
+Depth is claimed only as \emph{ordering}. The datasets provide no camera intrinsics,
+so metric distances would rest on an assumed field of view; the ordering primitives
+require only monotonicity in true distance, which relative depth provides once its
+sign is correct.
+
+% =====================================================================
+\chapter{Literature Review}
+\label{ch:literature}
+
+\section{Compositional visual reasoning}
+
+The observation that a visual question decomposes into simpler operations predates
+large language models. Neural Module Networks \cite{andreas2016nmn} parse a question
+into a layout of learned modules and assemble a network per instance. The modules are
+trained jointly, so the approach inherits both the strengths of end-to-end learning
+and its costs: a new capability requires retraining, and the layout parser must itself
+be learned.
+
+Later work refined the parsing rather than the principle. Stack-NMN
+\cite{hu2018stacknmn} makes the layout differentiable; Neural-Symbolic VQA
+\cite{yi2018nsvqa} separates perception from a symbolic executor over a structured
+scene representation. The recurring difficulty is that the program space must be fixed
+in advance, because it is the space over which the parser is trained.
+
+\section{Program synthesis with language models}
+
+Code-generating models change that constraint. If a model can write Python from a
+specification, the program space is the language itself, and adding a capability
+becomes a matter of documenting a function rather than retraining a parser.
+
+VisProg \cite{gupta2023visprog} generates programs in a small domain-specific language
+over a fixed module set. ViperGPT \cite{suris2023vipergpt} generates ordinary Python,
+supplies an API specification as the prompt, and executes the result with
+\texttt{exec}. CodeVQA \cite{subramanian2023codevqa} applies the idea to question
+answering with a smaller module set; Chameleon \cite{lu2023chameleon} generalises to
+tool sequences beyond vision.
+
+These systems share three properties: they are training-free, their intermediate
+representation is inspectable, and their behaviour is determined by two artefacts that
+receive little attention in evaluation --- the API surface and the prompt describing
+it. This dissertation studies the second pair.
+
+\subsection{The generator as an undocumented dependency}
+
+ViperGPT uses Codex; VisProg uses GPT-3; CodeVQA uses Codex. All three models have
+been withdrawn. The published prompts remain, but the model that interpreted them does
+not, and there is no way to establish after the fact which parts of a system's
+behaviour were specified by the prompt and which were supplied by the model.
+
+Related concerns appear in the reproducibility literature. Kapoor and Narayanan
+\cite{kapoor2023leakage} document how evaluation flaws propagate through published
+results; Bell and Kampman \cite{bell2021perspectives} survey reproducibility in AI
+research more broadly. The failure mode considered here --- a system whose central
+component becomes permanently unavailable --- is a consequence of building on closed
+APIs, and this work is a case study in what such a dependency conceals.
+
+\section{Referring expression comprehension}
+
+Referring expression comprehension asks a model to localise the object described by a
+phrase. RefCOCO and RefCOCO+ \cite{yu2016refcoco} are the standard benchmarks,
+collected on COCO images. They differ in one deliberate respect: RefCOCO permits
+location words, RefCOCO+ forbids them, so its expressions describe objects by
+appearance rather than position.
+
+Strong baselines follow two routes. Detection-based methods --- MDETR
+\cite{kamath2021mdetr}, GLIP \cite{li2022glip}, OWL-ViT \cite{minderer2022owlvit} ---
+pretrain for grounded detection directly. Composition-based methods such as ReCLIP
+\cite{subramanian2022reclip} decompose the expression and score candidate regions with
+CLIP without task-specific training. ViperGPT belongs to a third category: it neither
+trains nor scores directly, but writes a program that calls a detector.
+
+\subsection{The spatial component}
+
+An aspect of RefCOCO that bears on this work is that its expressions contain several
+distinct kinds of spatial language. \emph{Left}, \emph{right}, \emph{top} and
+\emph{bottom} are viewer-relative and resolvable in the image plane. \emph{Closest},
+\emph{farthest}, \emph{behind} and \emph{in front of} concern distance from the camera
+and are not. Because RefCOCO+ excludes location words but not distance words, the two
+datasets differ in the \emph{composition} of their spatial subsets, not merely in
+quantity. Aggregate accuracy cannot distinguish these cases;
+Chapter~\ref{ch:results} shows they behave differently.
+
+\section{Spatial reasoning in vision--language models}
+
+Recent work reports that vision--language models handle spatial relations poorly.
+SpatialVLM \cite{chen2024spatialvlm} attributes this to a lack of 3D supervision and
+synthesises spatial question-answering data at scale. Benchmarks such as What's Up
+\cite{kamath2023whatsup} and VSR \cite{liu2023vsr} isolate spatial relations and find
+large models near chance on some of them.
+
+That literature concerns models trained end to end, where the deficit is a property of
+the learned representation. In a program-synthesis system the situation differs:
+spatial relations are resolved by code, so the deficit may lie in the model, in the
+modules, or in the interface between them. Distinguishing these can be done
+experimentally, and Chapter~\ref{ch:results} does so by varying model scale while
+holding the interface fixed.
+
+\section{Positioning}
+
+This dissertation is a reproduction study with an extension. It differs from the above
+in three respects. It treats the API specification as an object of study rather than
+as infrastructure. It separates the contribution of the generator from that of the
+interface by varying model scale --- a control available in a training-free system and
+rarely reported. And it reports two negative results established by control rather
+than omitting them.
+
+% =====================================================================
+\chapter{Problem Formulation}
+\label{ch:problem}
+
+\section{Formal setting}
+
+Let $q$ be a query, $x$ an image, and $\mathcal{A}$ an API consisting of functions
+over image regions together with a textual specification $s(\mathcal{A})$. A generator
+$\pi$ maps specification and query to a program, and an engine $\phi$ evaluates it:
+\[
+    z \;=\; \pi\bigl(s(\mathcal{A}),\, q\bigr),
+    \qquad
+    r \;=\; \phi\bigl(x,\, z;\, \mathcal{A}\bigr).
+\]
+For grounding the required output is a region, so a correct program satisfies
+$r \in \mathcal{B}$. Accuracy is measured by intersection over union against the
+ground-truth box $b^{*}$:
+\[
+    \mathrm{IoU}(r, b^{*}) = \frac{\lvert r \cap b^{*}\rvert}{\lvert r \cup b^{*}\rvert},
+    \qquad \text{correct} \iff \mathrm{IoU}(r, b^{*}) \geq \tau, \quad \tau = 0.5 .
+\]
+
+Three properties matter. The generator never observes $x$. Nothing in the type system
+enforces $r \in \mathcal{B}$, because $z$ is ordinary Python and $\phi$ is
+\texttt{exec}. And $s(\mathcal{A})$ is prose, not a schema, so any constraint it fails
+to state is unenforced.
+
+\section{Problem 1: the generator is unavailable}
+
+ViperGPT instantiates $\pi$ as Codex, which has been withdrawn; reproduction requires
+$\pi'$. The substitution changes the entity that interprets $s(\mathcal{A})$. If some
+constraint $c$ holds of the programs Codex produced, two explanations exist: $c$ is
+stated in $s(\mathcal{A})$, or Codex inferred it. These are indistinguishable while the
+model is available and distinguished the moment it is replaced.
+
+\section{Problem 2: the specification is incomplete}
+
+The released specification is task-agnostic --- the same text serves question
+answering and grounding. It contains seven worked examples, whose declared return
+types are distributed as in Table~\ref{tab:returntypes}.
+
+\begin{table}[htbp]\centering
+\caption{Return types declared by the worked examples in the released specification
+(\texttt{prompts/api.prompt}, 7{,}645 bytes). Line numbers refer to that file.}
+\label{tab:returntypes}
+\begin{tabular}{@{}llc@{}}
+\toprule
+\textbf{Example documents} & \textbf{Declared return type} & \textbf{Line} \\
+\midrule
+\texttt{find}             & \texttt{List[ImagePatch]} & 44 \\
+\texttt{exists}           & \texttt{str} & 55 \\
+\texttt{verify\_property} & \texttt{str} & 68 \\
+\texttt{best\_text\_match}& \texttt{str} & 79 \\
+\texttt{simple\_query}    & \texttt{str} & 92 \\
+\texttt{compute\_depth}   & \texttt{ImagePatch} & 104 \\
+\texttt{llm\_query}       & \texttt{str} & 123 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Five of seven return a string. One returns a list. Exactly one returns the type a
+grounding program requires, and it sits inside the docstring of
+\texttt{compute\_depth}, where a reader seeking the output contract has no reason to
+look. No sentence states that \texttt{execute\_command} must return an
+\texttt{ImagePatch}.
+
+\section{Problem 3: the interface cannot express depth relations}
+
+Let $d(p)$ denote \texttt{compute\_depth} for a patch $p$. The relation \emph{$a$ is
+behind $b$} is expressible as $d(a) > d(b)$. The following are not expressible without
+the program implementing the ordering logic itself:
+
+\begin{itemize}[leftmargin=1.6em, itemsep=2pt]
+\item \emph{the third-closest person} --- a total order over a set;
+\item \emph{the cup between the bottle and the plate in depth} --- an interval test
+over three patches;
+\item \emph{the larger of the two objects} --- physical size, hence back-projection.
+\end{itemize}
+
+The specification compounds this. Among its three guidelines:
+
+\begin{quote}\itshape
+Use base Python (comparison, sorting) for basic logical operations,
+left/right/up/down, math, etc.
+\end{quote}
+
+This is correct for image-plane relations and cannot be correct for depth relations,
+because the image plane does not contain the information.
+
+\section{Problem 4: whether an extended interface helps}
+
+If the interface is the constraint, extending it should improve the affected queries.
+Two failure modes must be distinguished from success: the generator may ignore the new
+functions, as it largely ignores \texttt{compute\_depth}; or it may apply them
+indiscriminately, improving the target queries at the expense of others.
+
+\section{Criteria for a claim}
+
+Because this is a reproduction study, the standard of evidence is fixed in advance.
+
+\begin{description}[leftmargin=2.2em, style=nextline, itemsep=4pt]
+\item[C-1 Attribution] Any improvement must be shown to arise from the intervention
+rather than from a change in the evaluation. Where an intervention could plausibly help
+for an unrelated reason, a control condition without it is run.
+\item[C-2 Non-degradation] An improvement confined to a target subset at the cost of
+others is reported as a trade-off, not as a gain.
+\item[C-3 Stability] Where decoding is stochastic, results are reported as mean and
+standard deviation over three seeds.
+\item[C-4 Provenance] Every reported figure traces to a stored run summary, a
+configuration, and a scheduler job identifier.
+\item[C-5 Disclosure] Every departure from the published configuration is recorded with
+its reason and expected effect, whether or not it is believed to matter.
+\end{description}
+
+Criteria C-1 and C-2 are not decorative. Chapter~\ref{ch:rejected} reports two
+interventions rejected under C-1, and one that satisfied its target subset but failed
+C-2 and was superseded.
+
+% =====================================================================
+\chapter{System Architecture and Methodology}
+\label{ch:methodology}
+
+\section{Architecture}
+
+Figure~\ref{fig:architecture} shows the reproduced pipeline. Colour marks provenance:
+components carried over unchanged, components substituted because the published choice
+is unavailable, and components introduced by this work.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.80\textwidth]{fig14_architecture.png}
+\caption[Reproduced system architecture]{The reproduced pipeline. A query and an API
+specification are given to the program generator; the emitted program is written to
+disk, then executed against the image by an engine that binds the API to pretrained
+modules. The predicted region is scored by IoU.}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{The stage boundary}
+
+The published design runs generation and execution in one process. This implementation
+writes programs to \texttt{programs.jsonl} between the stages.
+
+The immediate reason is a dependency conflict: the GLIP fork requires an older PyTorch
+than the code generator, and the two cannot share an interpreter. Two consequences
+follow, both useful. Prompt conditions are compared on \emph{identical} programs, since
+the execution stage reads a fixed file. And the generation stage can be studied before
+the execution stage exists, which is what makes the static analysis of
+Section~\ref{sec:static} possible.
+
+\section{Departures from the published design}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig15_paper_vs_ours.png}
+\caption[Published design against this implementation]{Component-by-component
+comparison. Amber marks a substitution forced by unavailability; teal marks a
+deliberate change. The unchanged elements are the method, the executor semantics, the
+detector, and the task.}
+\label{fig:paperVSours}
+\end{figure}
+
+Every departure carries an identifier D1--D12 and is documented in
+Chapter~\ref{ch:deviations}. The substitutions that most affect results are the
+generator (D1) and the attribute model (D9).
+
+\section{Prompt specification}
+\label{sec:prompts}
+
+The experimental variable is the API specification. Four variants are defined; each is
+a strict superset of the previous one, so any difference in outcome is attributable to
+the added text. Model, modules, data and decoding are held fixed.
+
+\begin{table}[htbp]\centering
+\caption{The four prompt conditions.}
+\label{tab:conditions}
+\begin{tabular}{@{}llrp{0.40\textwidth}@{}}
+\toprule
+& \textbf{File} & \textbf{Bytes} & \textbf{Added} \\
+\midrule
+C1 & \texttt{api.prompt} & 7{,}645 & --- the released specification \\
+C2 & \texttt{api\_grounding.prompt} & 8{,}639 & an explicit output contract, two
+grounding examples \\
+C3 & \texttt{api\_depth.prompt} & 11{,}485 & five depth primitives with docstrings and
+three examples; removal of the instruction directing spatial relations to base Python \\
+C4 & \texttt{api\_depth\_cond.prompt} & 12{,}680 & three routing rules delimiting when
+the primitives apply, and two counter-examples \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{C1 --- the released specification}
+
+The prompt declares an \texttt{ImagePatch} class with attributes \texttt{left},
+\texttt{right}, \texttt{upper}, \texttt{lower}, \texttt{horizontal\_center},
+\texttt{vertical\_center}, and methods \texttt{find}, \texttt{exists},
+\texttt{verify\_property}, \texttt{best\_text\_match}, \texttt{simple\_query},
+\texttt{compute\_depth}, \texttt{crop}, \texttt{overlaps\_with}, together with free
+functions \texttt{best\_image\_match}, \texttt{distance}, \texttt{bool\_to\_yesno} and
+\texttt{coerce\_to\_numeric}. It closes with:
+
+\begin{lstlisting}[style=plainlist]
+Consider the following guidelines:
+- Use base Python (comparison, sorting) for basic logical operations,
+  left/right/up/down, math, etc.
+- Use the llm_query function to access external information and answer
+  informational questions not concerning the image.
+- Return only the function; do not include explanations or example usage.
+
+Query: INSERT_QUERY_HERE
+\end{lstlisting}
+
+Two properties are load-bearing. The text nowhere states the required return type, and
+five of seven examples declare \texttt{str}. And the first guideline directs spatial
+relations to base Python, excluding the depth API by construction.
+
+The single example returning a patch also fixes the semantics of
+\texttt{compute\_depth}:
+
+\begin{lstlisting}[caption={The only example in the released prompt that returns an
+\texttt{ImagePatch}, quoted verbatim from \texttt{prompts/api.prompt}, lines 100--110.}]
+def compute_depth(self):
+    """Returns the median depth of the image crop.
+    Examples
+    --------
+    >>> # the bar furthest away
+    >>> def execute_command(image)->ImagePatch:
+    >>>     image_patch = ImagePatch(image)
+    >>>     bar_patches = image_patch.find("bar")
+    >>>     bar_patches.sort(key=lambda bar: bar.compute_depth())
+    >>>     return bar_patches[-1]
+    """
+\end{lstlisting}
+
+The example sorts ascending and takes the last element for \emph{furthest away}. The
+specification therefore requires that a larger value denote a \emph{greater} distance
+from the camera. Section~\ref{sec:sign} shows the shipped implementation violates
+this, and that this example is the strongest available evidence for the correction.
+
+\subsection{C2 --- an explicit output contract}
+
+C2 appends three sentences and two examples; nothing is removed.
+
+\begin{lstlisting}[style=plainlist]
+This is a VISUAL GROUNDING task. The function must return the single
+ImagePatch that the query refers to. It must NOT return a string, a bool,
+or a list.
+Resolve every spatial relation in the query; do not drop it.
+\end{lstlisting}
+
+\begin{lstlisting}
+>>> # Query: man on the right
+>>> def execute_command(image) -> ImagePatch:
+>>>     image_patch = ImagePatch(image)
+>>>     man_patches = image_patch.find("man")
+>>>     man_patches.sort(key=lambda p: p.horizontal_center)
+>>>     return man_patches[-1]
+
+>>> # Query: the cup behind the bottle
+>>> def execute_command(image) -> ImagePatch:
+>>>     image_patch = ImagePatch(image)
+>>>     cup_patches = image_patch.find("cup")
+>>>     bottle_patches = image_patch.find("bottle")
+>>>     if not cup_patches: return image_patch
+>>>     if not bottle_patches: return cup_patches[0]
+>>>     bottle_depth = bottle_patches[0].compute_depth()
+>>>     behind = [c for c in cup_patches if c.compute_depth() > bottle_depth]
+>>>     return behind[0] if behind else cup_patches[0]
+\end{lstlisting}
+
+The clause on not dropping spatial relations is included because the static analysis
+measured that failure independently of the return type.
+
+\subsection{C3 --- depth primitives}
+
+C3 replaces the first guideline with a distinction between the two kinds of spatial
+relation:
+
+\begin{lstlisting}[style=plainlist]
+- Use base Python (comparison, sorting) for logical operations and arithmetic.
+- Resolve LEFT/RIGHT/ABOVE/BELOW using patch coordinates
+  (left, right, horizontal_center, vertical_center).
+- Resolve NEAR/FAR/BEHIND/IN FRONT using the depth functions below. These
+  relations are about distance from the camera and cannot be recovered from
+  image-plane coordinates.
+\end{lstlisting}
+
+and documents five new functions:
+
+\begin{lstlisting}[caption={Signatures presented to the generator in C3 and C4.}]
+def depth_order(patches: List[ImagePatch],
+                reverse: bool = False) -> List[ImagePatch]:
+    """Returns the patches sorted from NEAREST to FURTHEST from the camera.
+    Pass reverse=True to sort furthest to nearest."""
+
+def is_behind(a: ImagePatch, b: ImagePatch, margin: float = 0.0) -> bool:
+    """Returns True if a is further from the camera than b."""
+
+def is_in_front_of(a: ImagePatch, b: ImagePatch, margin: float = 0.0) -> bool:
+    """Returns True if a is closer to the camera than b."""
+
+def is_between_3d(a: ImagePatch, b: ImagePatch, c: ImagePatch) -> bool:
+    """Returns True if a lies between b and c in depth."""
+
+def distance_3d(a: ImagePatch, b: ImagePatch) -> float:
+    """Returns the separation between two patches, combining image-plane
+    offset and depth. Relative, not metres."""
+\end{lstlisting}
+
+\texttt{depth\_order} is the highest-value addition: a manual audit
+(Section~\ref{sec:audit}) finds \emph{closest}, \emph{nearest}, \emph{farthest} and
+\emph{closer} account for the majority of depth-word queries, and one ordering
+primitive covers all four including the ordinal cases (\emph{second closest}) that a
+pairwise predicate cannot express.
+
+\subsection{C4 --- routing}
+
+C4 adds no capability. It states when the capability applies:
+
+\begin{lstlisting}[style=plainlist]
+- Use the depth functions ONLY when the query actually expresses a depth
+  relation: closest, nearest, farthest, furthest, behind, in front of,
+  between (in depth). For every other query they add nothing and cost accuracy.
+- If the query is about LEFT/RIGHT/TOP/BOTTOM, sort by patch coordinates and
+  do not call any depth function.
+- If the query is about a colour, clothing, size or any other attribute, use
+  verify_property or best_text_match and do not call any depth function.
+\end{lstlisting}
+
+and supplies two counter-examples --- queries that should \emph{not} invoke the depth
+API, since the existing examples demonstrate only positive cases:
+
+\begin{lstlisting}
+>>> # Query: the man on the left
+>>> def execute_command(image) -> ImagePatch:
+>>>     image_patch = ImagePatch(image)
+>>>     man_patches = image_patch.find("man")
+>>>     if not man_patches: return image_patch
+>>>     man_patches.sort(key=lambda p: p.horizontal_center)
+>>>     return man_patches[0]
+
+>>> # Query: the woman in the red jacket
+>>> def execute_command(image) -> ImagePatch:
+>>>     image_patch = ImagePatch(image)
+>>>     woman_patches = image_patch.find("woman")
+>>>     if not woman_patches: return image_patch
+>>>     red = [w for w in woman_patches
+>>>            if w.verify_property("woman", "red jacket")]
+>>>     return red[0] if red else woman_patches[0]
+\end{lstlisting}
+
+C4 exists because C3 was measured and found to trade one failure for another; the
+sequence is reported in Chapter~\ref{ch:rejected} rather than presented as foresight.
+
+\section{Evaluation protocol}
+
+\subsection{Metric}
+
+The paper's Table~1 is captioned ``we report accuracy on the REC task'' while its
+column header reads ``IoU (\%)'', and the released evaluator computes mean IoU. These
+are different quantities. This dissertation reports \emph{accuracy at
+$\mathrm{IoU}\geq 0.5$} as primary and mean IoU alongside. On the runs reported here
+the two differ by roughly one point --- C4 on RefCOCO scores $42.00$ and $41.81$ --- so
+no conclusion depends on the choice, but both are given so comparison is possible in
+either currency.
+
+\subsection{Handling of invalid predictions}
+
+The released evaluator substitutes the dataset mean box, worth approximately $22.6$
+IoU, when a program returns nothing; this implementation scores an invalid return as
+zero. The difference is material for C1: under the paper's own evaluator, C1 would
+report approximately $22.6$ rather than $0.00$. The programs are equally invalid; what
+differs is whether the evaluator conceals the failure. Scoring zero is the more
+informative choice for a study whose subject is program validity.
+
+\subsection{Data}
+
+All experiments use testA of RefCOCO and RefCOCO+, with UNC referring expressions and
+COCO \texttt{train2014} images. Each condition is evaluated on the first 500
+expressions in file order --- deterministic and identical across conditions. This
+differs from the published evaluation, which reports on the full split after a seeded
+shuffle; the subset is a compute-driven restriction, recorded as such.
+
+Queries are labelled \emph{spatial} or \emph{non-spatial} by a lexicon of relational
+terms. The lexicon is a heuristic, not annotation, and Section~\ref{sec:audit}
+examines its limitations.
+
+% =====================================================================
+
+
+
+
+
+\chapter{Implementation}
+\label{ch:implementation}
+
+\section{Environment}
+
+Two Conda environments are required and never coexist in one interpreter.
+
+\begin{table}[htbp]\centering
+\caption{Execution environments. The GLIP fork requires an older PyTorch than the
+generator; the pipeline is split at the \texttt{programs.jsonl} boundary as a result.}
+\label{tab:envs}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Environment} & \textbf{Stage} & \textbf{PyTorch} & \textbf{Notes} \\
+\midrule
+\texttt{vipergpt} & generation & 2.13.0 & transformers 5.x \\
+\texttt{glip\_env} & execution & 2.1.2+cu121 & transformers 4.36.2, NumPy $<2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Hardware is a single NVIDIA H100 NVL (95\,GB) allocated through SLURM using fractional
+GPU shards. Compute nodes have no outbound network access, so all model weights and
+datasets are fetched on the login node and every job asserts offline operation before
+loading anything.
+
+\section{Building GLIP for the Hopper architecture}
+
+The published environment pins CUDA 11.6, which has no support for compute capability
+9.0. The published setup therefore \emph{cannot run at all} on this hardware. Three
+changes were required.
+
+\textbf{Removed headers.} The \texttt{THC/*} headers were deleted from PyTorch after
+version 1.11. Seven CUDA source files under \texttt{maskrcnn\_benchmark/csrc/cuda/}
+referenced them:
+
+\begin{lstlisting}[style=plainlist]
+#include <THC/THCAtomics.cuh>       ->  #include <ATen/cuda/Atomic.cuh>
+#include <THC/THCDeviceUtils.cuh>   ->  #include <ATen/cuda/CUDAContext.h>
+\end{lstlisting}
+
+\texttt{THCCeilDiv}, \texttt{THCudaMalloc} and \texttt{THCState} were verified absent
+from live code, so no further rewriting was needed.
+
+\textbf{Target architectures.} \texttt{setup.py} was extended with explicit
+\texttt{sm\_80} and \texttt{sm\_90} targets.
+
+\textbf{NumPy 2.0 aliases.} Five Python files used \texttt{np.float}, removed in NumPy
+1.24, causing construction to fail in \texttt{anchor\_generator.py} before any
+inference.
+
+The build must be performed \emph{on a GPU node}: \texttt{setup.py} gates
+\texttt{CUDAExtension} on \texttt{torch.cuda.is\_available()}, so a login-node build
+silently produces a CPU-only extension with no error.
+
+\subsection{Independent verification}
+
+The compiled kernel was verified before the full pipeline was trusted:
+
+\begin{lstlisting}[caption={CUDA NMS verified on a hand-checked case. Boxes 0 and 1
+overlap above threshold; box 2 is disjoint.}]
+boxes  = torch.tensor([[0.,0.,10.,10.], [1.,1.,11.,11.], [50.,50.,60.,60.]],
+                      device='cuda')
+scores = torch.tensor([0.9, 0.8, 0.7], device='cuda')
+keep   = _C.nms(boxes, scores, 0.5)      # -> [0, 2]
+\end{lstlisting}
+
+The detector was then validated against RefCOCO ground truth, reaching a mean IoU of
+$0.776$ at threshold $0.2$ and $81.5\%$ top-box accuracy on a held-out sample of 200.
+
+\section{The detector wrapper}
+
+A defect in the first wrapper is worth recording because of how it presented.
+\texttt{GLIPDemo} defaults to \texttt{tensor\_inputs=False}, under which it derives the
+image size as \texttt{original\_image.shape[:-1]}, assuming an HWC array. Passing a CHW
+tensor makes it read $(3, H)$ and rescale every box into a three-pixel-wide image.
+
+\begin{lstlisting}[caption={The one-word correction. Without it, every IoU was
+\emph{exactly} zero --- not low, zero --- which is what identified the fault as a
+coordinate-space bug rather than a detection-quality problem.}]
+self._demo = GLIPDemo(
+    glip_cfg,
+    min_image_size=800,
+    confidence_threshold=self.threshold,
+    show_mask_heatmaps=False,
+    tensor_inputs=True,      # <- selects shape[-2:] and the tensor transform
+)
+\end{lstlisting}
+
+Boxes are converted from the detector's top-left origin to the repository's bottom-left
+convention on return, and child patches produced by \texttt{find} are offset into their
+parent's frame --- an error invisible for root-level programs and wrong for any program
+that crops before finding.
+
+\section{The depth backend}
+\label{sec:sign}
+
+The shipped wrapper loaded MiDaS through \texttt{torch.hub}, which reaches the network
+and therefore hangs on an offline compute node, and returned the raw prediction. MiDaS
+predicts \emph{inverse} depth: a larger value means \emph{closer}. Every comparison
+built on \texttt{compute\_depth} therefore ran opposite to the semantics the paper's
+own example requires.
+
+\begin{lstlisting}[caption={Corrected depth. The inversion lives here and in
+\texttt{depth\_of\_region}, and nowhere else; callers are not permitted to read the raw
+map, which is what produced three separate sign errors.}]
+def compute_depth(self, image) -> float:
+    """Distance-like depth of the patch: LARGER = FURTHER from the camera."""
+    m = self._inverse_depth_map(image)
+    v = self._center_stat(m)
+    if v is None:
+        return 0.0
+    return 1.0 / max(v, _EPS)
+\end{lstlisting}
+
+Two further corrections were required. The DPT processor resizes to a square
+($384 \times 384$), so the depth map does not share the image's aspect ratio;
+proportional region reads therefore sampled horizontally squashed regions. The map is
+now resampled to image size. And the depth statistic is taken over the central 50\% of
+a box, because border pixels of a detection are usually background and skew the median.
+
+\section{The depth primitives}
+
+\begin{lstlisting}[caption={The contributed primitives, from
+\texttt{pipeline/image\_patch.py}. All follow the convention LARGER = FURTHER.}]
+def depth_order(patches: list, reverse: bool = False) -> list:
+    """Patches sorted NEAR to FAR. reverse=True gives far to near.
+
+    Backs "closest", "nearest", "farthest", "second closest" and
+    "third from the front" with a single primitive. Patches whose depth
+    cannot be computed are dropped rather than silently placed at one end.
+    """
+    if not patches:
+        return []
+    scored = []
+    for p in patches:
+        try:
+            d = p.compute_depth()
+        except Exception:          # a bad crop must not kill the program
+            continue
+        if d is not None:
+            scored.append((p, d))
+    scored.sort(key=lambda t: t[1], reverse=reverse)
+    return [p for p, _ in scored]
+
+
+def is_behind(a, b, margin: float = 0.0) -> bool:
+    """True if a is further from the camera than b by at least margin."""
+    return a.compute_depth() > b.compute_depth() + margin
+
+
+def is_between_3d(a, b, c) -> bool:
+    """True if a lies between b and c in depth."""
+    lo, hi = sorted([b.compute_depth(), c.compute_depth()])
+    return lo < a.compute_depth() < hi
+\end{lstlisting}
+
+The primitives are exposed to generated programs by the executor's namespace builder,
+alongside the original API.
+
+\subsection{Unit tests}
+
+Three sign errors occurred during development, none of which was caught by a test.
+The ordering semantics are now pinned by eighteen assertions over stub patches with
+known depths, requiring no model and no GPU:
+
+\begin{lstlisting}[caption={Representative assertions from
+\texttt{test\_depth\_api.py}. A failure here means the sign or the ordering has
+flipped, and is visible immediately rather than after hours of debugging.}]
+near, mid, far = StubPatch("near", 1.0), StubPatch("mid", 5.0), StubPatch("far", 9.0)
+
+assert depth_order([far, near, mid])            == [near, mid, far]
+assert depth_order([near, far, mid], True)      == [far, mid, near]
+assert depth_order([far, mid, near])[0]         is near   # "closest"
+assert depth_order([near, mid, far])[-1]        is far    # "farthest"
+assert depth_order([far, StubPatch("bad", None), near]) == [near, far]
+assert is_behind(far, near) and not is_behind(near, far)
+assert is_between_3d(mid, near, far)
+assert round(distance_3d(a, b), 6) == 5.0                 # 3-4-5 triangle
+\end{lstlisting}
+
+\section{Execution and scoring}
+
+The execution engine runs each program in a restricted namespace with a wall-clock
+timeout, and returns errors as data rather than raising, so that one bad program does
+not terminate a 500-sample run.
+
+\begin{lstlisting}[caption={Scoring, from \texttt{eval/execute\_refcoco.py}. A non-patch
+return scores zero rather than being excluded --- returning a sentence where a box is
+required is a task failure, and dropping such cases would flatter the baseline.}]
+res  = execute_program(p["program"], chw, bus, timeout_s=args.timeout)
+kind = "error" if res.error else classify(res.result)
+
+iou, pred = 0.0, None
+if kind == "patch":
+    r = res.result
+    # ImagePatch is bottom-left origin; undo the flip for COCO comparison
+    pred = (r.left, H - r.upper, r.right, H - r.lower)
+    iou  = iou_xyxy(pred, g["gt_xyxy"])
+ious.append(iou)          # non-patch returns score 0 -- that is the point
+\end{lstlisting}
+
+Because the programs are generated in one environment and executed in another, the two
+stages are joined by index. The runner asserts that the query string of every program
+matches the query of the corresponding ground-truth record, and refuses to score if any
+disagree.
+
+% =====================================================================
+\chapter{Experimental Setup}
+\label{ch:setup}
+
+\begin{table}[htbp]\centering
+\caption{Experiments. Generation and execution are separate jobs; identifiers are
+scheduler references retained for provenance.}
+\label{tab:experiments}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Experiment} & \textbf{Varies} & \textbf{Holds fixed} & \textbf{Jobs} \\
+\midrule
+Static analysis & prompt & model, data & 29187, 29193 \\
+End-to-end accuracy & prompt & model, modules, data & 29290, 29292 \\
+Generator scale & model size & prompt, modules, data & 29321, 29352, 29404 \\
+Seed variance & decoding seed & everything else & 29301, 29306, 29526 \\
+Depth conditions & prompt (C3, C4) & model, modules, data & 29459, 29523--29525 \\
+Threshold sweep & detector threshold & held-out sample & 29318 \\
+Candidate cap & candidate-set size & programs & 29563 \\
+Cap control & cap $\times$ condition & programs & 29565 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Decoding is greedy for all headline figures, matching the published temperature of
+zero. Because greedy decoding is deterministic, variance is estimated separately by
+sampling at $T = 0.7$ with three seeds; those figures are reported as mean and standard
+deviation and are never mixed with the greedy values.
+
+\section{Detector threshold}
+
+The paper specifies a detection threshold of $0.5$. That value was found to lose eight
+of twenty detections outright, so a sweep was performed --- on RefCOCO/testA samples
+200--399, \emph{disjoint} from every sample on which results are reported, so that the
+threshold is not tuned on the data it is evaluated on.
+
+\begin{table}[htbp]\centering
+\caption{Detector threshold sweep, held-out sample of 200. The selected value of $0.2$
+lies within one point of the optimum for detection.}
+\label{tab:threshold}
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+\textbf{Threshold} & \textbf{Acc.\ IoU$\geq$0.5} & \textbf{Mean IoU} &
+\textbf{No detection} & \textbf{Candidates/image} \\
+\midrule
+0.10 & 81.50 & 0.7372 & 21 & 25.5 \\
+0.15 & 81.50 & 0.7372 & 21 & 25.4 \\
+\textbf{0.20} & \textbf{80.50} & 0.7336 & 21 & \textbf{19.7} \\
+0.25 & 70.00 & 0.6658 & 21 & 9.3 \\
+0.30 & 59.50 & 0.5784 & 22 & 5.4 \\
+0.40 & 40.00 & 0.4350 & 32 & 2.4 \\
+0.50 & 31.00 & 0.3360 & 56 & 1.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.66\textwidth]{fig8_threshold_tradeoff.png}
+\caption[Detector threshold trade-off]{One threshold, two incompatible jobs. The value
+that maximises top-box detection accuracy also returns roughly twenty candidates per
+image; a program that must \emph{select} among candidates wants far fewer. The same
+knob cannot serve both, a tension that recurs in Chapter~\ref{ch:rejected}.}
+\label{fig:threshold}
+\end{figure}
+
+Twenty-one of two hundred samples yield no detection at \emph{every} threshold up to
+$0.4$. That floor is not threshold-related: it arises from the head-noun heuristic used
+to prompt the detector, under which \emph{``player number 8''} reduces to \emph{``8''}
+and is discarded.
+
+% =====================================================================
+\chapter{Results}
+\label{ch:results}
+
+\section{Main result}
+
+\begin{table}[htbp]\centering
+\caption{Accuracy at IoU $\geq 0.5$. Qwen2.5-Coder-7B, greedy decoding, $n=500$ per
+cell, testA split. C1 is the released prompt; C4 adds both the depth primitives and
+the rule stating when they apply.}
+\label{tab:main}
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+\textbf{Dataset} & \textbf{Subset} & \textbf{C1} & \textbf{C2} & \textbf{C3} & \textbf{C4} \\
+\midrule
+RefCOCO+ & overall & 0.00 & 30.80 & 28.00 & \up{37.60} \\
+RefCOCO+ & spatial ($n{=}47$) & 0.00 & 4.26 & 19.15 & \up{21.28} \\
+RefCOCO+ & non-spatial ($n{=}453$) & 0.00 & 33.55 & \down{28.92} & \up{39.29} \\
+\midrule
+RefCOCO & overall & 0.00 & 39.20 & 36.40 & \up{42.00} \\
+RefCOCO & spatial ($n{=}289$) & 0.00 & 34.26 & 36.68 & \up{37.02} \\
+RefCOCO & non-spatial ($n{=}211$) & 0.00 & 45.97 & \down{36.02} & \up{48.82} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig1_main_result.png}
+\caption[Main result]{All four conditions across both datasets and both subsets. The
+three rightmost groups act as controls: an intervention that improved only its target
+subset would be a trade rather than a gain.}
+\label{fig:main}
+\end{figure}
+
+Mean IoU for the same RefCOCO runs is $0.0000$, $0.3875$, $0.3655$ and $0.4181$ for
+C1--C4, tracking accuracy to within about a point throughout.
+
+\section{Comparison with the published figures}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig16_paper_vs_result.png}
+\caption[Reproduction against published figures]{Reproduced accuracy against the
+paper's Table~1, with the zero-shot baselines it reports alongside. C4 recovers 58\% of
+the RefCOCO figure and 56\% of RefCOCO+.}
+\label{fig:vspaper16}
+\end{figure}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig10_vs_paper.png}
+\caption[Reproduction with the perception ceiling]{The dotted line is GLIP alone taking
+its single best box: $81.5\%$ on a held-out sample of 200 --- \emph{above} the paper's
+$72.0$. Perception is therefore not what separates this reproduction from the original.
+No decomposition of the gap into individual deviations is shown, because those
+ablations were not run.}
+\label{fig:vspaper}
+\end{figure}
+
+That the perception ceiling exceeds the published figure is informative. The detector
+available here is good enough to surpass $72.0$ if a program selected from it perfectly.
+The shortfall is therefore in program synthesis, which is measured support for treating
+the generator substitution (D1) as the dominant term rather than assuming it.
+
+\section{Why the released prompt scores zero}
+\label{sec:static}
+
+The result is not a crash. Of 500 programs generated under C1 on RefCOCO, 332 executed
+to completion and returned a \emph{string}; none returned an \texttt{ImagePatch}.
+
+\begin{table}[htbp]\centering
+\caption{What each of the 500 samples returned, RefCOCO/testA.}
+\label{tab:returnkinds}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Return type} & \textbf{C1} & \textbf{C2} & \textbf{C4} \\
+\midrule
+\texttt{ImagePatch} & 0 & 444 & 488 \\
+\texttt{str} & 332 & 1 & 0 \\
+error & 168 & 55 & 11 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig7_failure_modes.png}
+\caption[Failure decomposition]{Every sample classified by what happened to it. C1
+fails on \emph{return type} and never reaches localisation; by C4 those categories are
+gone and the residual failure is a localisation miss, which is a perception limit
+rather than a specification bug. An accuracy figure alone conflates the two.}
+\label{fig:failure}
+\end{figure}
+
+Missing modules are ruled out as a cause. \texttt{simple\_query} and
+\texttt{llm\_query} are given neutral empty-string fallbacks (D10), so no program can
+fail for lack of a module that was deliberately not loaded. That concession strictly
+favours C1 and does not change its score.
+
+\subsection{A second effect: output format}
+
+Under C1 a large fraction of generations never defined \texttt{execute\_command} at
+all --- the model emitted prose or malformed markdown: $140/500$ on RefCOCO and
+$212/500$ on RefCOCO+, against zero under every later condition. The contract
+disciplines output \emph{format} as well as return type; these are separable failures
+and are reported separately.
+
+\subsection{Static analysis}
+
+Before execution, the programs were analysed by parsing.
+
+\begin{table}[htbp]\centering
+\caption{Static analysis of generated programs, $n=500$ per cell. ``Task-invalid''
+denotes a program whose \texttt{return} yields a string rather than a patch;
+``spatial dropped'' denotes a spatial query whose program contains no positional
+operation at all.}
+\label{tab:static}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Metric} & \textbf{C1 RefCOCO} & \textbf{C2 RefCOCO} & \textbf{C1 RefCOCO+} & \textbf{C2 RefCOCO+} \\
+\midrule
+Task-invalid return & 98.8\% & \up{0.2\%} & 98.2\% & \up{0.0\%} \\
+Spatial constraint dropped & 17.3\% & \up{1.7\%} & 31.9\% & \up{2.1\%} \\
+Parse rate & 99.8\% & \down{96.6\%} & 99.6\% & \down{92.2\%} \\
+Mean API calls per program & 2.45 & 1.66 & 2.89 & 2.25 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The contract costs parse rate --- $3.2$ points on RefCOCO and $7.4$ on RefCOCO+ ---
+because a stricter requirement induces a small rate of syntactically invalid
+generations. Net structural validity nonetheless rises from roughly $1\%$ to $96\%$.
+
+\section{Generator scale}
+
+\begin{table}[htbp]\centering
+\caption{Generator scale, condition C2, greedy, RefCOCO/testA, $n=500$.}
+\label{tab:scale}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+\textbf{Generator} & \textbf{C1 acc.} & \textbf{C2 acc.} & \textbf{spatial} &
+\textbf{non-spatial} & \textbf{C1 task-invalid} \\
+\midrule
+Qwen2.5-Coder-1.5B & 0.80 & 34.40 & 34.95 & 33.65 & 95.8\% \\
+Qwen2.5-Coder-7B & 0.00 & 39.20 & 34.26 & 45.97 & 98.8\% \\
+Qwen2.5-Coder-32B & 0.00 & 40.80 & 34.95 & 48.82 & 87.6\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.62\textwidth]{fig2_scale.png}
+\caption[Accuracy against generator scale]{Non-spatial accuracy climbs with capacity;
+spatial accuracy does not move. Same images, same detector, same prompt --- only the
+generator differs. This is the evidence that the spatial deficit is an interface
+problem rather than a capacity one.}
+\label{fig:scale}
+\end{figure}
+
+Two conclusions follow. The specification gap is scale-independent: a 32B generator
+still emits $87.6\%$ task-invalid programs under C1 and still scores $0.00$, and the
+same three sentences repair it at every size. Scaling $1.5\mathrm{B} \to 32\mathrm{B}$
+buys $6.4$ accuracy points; the contract buys $33$ to $41$.
+
+More consequentially, \textbf{spatial accuracy does not respond to scale at all} ---
+$34.95 / 34.26 / 34.95$, with the smallest and largest models identical to two decimal
+places --- while non-spatial accuracy rises by $15.2$ points. A larger generator writes
+better programs for everything except spatial relations, where it writes programs that
+are exactly as wrong. If the deficit were a program-synthesis problem, capacity would
+help; it demonstrably does elsewhere.
+
+An incidental observation: under C1, the 32B model failed to define
+\texttt{execute\_command} in $304/500$ generations against $16/500$ for 1.5B. The
+larger instruction-tuned model is more prone to answering in prose when the prompt does
+not demand a function, which is why 32B scores $0.00$ where 1.5B manages $0.80$.
+
+\section{Spatial breakdown}
+\label{sec:audit}
+
+We expected the spatial gap to \emph{shrink} on RefCOCO+, which forbids location words.
+It widened threefold: $9.3$ points on RefCOCO against $28.1$ on RefCOCO+ under C2.
+
+A manual audit of all 47 RefCOCO+ spatial queries explains why. The two subsets contain
+different kinds of spatial language.
+
+\begin{table}[htbp]\centering
+\caption{The two spatial subsets are not the same kind of query.}
+\label{tab:audit}
+\begin{tabular}{@{}p{0.16\textwidth}p{0.34\textwidth}p{0.38\textwidth}@{}}
+\toprule
+& \textbf{RefCOCO} & \textbf{RefCOCO+} \\
+\midrule
+Type & 2D image-plane & depth and inter-object \\
+Examples & \emph{man on right}, \emph{person bottom left} &
+\emph{man closest to us}, \emph{farthest man}, \emph{umpire behind catcher} \\
+Resolvable by & sorting patch coordinates in base Python &
+requires \texttt{compute\_depth} or 3D geometry \\
+Accuracy (C2) & 34.26 & 4.26 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Forbidding location words removed viewer-frame \emph{directional} expressions and left
+depth-ordering and relational ones. The released prompt's instruction to use base Python
+for ``left/right/up/down'' works for the first and cannot work for the second.
+Consistently, the call-frequency analysis finds \texttt{compute\_depth} invoked 29 times
+against 547 for \texttt{find}: the geometric API is effectively unused, by design of the
+prompt.
+
+Two further observations support this reading. All three successes in the RefCOCO+
+spatial subset under C2 are depth queries with very high IoU ($0.97$, $0.96$, $0.92$):
+when depth ordering is attempted correctly the localisation is excellent, but it is
+usually not attempted. And across seeds, spatial variance is roughly four times
+non-spatial variance, reported in Section~\ref{sec:seeds}.
+
+\textbf{Caveat.} $n = 47$, so $4.26\%$ is 2 of 47 and $21.28\%$ is 10 of 47. The lexicon
+also produces roughly five false positives in that subset --- \emph{``writing on back''},
+\emph{``long sleeved''} matching \emph{side} --- which would push true depth-query
+accuracy lower still. The direction is established; the value is not.
+
+\section{API adoption}
+
+The principal risk in extending an API is that the generator ignores the extension, as
+it largely ignores \texttt{compute\_depth}. It did not.
+
+\begin{table}[htbp]\centering
+\caption{API calls across 500 generated programs, RefCOCO/testA.}
+\label{tab:adoption}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Condition} & \texttt{find} & \texttt{compute\_depth} & \texttt{depth\_order} &
+\textbf{other depth primitives} \\
+\midrule
+C1 & 548 & 29 & 0 & 0 \\
+C2 & 639 & 23 & 0 & 0 \\
+C3 & 598 & 19 & 119 & 63 \\
+C4 & 559 & --- & 37 & 7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.68\textwidth]{fig3_api_adoption.png}
+\caption[API adoption across conditions]{Zero adoption under the older prompts, strong
+adoption once the primitives are offered. Under C4 the count falls to 37 --- the routing
+rule working, not the primitive being abandoned, since RefCOCO contains few depth
+queries. On RefCOCO+, which has 47 depth-word queries, C4 makes 33
+\texttt{depth\_order} calls against 167 under C3.}
+\label{fig:adoption}
+\end{figure}
+
+\section{Providing a capability is not sufficient}
+
+C3 offers the primitives; C4 adds three sentences saying when they apply. The difference
+between them is the sharper finding of this dissertation.
+
+C3 wins its target subset --- RefCOCO+ depth queries move $4.26 \to 19.15$ --- and loses
+elsewhere: non-spatial accuracy falls $45.97 \to 36.02$ on RefCOCO and $33.55 \to 28.92$
+on RefCOCO+, so overall accuracy drops. \texttt{depth\_order} is invoked 119 times on
+RefCOCO, where most queries need no depth at all. \emph{Given a new primitive, the
+generator reaches for it indiscriminately.}
+
+C4 improves every cell of both datasets. The depth gain survives ($21.28$) while
+non-spatial rises above C2 as well ($48.82$ against $45.97$), presumably because the
+counter-examples also clarify the 2D and attribute paths. Execution robustness improves
+monotonically: RefCOCO errors $55 \to 24 \to 11$ and patch returns $444 \to 475 \to 488$
+for C2 $\to$ C3 $\to$ C4.
+
+This is the same class of omission as the first result. In C1 the specification failed to
+state \emph{what} to return; in C3 it failed to state \emph{when} a capability applies.
+Both are failures of the contract rather than of the model.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig4_qualitative.png}
+\caption[Qualitative comparison]{Depth queries where C4 succeeds and C2 fails. Red: C2's
+prediction. Teal: C4's. Dashed: ground truth. The failures are not near-misses --- without
+a primitive for \emph{closest}, the program selects a different object entirely.}
+\label{fig:qual}
+\end{figure}
+
+\section{Seed variance}
+\label{sec:seeds}
+
+Greedy decoding is deterministic, so variance was estimated by sampling at $T = 0.7$ with
+three seeds.
+
+\begin{table}[htbp]\centering
+\caption{Seed variance, RefCOCO/testA, $T=0.7$, seeds 1--3, $n=500$.}
+\label{tab:seeds}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Condition} & \textbf{overall} & \textbf{spatial} & \textbf{non-spatial} \\
+\midrule
+C2 contract & $36.07 \pm 1.75$ & $32.87 \pm 3.35$ & $40.44 \pm 0.72$ \\
+C3 + depth & $34.40 \pm 0.40$ & $34.02 \pm 0.80$ & $34.92 \pm 0.55$ \\
+C4 + routing & $\mathbf{42.07 \pm 0.61}$ & $38.29 \pm 0.72$ & $47.23 \pm 1.19$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig6_seed_variance.png}
+\caption[Seed variance and stability]{Left: C4 separates from C2 by $6.0$ points against
+standard deviations under two. Right: standard deviation on spatial queries alone. The
+explicit primitive removes the improvisation the generator otherwise performs afresh on
+every sample.}
+\label{fig:seeds}
+\end{figure}
+
+Two observations. First, \textbf{greedy decoding understates C4}. C2's greedy result
+($39.20$) sits $1.8$ standard deviations \emph{above} its own sampled mean ($36.07$) ---
+greedy was fortunate for C2 --- while C4's greedy ($42.00$) and sampled ($42.07$) results
+coincide. The honest comparison is $6.0$ points, not the $2.8$ the greedy table suggests.
+
+Second, and unanticipated: \textbf{the primitives buy stability as well as accuracy}.
+Spatial-query standard deviation falls from $\pm 3.35$ under C2 to $\pm 0.72$ under C4, a
+factor of $4.6$. Under C2 the generator improvises spatial logic on every sample ---
+sometimes sorting by coordinate, sometimes dropping the relation entirely --- and which it
+does depends on the seed. Once \texttt{depth\_order} exists there is one way to express
+the relation and the variance collapses. An explicit primitive makes the system's
+behaviour reproducible, not merely more accurate.
+
+\section{Robustness of the metric}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig11_iou_sweep.png}
+\caption[IoU threshold sensitivity]{Accuracy recomputed at every IoU threshold from $0.3$
+to $0.9$, and the C4$-$C2 difference. The threshold of $0.5$ is used because the paper
+uses it, but the C4 advantage stays positive across the whole range.}
+\label{fig:iousweep}
+\end{figure}
+
+Were the advantage confined to the neighbourhood of $0.5$, it would suggest the conditions
+differ in box tightness rather than in object selection. They do not.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig5_iou_distribution.png}
+\caption[IoU distribution]{Left: distribution over samples scoring anything at all.
+Right: share of samples scoring exactly zero. The distributions are strongly bimodal ---
+programs either localise well or miss entirely --- which is what one expects when the
+failure mode is selecting the wrong object rather than drawing a loose box.}
+\label{fig:distribution}
+\end{figure}
+
+% =====================================================================
+\chapter{Rejected Hypotheses and Controls}
+\label{ch:rejected}
+
+Three hypotheses were tested and rejected, and one intervention was disqualified by a
+control. They are reported because a reproduction study in which nothing failed would be
+less credible, and because in two cases the rejected result was larger than the accepted
+one.
+
+\section{Rejection 1: the collapse hypothesis}
+
+Milestone~1 was designed to test a specific claim: that spatial-relational queries would
+cause the generator to collapse the whole query into a single opaque
+\texttt{simple\_query} call. The paper's GQA prompt instructs exactly this, listing
+relational terms and directing the model to ask directly rather than decompose.
+
+The measured collapse rate was approximately $0\%$ --- one program in 289 spatial queries.
+
+The hypothesis was well-posed and aimed at the wrong task. That instruction applies to
+GQA, not to grounding, and grounding cannot use \texttt{simple\_query} at all because it
+must return a patch. The cost of establishing this was a single 63-minute job, incurred
+before any perception model had been built --- which is why the generation stage was
+studied first.
+
+The same run produced the return-type finding that became the first result of this
+dissertation.
+
+\section{Rejection 2: RefCOCO+ as a clean control}
+
+RefCOCO+ forbids location words, so it was expected to serve as a control in which the
+spatial/non-spatial gap would narrow or vanish. It widened threefold
+(Section~\ref{sec:audit}).
+
+The audit that followed produced the distinction between image-plane and depth-based
+spatial language, which is the entire justification for Milestone~3. A rejected
+hypothesis produced the contribution.
+
+\section{Rejection 3: the primitives alone}
+
+C3 was expected to suffice. It improved its target subset and degraded the others,
+failing criterion C-2, and was superseded by C4 (Section~\ref{sec:prompts}).
+
+\section{A fifteen-point result, disqualified}
+
+The detector returns roughly 20 candidates per image at the selected threshold. Capping
+\texttt{find} to $k$ of them, on the \emph{same} C4 programs:
+
+\begin{table}[htbp]\centering
+\caption{Candidate cap applied to C4 programs, RefCOCO/testA.}
+\label{tab:cap}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Cap} & \textbf{overall} & \textbf{spatial} & \textbf{non-spatial} \\
+\midrule
+off & 42.80 & 37.72 & 49.76 \\
+$k = 12$ & 45.20 & 41.52 & 50.24 \\
+$k = 6$ & 49.60 & 47.75 & 52.13 \\
+$k = 3$ & \textbf{57.60} & \textbf{61.59} & 52.13 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+$57.60$ would be the best figure in this project by fifteen points, and $61.59$ on spatial
+queries would exceed every non-spatial result obtained. It is not reportable, and the
+control is why.
+
+Applying the identical cap to \textbf{C2}, which contains no depth primitives at all:
+
+\begin{table}[htbp]\centering
+\caption{The control required by criterion C-1. C2 has no depth reasoning anywhere in the
+pipeline.}
+\label{tab:capcontrol}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+& \textbf{no cap} & \textbf{$k = 3$} & \textbf{gain} \\
+\midrule
+C2 spatial & 34.60 & 57.09 & \down{$+22.5$} \\
+C4 spatial & 37.72 & 61.59 & $+23.9$ \\
+C2 non-spatial & 45.02 & 45.50 & $+0.5$ \\
+C4 non-spatial & 49.76 & 52.13 & $+2.4$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{fig13_cap_control.png}
+\caption[The control that disqualified a fifteen-point result]{Left: both conditions with
+and without a three-candidate cap. Right: the gain the cap alone provides, by subset. C2
+gains almost exactly what C4 gains, so the improvement belongs to the candidate set rather
+than to depth reasoning. Non-spatial queries barely move, which identifies the mechanism.}
+\label{fig:capcontrol}
+\end{figure}
+
+C2's spatial accuracy rises $22.5$ points from the cap alone. Of C4's $23.9$, roughly
+$1.4$ points are attributable to depth and the rest to the candidate set.
+
+\textbf{The mechanism is arithmetic.} Choosing among three candidates rather than twenty
+raises the hit rate by construction --- random selection alone scores $33\%$ at $k=3$
+against $5\%$ at $k=20$ --- and in RefCOCO the referred object is almost always among the
+most confident detections. That non-spatial queries gain almost nothing ($+0.5$ for C2)
+confirms it: those queries verify attributes rather than selecting among same-class
+candidates, so a smaller set does not help them. Only \emph{pick one of $N$ people}
+benefits, and it benefits however the pick is made.
+
+\textbf{Decision.} \texttt{max\_detections} remains disabled for every reported number.
+Non-maximum suppression is likewise left off: it helps RefCOCO marginally
+($42.00 \to 42.80$) but harms RefCOCO+ depth queries badly ($21.28 \to 12.77$), because
+suppressing overlapping boxes removes exactly the depth-distinct instances a depth query
+must tell apart.
+
+\textbf{What survives.} C4's advantage over C2 holds under both settings --- $3.8$ points
+uncapped, $5.4$ capped --- so no claim in this work rests on the cap.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.68\textwidth]{fig12_headroom.png}
+\caption[Achieved against achievable]{Depth-ordering selection study. Grey: the correct box
+was present among the candidates. Teal: it was selected. The gap between bars is an
+ordering failure; the gap from grey to $100\%$ is a detection failure. The binding
+constraint has moved from ordering to detection.}
+\label{fig:headroom}
+\end{figure}
+
+\section{A sign error that a synthetic test endorsed}
+
+The depth sign was established, reversed, and re-established during development. The
+reason is worth recording.
+
+The initial implementation returned the raw MiDaS prediction. Believing this to be inverse
+depth, an inversion was applied. A synthetic test scene --- a brightness gradient with a
+large dark object low in frame --- then indicated the inversion was wrong, and it was
+removed. That scene was invalid: the model read the brightness gradient as depth.
+
+The decisive experiment removes both the detector and the synthetic data. Take RefCOCO+
+depth queries, use \textbf{ground-truth boxes only}, and ask whether the annotated target
+sits at the correct end of the depth ordering.
+
+\begin{table}[htbp]\centering
+\caption{Depth sign validated against ground truth, no detector involved, $n=25$.}
+\label{tab:sign}
+\begin{tabular}{@{}lr@{}}
+\toprule
+& \textbf{Target at correct depth extreme} \\
+\midrule
+without inversion & \down{$2/25 = 8\%$} \\
+with inversion & \up{$20/25 = 80\%$} \\
+chance ($3.8$ objects per image) & $26\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.56\textwidth]{fig9_depth_sign.png}
+\caption[Depth sign validation]{$8\%$ is far \emph{below} the chance level of $26\%$. A
+weak signal scores near chance; an inverted one scores below it. That distinction is what
+identified the fault.}
+\label{fig:sign}
+\end{figure}
+
+Two lessons are recorded. \textbf{Synthetic scenes are unreliable for validating
+perceptual signals}, because the model latches onto whatever cue the synthetic image
+actually contains. And the paper's own \texttt{compute\_depth} example ---
+\texttt{sort(\ldots); return bar\_patches[-1]} for \emph{furthest away} --- independently
+requires the corrected sign, so the correction is not merely empirically supported but
+required by the specification being reproduced.
+
+
+
+
+
+
+
+% =====================================================================
+%  Milestone 4 — Generalisation Across Generator Families
+%  \input{chapters/ch_milestone4}
+% =====================================================================
+\chapter{Milestone 4 --- Generalisation Across Generator Families}
+\label{ch:milestone4}
+
+\section{Motivation}
+
+Every result in Chapters~\ref{ch:results} and~\ref{ch:rejected} is measured on one
+generator family: Qwen2.5-Coder, at 1.5B, 7B and 32B parameters. The scale sweep
+shows that the specification gap and the flat spatial accuracy persist across that
+range, which rules out capacity \emph{within} the Qwen family as an explanation. It
+does not rule out the family itself. A reader can reasonably ask whether the released
+prompt's failure is a property of ViperGPT's specification or a property of how one
+vendor's models happen to follow instructions --- and, separately, whether a stronger
+publicly available generator narrows the gap to the paper's reported $72.0$.
+
+This chapter answers both with a second, orthogonal sweep: four model families across
+all four prompt conditions on both datasets.
+
+\section{Design}
+
+\begin{table}[htbp]\centering\small
+\caption{The four generators. All are openly downloadable without licence acceptance
+or an access token, so the grid is reproducible without credential management --- a
+deliberate choice, given that the dissertation's subject is a system rendered
+irreproducible by a withdrawn proprietary model.}
+\label{tab:m4-models}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Generator} & \textbf{Publisher} & \textbf{Parameters} & \textbf{Note} \\
+\midrule
+Qwen2.5-Coder-7B-Instruct & Alibaba & 7B dense & used throughout Ch.~\ref{ch:results} \\
+DeepSeek-Coder-V2-Lite-Instruct & DeepSeek & 16B / \textbf{2.4B active} & mixture-of-experts \\
+Yi-Coder-9B-Chat & 01.AI & 9B dense & --- \\
+OpenCoder-8B-Instruct & INF / M-A-P & 8B dense & needs \texttt{trust\_remote\_code} (D15) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Each model was run under all four prompt conditions (C1--C4,
+Section~\ref{sec:prompts}) on both datasets at $n=500$ with greedy decoding --- the
+same protocol as every other result in this dissertation. Combined with the existing
+Qwen-7B cells this gives a $4 \times 4 \times 2 = 32$-cell grid. Qwen2.5-Coder-1.5B
+and -32B contribute C1 and C2 on RefCOCO from the earlier scale sweep and are
+included in the C1$\to$C2 analysis only (D18).
+
+\textbf{What the design isolates.} The prompt conditions are unchanged; only the
+generator varies. A difference between models under the same condition is therefore
+attributable to the generator, and a difference between conditions that holds across
+all four generators is attributable to the prompt rather than to one vendor's
+instruction-following.
+
+\textbf{What it does not control for.} DeepSeek-Coder-V2-Lite is a mixture-of-experts
+model with 16B total parameters but only 2.4B active per token --- roughly a third of
+the smallest dense model here. Any DeepSeek result is confounded by architecture and
+effective capacity simultaneously and is reported as such rather than treated as
+size-matched. All four generators were released in 2024--2025, two to three years
+after Codex, so the grid is not a controlled test of model era.
+
+\section{Engineering}
+
+Three failures occurred while building the grid. Two are general lessons rather than
+incidental bugs.
+
+\subsection{A global flag broke the model it was not meant for}
+
+OpenCoder ships custom tokenizer and model classes and requires
+\texttt{trust\_remote\_code=True}. Setting the flag globally broke DeepSeek: it forced
+\texttt{transformers} to load the repository's own \texttt{modeling\_deepseek.py} in
+preference to the library's built-in class, and that file imports
+\texttt{is\_torch\_fx\_available}, removed in \texttt{transformers}~5.x.
+
+\begin{lstlisting}[caption={The flag is made conditional on the model identifier
+rather than applied uniformly (D15).}]
+tok = AutoTokenizer.from_pretrained(
+    a.model, padding_side="left",
+    trust_remote_code=("OpenCoder" in a.model))
+\end{lstlisting}
+
+\subsection{A resumability bug reported failure as success}
+
+The generation script creates its run directory \emph{before} loading the model, so
+when the flag above crashed DeepSeek at model-load time, eight empty directories were
+left behind. The grid driver's resume logic checked only for the directory's
+existence, so the next submission treated all eight as complete, skipped them, and
+reported success having generated nothing.
+
+\begin{lstlisting}[caption={Completion is tested by the artefact, not by the
+container created to hold it.}]
+EXPECT="outputs/runs/*m1_${DS}_testA_${SHORT}_${TAG}_greedy"
+if compgen -G "$EXPECT/programs.jsonl" > /dev/null; then
+    echo ">>> SKIP  $DS | $PROMPT  (already generated)"
+    continue
+fi
+\end{lstlisting}
+
+This generalises beyond the project: in a resumable pipeline the marker of completion
+must be the output artefact, never a side effect of having started.
+
+\subsection{A batching corruption, not a crash}
+
+After both fixes, DeepSeek's RefCOCO/C1 cell generated at batch size 6 --- the setting
+used for the other models --- with a parse rate of $0.4\%$ across 500 samples. Not an
+error; near-total corruption. Regenerating at batch size 1 (D17) restored the parse
+rate to the range seen on the model's other seven cells. The root cause was not fully
+diagnosed since a working fix was found, and it is recorded as a fragility of this
+particular mixture-of-experts model under batched greedy decoding on this stack rather
+than assumed to generalise.
+
+\section{Results}
+
+\begin{table}[htbp]\centering\small
+\caption{Accuracy at IoU $\geq 0.5$, greedy, $n=500$ per cell, testA. Conditions as
+defined in Table~\ref{tab:conditions}.}
+\label{tab:m4-main}
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+& \multicolumn{4}{c}{\textbf{RefCOCO}} & \multicolumn{4}{c}{\textbf{RefCOCO+}} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+\textbf{Generator} & C1 & C2 & C3 & C4 & C1 & C2 & C3 & C4 \\
+\midrule
+Qwen2.5-Coder-7B & 0.00 & 39.20 & 36.40 & 42.00 & 0.00 & 30.80 & 28.00 & 37.60 \\
+DeepSeek-V2-Lite & 0.00 & 29.60 & 38.80 & 41.80 & 0.00 & 24.00 & 38.60 & 38.40 \\
+OpenCoder-8B & 0.20 & 40.80 & 37.40 & 43.20 & 0.00 & 30.20 & 28.00 & 31.60 \\
+Yi-Coder-9B & 3.80 & 43.80 & 39.00 & \textbf{45.40} & 0.80 & 34.40 & 35.60 & \textbf{43.80} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{results/figures/fig17_grid.pdf}
+\caption[Accuracy across all generators and conditions]{All four models under all
+four conditions, both datasets. The dashed line is the paper's reported figure
+($72.0$ on RefCOCO, $67.0$ on RefCOCO+). Every generator is near-zero under C1 and
+recovers substantially by C2.}
+\label{fig:m4-grid}
+\end{figure}
+
+\subsection{Q1 --- is the specification gap universal?}
+
+\begin{table}[htbp]\centering
+\caption{C1 $\to$ C2, RefCOCO overall. A gap present in every family cannot be a
+property of one model.}
+\label{tab:m4-q1}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Generator} & \textbf{C1} & \textbf{C2} & \textbf{gain} \\
+\midrule
+Qwen2.5-Coder-1.5B & 0.80 & 34.40 & $+33.6$ \\
+Qwen2.5-Coder-7B & 0.00 & 39.20 & $+39.2$ \\
+Qwen2.5-Coder-32B & 0.00 & 41.60 & $+41.6$ \\
+DeepSeek-V2-Lite & 0.00 & 29.60 & $+29.6$ \\
+OpenCoder-8B & 0.20 & 40.80 & $+40.6$ \\
+Yi-Coder-9B & 3.80 & 43.80 & $+40.0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Every generator scores below $4\%$ under the released prompt, and every one recovers
+by at least $29.6$ points under the return-type contract alone.
+\textbf{The specification gap is not a Qwen-specific failure.} Yi-Coder's baseline of
+$3.80$ is the least severe of the six, and it remains a near-total failure relative to
+its own $43.80$ under C2.
+
+\subsection{Q2 --- does the depth capability transfer?}
+
+\begin{table}[htbp]\centering
+\caption{C2 $\to$ C3 on the RefCOCO+ spatial subset ($n=47$; the depth-word queries).}
+\label{tab:m4-q2}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Generator} & \textbf{C2 spatial} & \textbf{C3 spatial} & \textbf{gain} \\
+\midrule
+Qwen2.5-Coder-7B & 4.26 & 19.15 & $+14.9$ \\
+DeepSeek-V2-Lite & 14.89 & 27.66 & $+12.8$ \\
+OpenCoder-8B & 23.40 & 17.02 & $-6.4$ \\
+Yi-Coder-9B & 25.53 & 29.79 & $+4.3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three of four generators improve on the depth subset when the primitives are offered;
+OpenCoder is the exception, losing $6.4$ points.
+
+Two observations matter independently of that exception. First, \textbf{OpenCoder and
+Yi-Coder already score far higher than Qwen under C2} --- $23.40$ and $25.53$ against
+Qwen's $4.26$ --- \emph{before} any depth primitive is offered. Some generators are
+evidently resolving depth relations by other means under the plain grounding contract,
+a behaviour not investigated here. Second, Qwen shows both the lowest starting point
+and the largest gain, consistent with it benefiting most from an explicit primitive
+precisely because it had the least alternative strategy.
+
+At $n=47$ a single query is worth $2.13$ percentage points, so these differences span
+roughly two to seven samples. The ordering is informative; the magnitudes are not.
+
+\subsection{Q3 --- is the routing rule necessary in every family?}
+
+\begin{table}[htbp]\centering
+\caption{C2 $\to$ C3 $\to$ C4 on the RefCOCO non-spatial subset --- the control
+against which over-application of the depth primitives shows up.}
+\label{tab:m4-q3}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+\textbf{Generator} & \textbf{C2} & \textbf{C3} & \textbf{C4} & \textbf{C3 change} & \textbf{C4 change} \\
+\midrule
+Qwen2.5-Coder-7B & 45.97 & 36.02 & 48.82 & $-9.9$ & $+12.8$ \\
+DeepSeek-V2-Lite & 31.28 & 45.50 & 50.71 & $+14.2$ & $+5.2$ \\
+OpenCoder-8B & 47.87 & 36.49 & 45.97 & $-11.4$ & $+9.5$ \\
+Yi-Coder-9B & 49.29 & 49.76 & 52.13 & $+0.5$ & $+2.4$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two of four generators exhibit the over-application failure that motivated C4 in
+Chapter~\ref{ch:results}: Qwen loses $9.9$ points of non-spatial accuracy under C3
+and OpenCoder loses $11.4$, and both recover under C4. Yi-Coder does not exhibit it
+--- its non-spatial accuracy is flat between C2 and C3 --- yet still gains $2.4$
+points from the routing rule.
+
+DeepSeek behaves differently again: its C2 non-spatial accuracy is anomalously low
+($31.28$, against $45.97$--$49.29$ for the others), so C3 appears to \emph{gain}
+$14.2$ points rather than lose them. This is better read as DeepSeek performing poorly
+under C2 than as the depth primitives helping non-spatial queries. Its C2 figures are
+the weakest in the grid on both datasets ($29.60$ and $24.00$ overall), which is
+consistent with its $2.4$B active parameters.
+
+\textbf{One exception to the C3 $\to$ C4 ordering.} On RefCOCO+, DeepSeek is the sole
+generator for which C4 does not exceed C3 ($38.40$ against $38.60$, a $-0.2$
+difference). Every other model, and DeepSeek itself on RefCOCO ($38.80 \to 41.80$),
+shows $\text{C4} > \text{C3}$. A $0.2$-point difference is one sample in 500 and has
+not been re-seeded; it is reported rather than smoothed over, and the claim that C4
+improves on C3 is stated as holding in every generator on RefCOCO and in three of four
+on RefCOCO+.
+
+\subsection{Q4 --- does a stronger generator raise accuracy?}
+
+\begin{table}[htbp]\centering
+\caption{Best condition (C4) against the paper's reported figures.}
+\label{tab:m4-q4}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Generator} & \textbf{C4 RefCOCO} & \textbf{C4 RefCOCO+} & \textbf{share of 72.0 / 67.0} \\
+\midrule
+Qwen2.5-Coder-7B & 42.00 & 37.60 & 58\% / 56\% \\
+DeepSeek-V2-Lite & 41.80 & 38.40 & 58\% / 57\% \\
+OpenCoder-8B & 43.20 & 31.60 & 60\% / 47\% \\
+Yi-Coder-9B & \textbf{45.40} & \textbf{43.80} & \textbf{63\% / 65\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{results/figures/fig18_generalisation.pdf}
+\caption[Do the findings transfer across generators?]{Each panel answers one
+generalisation question with a before-and-after marker per model: hollow before the
+intervention, filled after. Left to right: the specification gap (Q1), the depth
+capability (Q2), and the routing rule (Q3).}
+\label{fig:m4-transfer}
+\end{figure}
+
+\textbf{Yi-Coder-9B is the strongest generator measured}, on both datasets, by $3.4$
+points on RefCOCO and $6.2$ points on RefCOCO+ over Qwen2.5-Coder-7B. This answers
+the question directly: \textbf{substituting a different open-weights generator does
+raise accuracy, by three to six points, and does not close the gap to the paper's
+reported figures.}
+
+The perception ceiling measured independently of any generator ($81.5\%$ top-box
+accuracy, held-out $n=200$) exceeds the paper's $72.0$, so the shortfall is not a
+perception limit for any of the four generators tried. It remains a program-synthesis
+limit --- which is measured support for treating the Codex substitution (D1) as the
+dominant term in the gap rather than assuming it.
+
+\section{Summary}
+
+\begin{enumerate}[leftmargin=1.8em, itemsep=4pt]
+\item The specification gap of Chapter~\ref{ch:results} is present in all six
+generators measured, at severities from $0.00$ to $3.80$ under C1, and is repaired to
+between $29.6$ and $43.8$ under C2. It is a property of the prompt, not of one vendor.
+
+\item The depth capability transfers in three of four families. OpenCoder is an
+exception on the depth subset. Two generators show substantially better depth
+performance than Qwen even under the plain grounding contract, indicating a
+generator-dependent alternative strategy not investigated here.
+
+\item The over-application failure that motivated the routing rule is present in two
+of four families and absent in the other two, yet C4 improves on C3 for every
+generator on RefCOCO and for three of four on RefCOCO+. The routing rule helps whether
+or not the specific failure it was designed to prevent is present.
+
+\item Substituting the generator raises accuracy by three to six points at best
+(Yi-Coder-9B) and does not close the gap to the paper. The gap is attributable to
+program synthesis rather than to perception.
+\end{enumerate}
+
+\section{Limitations specific to this milestone}
+
+\begin{enumerate}[leftmargin=1.6em, itemsep=3pt]
+\item DeepSeek-Coder-V2-Lite's active parameter count ($2.4$B) is not comparable to
+the three dense models ($7$--$9$B); its results are confounded by architecture and
+capacity simultaneously. Its consistently weak C2 figures are the clearest symptom.
+
+\item All four generators postdate Codex by two to three years. The grid tests family
+and instruction-tuning lineage at a roughly fixed point in time, not model era.
+
+\item Qwen2.5-Coder-1.5B and -32B were not extended to the full grid; only the 7B
+point is shared between the scale sweep and the family sweep. The two answer different
+questions and were run to answer each independently (D18).
+
+\item Every cell is single-seed and greedy. The DeepSeek C3/C4 near-tie on RefCOCO+
+in particular has not been re-seeded and should be treated as inconclusive rather than
+as a genuine reversal.
+
+\item The RefCOCO+ depth subset is $n=47$, so each query is worth $2.13$ percentage
+points. Several models land on identical values there ($19.15\% = 9/47$), which is a
+consequence of the quantisation rather than a meaningful agreement.
+\end{enumerate}
+
+% =====================================================================
+\chapter{Deviations from the Published Configuration}
+\label{ch:deviations}
+
+Every departure is recorded with its reason and expected effect, per criterion C-5.
+
+\begin{longtable}{@{}p{0.05\textwidth}p{0.26\textwidth}p{0.60\textwidth}@{}}
+\caption{Deviation register.}\label{tab:deviations}\\
+\toprule
+\textbf{ID} & \textbf{Deviation} & \textbf{Reason and expected effect} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Deviation} & \textbf{Reason and expected effect} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+D1 & Codex $\to$ Qwen2.5-Coder & Codex is retired; no faithful option exists. This
+substitution is the subject of the study and the dominant term in the gap to $72.0$. \\
+
+D2 & Scope restricted to grounding & The four-table configuration requires roughly
+250\,GB against 231\,GB of quota; NExT-QA alone needs over 100\,GB of video, and OK-VQA
+depends on GPT-3, also retired. No cross-task claim is made. \\
+
+D3 & RefCOCO annotations from the Internet Archive & The canonical host no longer
+resolves. The archived files are byte-identical. No effect. \\
+
+D4 & Dependency versions & The environment pre-existed, so the pinned versions were not
+applied. Frozen to a lockfile. No effect on the text-only path. \\
+
+D5 & GLIP built for \texttt{sm\_90} & CUDA 11.6 has no support for compute capability
+9.0, so the published environment cannot run on this hardware. Headers updated, target
+architectures added; kernels unchanged. Verified numerically. \\
+
+D6 & NumPy 2.0 aliases in GLIP & Five files used \texttt{np.float}, removed in NumPy
+1.24. Semantics unchanged. \\
+
+D7 & Offline operation & GLIP fetches a tokenizer at load time; compute nodes have no
+network. Cached in advance and asserted before every job. \\
+
+D8 & Detector threshold $0.5 \to 0.2$ & The paper's value loses 8 of 20 detections.
+Re-swept on a held-out slice ($n{=}200$, disjoint from all reported cells): $0.2$ is
+within $1.0$ point of optimal for detection. Material and now validated. \\
+
+D9 & X-VLM $\to$ CLIP ViT-L & X-VLM weights are distributed via a file-sharing link and
+cannot be fetched by script. CLIP scores globally rather than at region level, so
+attribute verification should be weaker; costliest on RefCOCO+, whose expressions are
+attribute-based. \\
+
+D10 & \texttt{simple\_query}, \texttt{llm\_query} return \texttt{""} & Loading BLIP-2-XXL
+and an 8B text model is out of scope. Without a fallback, a program calling them raises,
+making its failure attributable to our configuration. Strictly favours C1; no effect on
+later conditions. \\
+
+D11 & Depth backend corrected & The shipped wrapper loaded MiDaS over the network and
+returned inverse depth unmodified, so comparisons ran opposite to the documented
+semantics. Now loaded offline, resampled to image size, and inverted. Every depth number
+depends on this; pinned by 18 unit assertions. \\
+
+D12 & Detection scores exposed; candidate controls added & \texttt{find} now also returns
+per-box confidence, with optional \texttt{max\_detections} and NMS. \textbf{Both disabled
+by default}: enabling them raises accuracy by 15 points, but a control shows the gain
+belongs to the candidate set rather than to the method
+(Chapter~\ref{ch:rejected}). Recorded as a negative result. \\
+\end{longtable}
+
+\section{Undocumented at the time of writing}
+
+Two further differences were identified during the audit of this dissertation and are
+recorded here for completeness.
+
+The \texttt{crop\_larger\_margin} option, which expands detections by 10\%, is enabled in
+the published configuration and disabled in the evaluation configurations used here. Its
+effect has not been measured.
+
+The published evaluator shuffles the split under a fixed seed and reports on the full
+testA set; this work takes the first 500 expressions in file order. Both are
+deterministic, but they are not the same 500 samples.
+
+% =====================================================================
+\chapter{Limitations}
+\label{ch:limitations}
+
+\begin{enumerate}[leftmargin=1.6em, itemsep=4pt]
+\item \textbf{The reproduction is not faithful.} $42.00$ against a reported $72.0$. The
+contributors are enumerated in Chapter~\ref{ch:deviations} but not decomposed
+quantitatively, because the per-deviation ablations were not run.
+
+\item \textbf{Metric and fallback differ from the published evaluator.} Accuracy at
+IoU $\geq 0.5$ rather than mean IoU, and zero rather than a mean-box substitute for an
+invalid prediction. Both figures are reported wherever a comparison is drawn.
+
+\item \textbf{The depth subset is small.} $n = 47$; $21.28\%$ is 10 of 47. The direction
+is established, the value is not. The lexicon used to identify spatial queries is a
+heuristic with an estimated five false positives in that subset.
+
+\item \textbf{Seed coverage is asymmetric.} Seeds were run for RefCOCO only; every
+RefCOCO+ figure, including the headline $21.28$, is single-run.
+
+\item \textbf{X-VLM was never built.} CLIP is a substitute whose weakness is expected to
+fall most heavily on RefCOCO+.
+
+\item \textbf{Evaluation is on a 500-sample subset} of testA rather than the full split.
+
+\item \textbf{The candidate-set tension is unresolved.} The detector threshold is correct
+for detection and wrong for selection; \texttt{max\_detections} addresses this but was
+disqualified as a contribution and disabled.
+
+\item \textbf{Provenance is by job identifier rather than commit hash} for the execution
+runs, because \texttt{git} is not installed on the compute nodes. The job scripts are
+committed, so the configuration is recoverable, but the automatic stamping intended by
+the design is absent.
+\end{enumerate}
+
+% =====================================================================
+\chapter{Conclusion and Future Work}
+\label{ch:conclusion}
+
+\section{Conclusion}
+
+This dissertation set out to reproduce ViperGPT after the withdrawal of its program
+generator, and to determine which of its reported behaviour belonged to the method rather
+than to that generator.
+
+The answer to RQ1 is that the released specification carries an unstated output contract.
+With an open-weights generator, $98.8\%$ of programs return a natural-language string
+where a bounding box is required, and executed accuracy is $0.00$ --- not because the
+system crashes, but because $332$ of $500$ programs run to completion and answer the wrong
+kind of question. Three sentences stating the contract raise accuracy to $39.20$.
+
+The answer to RQ2 is that this is a property of the specification, not of capacity. The
+failure occurs at 1.5B, 7B and 32B parameters and is repaired at each. Scaling the
+generator twentyfold buys approximately six accuracy points where stating the contract
+buys thirty-three to forty-one.
+
+The answer to RQ3 is that accuracy differs sharply by the kind of spatial language. Across
+the same three model sizes, non-spatial accuracy rises $33.65 \to 48.82$ while spatial
+accuracy remains flat at $34.95 / 34.26 / 34.95$. A manual audit shows that RefCOCO's
+spatial queries are image-plane and RefCOCO+'s are depth-based, and that the latter score
+$4.26$ against the former's $34.26$. The API exposes one scalar for depth and the prompt
+directs the generator away from geometry; the deficit is in the interface.
+
+The answer to RQ4 is qualified and is the more interesting result. Extending the API with
+depth-ordering primitives improves depth queries from $4.26$ to $19.15$ but costs ten
+points of non-spatial accuracy: the generator applies a new primitive indiscriminately.
+Adding three sentences that delimit when the primitives apply improves \emph{every} subset
+of both datasets, reaching $21.28$ on depth queries and $42.00$ overall
+($42.07 \pm 0.61$ over three seeds against $36.07 \pm 1.75$), and reduces the seed-to-seed
+variance of spatial queries by a factor of $4.6$.
+
+The two results share a form. In the first, the specification failed to say \emph{what} a
+program must return. In the second, it failed to say \emph{when} a capability applies.
+Neither is a limitation of the model, and neither is visible until the model that had been
+supplying the missing constraint is replaced.
+
+\section{Future work}
+
+\textbf{Complete the substitution register.} Building X-VLM (D9) would close the deviation
+most likely to be costing accuracy on RefCOCO+, and would allow the attribute path to be
+attributed rather than assumed.
+
+\textbf{Resolve the candidate-set tension.} The detector threshold is tuned for detection
+and is wrong for selection. A principled treatment --- a query-conditional candidate
+budget, or a selection-aware detector --- would address a constraint that currently limits
+both depth ordering and attribute checking, and would do so without the dataset artefact
+that disqualified the naive cap.
+
+\textbf{Extend the seed protocol} to RefCOCO+ and to the depth subset specifically, where
+the present figures are single-run and small.
+
+\textbf{Metric depth.} The primitives claim ordering only, because the datasets carry no
+camera intrinsics. A dataset with intrinsics, or a metric depth model, would allow
+\texttt{position\_3d} and \texttt{physical\_size} --- implemented but unused --- to be
+evaluated, and would extend the API to relations that ordering cannot express.
+
+\textbf{Generalise the specification finding.} The result here concerns one prompt and one
+task. Whether other program-synthesis systems carry comparable unstated contracts is
+testable by the same method: substitute the generator and measure what breaks.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
